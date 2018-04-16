@@ -233,13 +233,13 @@
       
         <tags>
             
-            <tag> hadoop </tag>
-            
-            <tag> hdfs </tag>
-            
             <tag> shell </tag>
             
             <tag> awk </tag>
+            
+            <tag> hadoop </tag>
+            
+            <tag> hdfs </tag>
             
             <tag> file </tag>
             
