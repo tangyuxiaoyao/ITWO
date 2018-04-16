@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://tangyuxiaoyao.github.io/ITWO/"/>
-  <updated>2018-04-16T02:43:46.578Z</updated>
+  <updated>2018-04-16T03:17:28.083Z</updated>
   <id>https://tangyuxiaoyao.github.io/ITWO/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo yilla 和github 结合搭建个人博客</title>
+    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/04/16/hexo%20yilia%20github%20%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>https://tangyuxiaoyao.github.io/ITWO/2018/04/16/hexo yilia github 搭建个人博客/</id>
+    <published>2018-04-16T03:17:28.107Z</published>
+    <updated>2018-04-16T03:17:28.083Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="为什么考虑这样的搭配方式"><a href="#为什么考虑这样的搭配方式" class="headerlink" title="为什么考虑这样的搭配方式?"></a>为什么考虑这样的搭配方式?</h1><h2 id="构建需求"><a href="#构建需求" class="headerlink" title="构建需求"></a>构建需求</h2><blockquote><p>现阶段有很多的技术网站都带有给想要展示自己的一些技术入门以及技术研究的平台,也就常见的技术博客.<br>  但是大多都不满足于个性化定制,偶然间接触到markdown,当然简书等这样的平台也支持markdown,但是出于个人的独占情节,还是更倾向于搭建一个独立的自己可控的blog.<br><a id="more"></a></p><h2 id="技术实现-快速搭建"><a href="#技术实现-快速搭建" class="headerlink" title="技术实现(快速搭建)"></a>技术实现(快速搭建)</h2><p>考虑到如果从零开始,买空间,选域名,构建主体框架,渲染静态页面,一套走下来,未免本末倒置,博客注重的应该是文章的可读性以及质量,当然ui需要一定的可观瞻性.幸运的是遇到了hexo,给人一种转角遇到爱的小确幸.<br>      ps:Hexo is a fast, simple &amp; powerful blog framework powered by Node.js.<br>      从官网的解释可以看出,我们需要安装Node.js,当然要和gitbub结合,你需要申请一个github账号,申请账号的步骤,此处就不再累述.<br>      笔者使用的系统是ubantu 16.04</p><p>传送门:<a href="https://github.com/join" target="_blank" rel="external">github账号申请</a></p></blockquote><h3 id="现在演示安装Node-js"><a href="#现在演示安装Node-js" class="headerlink" title="现在演示安装Node.js."></a>现在演示安装Node.js.</h3><blockquote><p>在 Github 上获取 Node.js 源码：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo git <span class="built_in">clone</span> https://github.com/nodejs/node.git</div></pre></td></tr></table></figure><p> 1.修改目录权限：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ sudo chmod -R 755 node</div><div class="line">$ <span class="built_in">cd</span> node</div><div class="line">$ node -v</div></pre></td></tr></table></figure></p><p> 2.使用 ./configure 创建编译文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo ./configure</div></pre></td></tr></table></figure></p><p> 3.这一步，可能时间有点长，耐心等待<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo make</div></pre></td></tr></table></figure></p><p> 4.最后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo make</div></pre></td></tr></table></figure></p><blockquote><p>install 查看版本</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node -v</div></pre></td></tr></table></figure><blockquote><p>v0.10.25 如果node不是最新的，node有一个模块叫n，是专门用来管理node.js的版本的。使用npm（NPM是随同nodejs一起安装的包管理工具）安装n模块</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo npm install -g n</div></pre></td></tr></table></figure><blockquote><p>然后，升级node.js到最新稳定版</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo n stable</div></pre></td></tr></table></figure><blockquote><p>旧版本的 npm，也可以很容易地通过 npm 命令来升级，命令如下：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo npm install npm -g</div></pre></td></tr></table></figure><h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><blockquote><p>执行以下的命令:</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div><div class="line">$ hexo init blog 此处会新建一个新的目录存储hexo的一些初始化的文件.</div><div class="line">$ <span class="built_in">cd</span> blog</div><div class="line">$ npm install</div><div class="line">$ hexo server 此处会生成一个新的本地预览 访问http://localhost:4000 就可以访问本地的默认主题.</div></pre></td></tr></table></figure><h3 id="新建github仓库"><a href="#新建github仓库" class="headerlink" title="新建github仓库"></a>新建github仓库</h3><blockquote><p>新建一个仓库,然后选择public权限(写博客不就是为了别人看,进而监督自己进步么,所以public),指定git分支,使用默认的master分支即可,因为这个仓库就你一个看门的,这里面也是你的.然后记住自己的clone地址.<br>ps:记得保存.</p></blockquote><h3 id="将gitbub仓库和hexo主题绑定"><a href="#将gitbub仓库和hexo主题绑定" class="headerlink" title="将gitbub仓库和hexo主题绑定"></a>将gitbub仓库和hexo主题绑定</h3><blockquote><p>编辑_config.yml:</p></blockquote><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">type</span>: git</div><div class="line"><span class="attribute">repo</span>: <span class="attribute">https</span>:<span class="comment">//github.com/tangyuxiaoyao/ITWO.git</span></div><div class="line"><span class="attribute">branch</span>: master</div></pre></td></tr></table></figure><blockquote><p>repo配置的地址为上文已经提及过的项目仓库clone地址.<br>而且这里有看到仓库后面带有子资源路径所以参考配置文件中的注释,需要将root对应的配置改为仓库的名称资源路径.</p></blockquote><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># URL</div><div class="line">## If your site <span class="keyword">is</span> <span class="keyword">put</span> in <span class="keyword">a</span> subdirectory, <span class="keyword">set</span> url <span class="keyword">as</span> <span class="string">'http://yoursite.com/child'</span> <span class="built_in">and</span> root <span class="keyword">as</span> <span class="string">'/child/'</span></div><div class="line">roo<span class="variable">t:</span> /ITWO/</div></pre></td></tr></table></figure><h3 id="发布主题到github仓库"><a href="#发布主题到github仓库" class="headerlink" title="发布主题到github仓库"></a>发布主题到github仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div><div class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure><ol><li>安装hexo发布模块deploy</li><li>清除缓存</li><li>生成静态页面</li><li>发布到github(每次改完以后也是这么稳妥发布)<h3 id="生成新的文章"><a href="#生成新的文章" class="headerlink" title="生成新的文章"></a>生成新的文章</h3></li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> <span class="built_in">source</span>/_posts/</div><div class="line">$ hexo new <span class="string">"shell在指定行插入文本"</span></div></pre></td></tr></table></figure><blockquote><p>然后就会生成一个为该名称的md文件,根据md语法编辑内容,完成以后发布即可.<br>ps:可以用hexo clean &amp;&amp; hexo g &amp;&amp; hexo s在本地生成预览效果,避免发布到github上的效果不尽人意.</p></blockquote><p><img src="/ITWO/assets/jscy.jpg" alt="古人笑比庭中树,一日秋风一日疏"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;为什么考虑这样的搭配方式&quot;&gt;&lt;a href=&quot;#为什么考虑这样的搭配方式&quot; class=&quot;headerlink&quot; title=&quot;为什么考虑这样的搭配方式?&quot;&gt;&lt;/a&gt;为什么考虑这样的搭配方式?&lt;/h1&gt;&lt;h2 id=&quot;构建需求&quot;&gt;&lt;a href=&quot;#构建需求&quot; class=&quot;headerlink&quot; title=&quot;构建需求&quot;&gt;&lt;/a&gt;构建需求&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;现阶段有很多的技术网站都带有给想要展示自己的一些技术入门以及技术研究的平台,也就常见的技术博客.&lt;br&gt;  但是大多都不满足于个性化定制,偶然间接触到markdown,当然简书等这样的平台也支持markdown,但是出于个人的独占情节,还是更倾向于搭建一个独立的自己可控的blog.&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="hexo" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hexo/"/>
+    
+      <category term="yilla" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/yilla/"/>
+    
+      <category term="github" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/github/"/>
+    
+  </entry>
   
   <entry>
     <title>如何在hadoop streaming mapreduce中 使用python第三方包</title>
@@ -37,9 +62,9 @@
     
       <category term="mapreduce" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mapreduce/"/>
     
-      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
-    
       <category term="streaming" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/streaming/"/>
+    
+      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
     
       <category term="numpy" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/numpy/"/>
     
@@ -85,9 +110,9 @@
     </summary>
     
     
-      <category term="mysql" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mysql/"/>
-    
       <category term="mongo" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mongo/"/>
+    
+      <category term="mysql" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mysql/"/>
     
   </entry>
   
@@ -110,9 +135,9 @@
     
       <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
     
-      <category term="split" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/split/"/>
-    
       <category term="join" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/join/"/>
+    
+      <category term="split" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/split/"/>
     
   </entry>
   
@@ -133,9 +158,9 @@
     </summary>
     
     
-      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
-    
       <category term="shell" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell/"/>
+    
+      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
     
       <category term="hbase" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hbase/"/>
     
@@ -167,27 +192,6 @@
   </entry>
   
   <entry>
-    <title>hexo yilla 和github 结合搭建个人博客</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/23/hexo%20yilia%20github%20%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/23/hexo yilia github 搭建个人博客/</id>
-    <published>2018-03-23T03:14:19.712Z</published>
-    <updated>2018-03-23T03:14:19.712Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="为什么考虑这样的搭配方式"><a href="#为什么考虑这样的搭配方式" class="headerlink" title="为什么考虑这样的搭配方式?"></a>为什么考虑这样的搭配方式?</h1><h2 id="构建需求"><a href="#构建需求" class="headerlink" title="构建需求"></a>构建需求</h2><blockquote><p>现阶段有很多的技术网站都带有给想要展示自己的一些技术入门以及技术研究的平台,也就常见的技术博客.<br>  但是大多都不满足于个性化定制,偶然间接触到markdown,当然简书等这样的平台也支持markdown,但是出于个人的独占情节,还是更倾向于搭建一个独立的自己可控的blog.<br><a id="more"></a></p><h2 id="技术实现-快速搭建"><a href="#技术实现-快速搭建" class="headerlink" title="技术实现(快速搭建)"></a>技术实现(快速搭建)</h2><p>考虑到如果从零开始,买空间,选域名,构建主体框架,渲染静态页面,一套走下来,未免本末倒置,博客注重的应该是文章的可读性以及质量,当然ui需要一定的可观瞻性.幸运的是遇到了hexo,给人一种转角遇到爱的小确幸.<br>      ps:Hexo is a fast, simple &amp; powerful blog framework powered by Node.js.<br>      从官网的解释可以看出,我们需要安装Node.js,当然要和gitbub结合,你需要申请一个github账号,申请账号的步骤,此处就不再累述.<br>      笔者使用的系统是ubantu 16.04</p><p>传送门:<a href="https://github.com/join" target="_blank" rel="external">github账号申请</a></p></blockquote><h3 id="现在演示安装Node-js"><a href="#现在演示安装Node-js" class="headerlink" title="现在演示安装Node.js."></a>现在演示安装Node.js.</h3><blockquote><p>在 Github 上获取 Node.js 源码：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo git <span class="built_in">clone</span> https://github.com/nodejs/node.git</div></pre></td></tr></table></figure><p> 1.修改目录权限：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ sudo chmod -R 755 node</div><div class="line">$ <span class="built_in">cd</span> node</div><div class="line">$ node -v</div></pre></td></tr></table></figure></p><p> 2.使用 ./configure 创建编译文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo ./configure</div></pre></td></tr></table></figure></p><p> 3.这一步，可能时间有点长，耐心等待<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo make</div></pre></td></tr></table></figure></p><p> 4.最后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo make</div></pre></td></tr></table></figure></p><blockquote><p>install 查看版本</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node -v</div></pre></td></tr></table></figure><blockquote><p>v0.10.25 如果node不是最新的，node有一个模块叫n，是专门用来管理node.js的版本的。使用npm（NPM是随同nodejs一起安装的包管理工具）安装n模块</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo npm install -g n</div></pre></td></tr></table></figure><blockquote><p>然后，升级node.js到最新稳定版</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo n stable</div></pre></td></tr></table></figure><blockquote><p>旧版本的 npm，也可以很容易地通过 npm 命令来升级，命令如下：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo npm install npm -g</div></pre></td></tr></table></figure><h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><blockquote><p>执行以下的命令:</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div><div class="line">$ hexo init blog 此处会新建一个新的目录存储hexo的一些初始化的文件.</div><div class="line">$ <span class="built_in">cd</span> blog</div><div class="line">$ npm install</div><div class="line">$ hexo server 此处会生成一个新的本地预览 访问http://localhost:4000 就可以访问本地的默认主题.</div></pre></td></tr></table></figure><h3 id="新建github仓库"><a href="#新建github仓库" class="headerlink" title="新建github仓库"></a>新建github仓库</h3><blockquote><p>新建一个仓库,然后选择public权限(写博客不就是为了别人看,进而监督自己进步么,所以public),指定git分支,使用默认的master分支即可,因为这个仓库就你一个看门的,这里面也是你的.然后记住自己的clone地址.<br>ps:记得保存.</p></blockquote><h3 id="将gitbub仓库和hexo主题绑定"><a href="#将gitbub仓库和hexo主题绑定" class="headerlink" title="将gitbub仓库和hexo主题绑定"></a>将gitbub仓库和hexo主题绑定</h3><blockquote><p>编辑_config.yml:</p></blockquote><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">type</span>: git</div><div class="line"><span class="attribute">repo</span>: <span class="attribute">https</span>:<span class="comment">//github.com/tangyuxiaoyao/ITWO.git</span></div><div class="line"><span class="attribute">branch</span>: master</div></pre></td></tr></table></figure><blockquote><p>repo配置的地址为上文已经提及过的项目仓库clone地址.<br>而且这里有看到仓库后面带有子资源路径所以参考配置文件中的注释,需要将root对应的配置改为仓库的名称资源路径.</p></blockquote><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># URL</div><div class="line">## If your site <span class="keyword">is</span> <span class="keyword">put</span> in <span class="keyword">a</span> subdirectory, <span class="keyword">set</span> url <span class="keyword">as</span> <span class="string">'http://yoursite.com/child'</span> <span class="built_in">and</span> root <span class="keyword">as</span> <span class="string">'/child/'</span></div><div class="line">roo<span class="variable">t:</span> /ITWO/</div></pre></td></tr></table></figure><h3 id="发布主题到github仓库"><a href="#发布主题到github仓库" class="headerlink" title="发布主题到github仓库"></a>发布主题到github仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div><div class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure><ol><li>安装hexo发布模块deploy</li><li>清除缓存</li><li>生成静态页面</li><li>发布到github(每次改完以后也是这么稳妥发布)<h3 id="生成新的文章"><a href="#生成新的文章" class="headerlink" title="生成新的文章"></a>生成新的文章</h3></li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> <span class="built_in">source</span>/_posts/</div><div class="line">$ hexo new <span class="string">"shell在指定行插入文本"</span></div></pre></td></tr></table></figure><blockquote><p>然后就会生成一个为该名称的md文件,根据md语法编辑内容,完成以后发布即可.<br>ps:可以用hexo clean &amp;&amp; hexo g &amp;&amp; hexo s在本地生成预览效果,避免发布到github上的效果不尽人意.</p></blockquote><p><img src="/ITWO/assets/jscy.jpg" alt="古人笑比庭中树,一日秋风一日疏"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;为什么考虑这样的搭配方式&quot;&gt;&lt;a href=&quot;#为什么考虑这样的搭配方式&quot; class=&quot;headerlink&quot; title=&quot;为什么考虑这样的搭配方式?&quot;&gt;&lt;/a&gt;为什么考虑这样的搭配方式?&lt;/h1&gt;&lt;h2 id=&quot;构建需求&quot;&gt;&lt;a href=&quot;#构建需求&quot; class=&quot;headerlink&quot; title=&quot;构建需求&quot;&gt;&lt;/a&gt;构建需求&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;现阶段有很多的技术网站都带有给想要展示自己的一些技术入门以及技术研究的平台,也就常见的技术博客.&lt;br&gt;  但是大多都不满足于个性化定制,偶然间接触到markdown,当然简书等这样的平台也支持markdown,但是出于个人的独占情节,还是更倾向于搭建一个独立的自己可控的blog.&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="hexo yilla github" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hexo-yilla-github/"/>
-    
-  </entry>
-  
-  <entry>
     <title>mapreduce 温故</title>
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/23/mapredcue%20%E6%B8%A9%E4%B9%A0/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/23/mapredcue 温习/</id>
@@ -215,7 +219,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/14/nohup-%E4%BD%BF%E7%94%A8%E8%A7%A3%E9%87%8A/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/14/nohup-使用解释/</id>
     <published>2018-03-14T01:54:12.000Z</published>
-    <updated>2018-03-23T03:13:55.437Z</updated>
+    <updated>2018-04-16T03:19:39.333Z</updated>
     
     <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>我们在运行服务或者其他程序的时候经常这样启动进程。<a id="more"></a></p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup ls &gt;out.log 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure><h2 id="细节分析"><a href="#细节分析" class="headerlink" title="细节分析"></a>细节分析</h2><blockquote><p>&amp; 可以免疫SIGINT（sign of interuput），也就是说他可以用于程序后台运行，但是关闭当前shell session就会退出该程序。<br>nohup 的运用是为了免疫SIGHUP信号，可以避免挂起，将程序的输出重定向到nohup.out中，也就是说免疫回话级别的关闭，但是不免疫SIGINT信号，也就是我们所用的Ctrl+C。<br>综上所属我们需要做的就是结合两者的优点，可以这样使用从而真正意义上实现程序后台运行，而且免疫session关闭而导致程序退出。<br>2&gt;&amp;1 的运用是为了将标准出错重定向到标准输出。<br>nohup ls &gt;out.log 2&gt;&amp;1 &amp; 连接起来的意思就是后台挂起ls命令，并且将标准输出和标准出错都作为输出重定向到out.log中，我们可以使用tail -f out.log监控程序的运行过程。<br>tip:当当前session还为关闭，我们可以使用Jobs命令来查看当前会话下面有多少挂起的程序，如果想停止自己启动的程序，可以使用fg %jobnumber的方式，将该任务放到前台执行然后使用Ctrl+C命令终止它的执行。但是如果当前session已经失去，我们就只能通过ps -ef 找到提交的任务然后通过kill来结束程序。</p></blockquote>]]></content>
     
@@ -247,9 +251,9 @@
     </summary>
     
     
-      <category term="maven" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/maven/"/>
-    
       <category term="gradle" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/gradle/"/>
+    
+      <category term="maven" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/maven/"/>
     
   </entry>
   
@@ -258,7 +262,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/13/idea-%E5%AF%BC%E5%85%A5gradle%E9%A1%B9%E7%9B%AE%E6%8A%A5%E9%94%99/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/13/idea-导入gradle项目报错/</id>
     <published>2018-03-13T01:17:08.000Z</published>
-    <updated>2018-03-23T03:14:09.229Z</updated>
+    <updated>2018-04-16T03:18:58.315Z</updated>
     
     <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>在导入一个新的gradle项目进idea时，报错如下：<a id="more"></a></p></blockquote><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Error:com/android/builder/model/AndroidProject : Unsupported major.minor version <span class="number">52.0</span>. Please use JDK <span class="number">8</span> or newer.</div><div class="line">&lt;a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html"&gt;Download JDK 8&lt;/a&gt;&lt;br&gt;&lt;a href="select.jdk"&gt;Select a JDK from the File System&lt;/a&gt;</div></pre></td></tr></table></figure><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><blockquote><p>本来是冲着后面给的错误去解决问题（传统经验害死人），后来该改的都改了，最终还是问题依旧，这才想着从前面开始解决，问了同事，同事也说是gradle的版本问题，其实根本不是，为什么不是呢，贴出官网给的答案</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Gradle runs on all major operating systems and requires only a Java JDK or JRE version 7 or higher to be installed. To check, run java -version:</div><div class="line">$ java -version</div><div class="line">java version <span class="string">"1.8.0_121"</span></div></pre></td></tr></table></figure><blockquote><p>从以上的洋文可以看出，只要是7版本以上就可以，所以就考虑到是不是idea本身的问题，在idea的设置里找了一遭，找到了<strong>它默认开启了Android Support,后来把这项支持点掉</strong>以后，重启idea,问题解决。</p></blockquote>]]></content>
     
@@ -270,7 +274,11 @@
     </summary>
     
     
-      <category term="idea gradle android" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/idea-gradle-android/"/>
+      <category term="idea" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/idea/"/>
+    
+      <category term="gradle" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/gradle/"/>
+    
+      <category term="android" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/android/"/>
     
   </entry>
   
@@ -279,19 +287,26 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/07/%E8%A7%A3%E5%86%B3ubantu-%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%93%E4%B8%8D%E5%BC%80%E9%97%AE%E9%A2%98/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/07/解决ubantu-谷歌浏览器打不开问题/</id>
     <published>2018-03-07T06:19:10.000Z</published>
-    <updated>2018-03-23T03:11:30.423Z</updated>
+    <updated>2018-04-16T03:26:57.819Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>遇到chrome/chromium启动不了<a id="more"></a></p></blockquote><h2 id="定位问题"><a href="#定位问题" class="headerlink" title="定位问题"></a>定位问题</h2><blockquote><p>在/usr/bin/./chromium-browser启动命令，　查看log输出</p><p>log输出如下：<br>[20049:20083:0302/221800.660699:FATAL:nss_util.cc(631)] NSS_VersionCheck(“3.26”) failed. NSS &gt;= 3.26 is required. Please upgrade to the latest NSS, and if you still get this error, contact your distribution maintainer.<br>已放弃 (核心已转储)</p></blockquote><h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install libnss3</div></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>遇到chrome/chromium启动不了</p></blockquote><a id="more"></a><h2 id="定位问题"><a href="#定位问题" class="headerlink" title="定位问题"></a>定位问题</h2><blockquote><p>在/usr/bin/./chromium-browser启动命令，　查看log输出</p><p>log输出如下：<br>[20049:20083:0302/221800.660699:FATAL:nss_util.cc(631)] NSS_VersionCheck(“3.26”) failed. NSS &gt;= 3.26 is required. Please upgrade to the latest NSS, and if you still get this error, contact your distribution maintainer.<br>已放弃 (核心已转储)</p></blockquote><h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install libnss3</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
       &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;遇到chrome/chromium启动不了
+&lt;p&gt;遇到chrome/chromium启动不了&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     
     
-      <category term="ubantu chrome chromium 打不开" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/ubantu-chrome-chromium-%E6%89%93%E4%B8%8D%E5%BC%80/"/>
+      <category term="ubantu" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/ubantu/"/>
+    
+      <category term="chrome" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/chrome/"/>
+    
+      <category term="chromium" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/chromium/"/>
+    
+      <category term="打不开" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/%E6%89%93%E4%B8%8D%E5%BC%80/"/>
     
   </entry>
   
@@ -300,7 +315,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/06/shell-%E5%90%88%E5%B9%B6hdfs%E6%96%87%E4%BB%B6-%E5%88%86%E5%8F%91-%E5%B9%B6%E5%8A%A0%E6%96%87%E4%BB%B6%E6%A0%A1%E9%AA%8C%E5%92%8C/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/</id>
     <published>2018-03-06T02:40:13.000Z</published>
-    <updated>2018-03-23T03:13:35.038Z</updated>
+    <updated>2018-04-16T03:21:29.832Z</updated>
     
     <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>提供一批带有城市标识的商户号，然后在流水中匹配到卡号，最终通过设备号和卡号的映射关系，输出每个城市商户商户对应的设备号。<a id="more"></a></p></blockquote><h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">MapDevice</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">MidCard</span>(<span class="params">card: <span class="type">String</span>, mid: <span class="type">String</span></span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="class">  <span class="title">case</span> <span class="title">class</span> <span class="title">CardDevice</span>(<span class="params">card: <span class="type">String</span>, device: <span class="type">String</span></span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="class"></span></div><div class="line"><span class="class">  <span class="title">case</span> <span class="title">class</span> <span class="title">CityMid</span>(<span class="params">city: <span class="type">String</span>, mid: <span class="type">String</span></span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="class">  <span class="title">val</span> <span class="title">comma</span> </span>= <span class="string">","</span></div><div class="line">  <span class="keyword">val</span> tab = <span class="string">"\t"</span></div><div class="line"></div><div class="line">  <span class="comment">// 从业务逻辑来看直接判断分割以后的列数更能够过滤掉脏数据，当然空行也被pass了。</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</div><div class="line">    <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"商户数据抓取设备号"</span>).setMaster(<span class="string">"local[*]"</span>)</div><div class="line">    <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">    <span class="keyword">val</span> sqlContext = <span class="keyword">new</span> <span class="type">SQLContext</span>(sc)</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// .filter(_.matches("\\S+")) 过滤空行</span></div><div class="line">    <span class="comment">// 考虑到只有city和mid的前提下，就会产生重复数据，所以要过滤以后再建表。</span></div><div class="line">    <span class="keyword">import</span> sqlContext.implicits._</div><div class="line">    <span class="keyword">val</span> midFilePath = args(<span class="number">0</span>)</div><div class="line">    <span class="keyword">val</span> cardMids = sc.textFile(midFilePath)</div><div class="line">      .filter(_.trim.split(comma, <span class="number">-1</span>).length == <span class="number">6</span>)</div><div class="line">      .map(line =&gt; &#123;</div><div class="line">        <span class="keyword">val</span> details = line.split(comma, <span class="number">-1</span>)</div><div class="line">        details(<span class="number">0</span>) + comma + details(<span class="number">4</span>)</div><div class="line">      &#125;).distinct().map(line =&gt; &#123;</div><div class="line">      <span class="keyword">val</span> details = line.split(comma, <span class="number">-1</span>)</div><div class="line">      <span class="type">CityMid</span>(details(<span class="number">0</span>), details(<span class="number">1</span>))</div><div class="line">    &#125;).toDF()</div><div class="line"></div><div class="line">    cardMids.registerTempTable(<span class="string">"cityMid"</span>)</div><div class="line"></div><div class="line">    <span class="comment">//    cardMids.show()</span></div><div class="line"></div><div class="line">    <span class="keyword">val</span> transFilePath = args(<span class="number">1</span>)</div><div class="line"></div><div class="line">    <span class="keyword">val</span> todayMCDF = sc.newAPIHadoopFile[<span class="type">LongWritable</span>, <span class="type">Text</span>, <span class="type">LzoTextInputFormat</span>](transFilePath)</div><div class="line">      .filter(_._2.toString.split(comma, <span class="number">-1</span>).length == <span class="number">47</span>)</div><div class="line">      .map(_._2.toString.split(comma, <span class="number">-1</span>))</div><div class="line">      .map(mpc =&gt; <span class="type">MidCard</span>(mpc(<span class="number">0</span>), mpc(<span class="number">1</span>)))</div><div class="line">      .toDF()</div><div class="line"></div><div class="line">    todayMCDF.registerTempTable(<span class="string">"midcard"</span>)</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">val</span> cardDevicePath = args(<span class="number">2</span>)</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// .filter(_.trim.length &gt; 0) 过滤空行</span></div><div class="line">    <span class="comment">// _.device.matches("\\S+") 过滤匹配到的设备号为空</span></div><div class="line">    <span class="keyword">val</span> cardDeviceDF = sc.textFile(cardDevicePath)</div><div class="line">      .filter(_.trim.split(tab, <span class="number">-1</span>).length == <span class="number">10</span>)</div><div class="line">      .map(line =&gt; &#123;</div><div class="line">        <span class="keyword">val</span> items = line.split(tab, <span class="number">-1</span>)</div><div class="line">        <span class="keyword">val</span> card = items(<span class="number">0</span>)</div><div class="line">        <span class="keyword">val</span> deviceId = items(<span class="number">3</span>)</div><div class="line">        <span class="type">CardDevice</span>(card, deviceId)</div><div class="line">      &#125;).filter(_.device.matches(<span class="string">"\\S+"</span>)).toDF()</div><div class="line"></div><div class="line"></div><div class="line">    cardDeviceDF.registerTempTable(<span class="string">"carddevice"</span>)</div><div class="line"></div><div class="line">    <span class="comment">//    cardDeviceDF.show(10)</span></div><div class="line"></div><div class="line">    <span class="keyword">val</span> resDF = sqlContext.sql(<span class="string">"select city,device from (select card,city from cityMid c  join cardmid m on c.mid=m.mid ) c join carddevice d on d.card=c.card group by city,device"</span>)</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//    resDF.show(5)</span></div><div class="line">    <span class="keyword">val</span> resSavePath = args(<span class="number">3</span>)</div><div class="line"></div><div class="line"></div><div class="line">    resDF.map(value =&gt; value.mkString(comma)).saveAsTextFile(resSavePath)</div><div class="line"></div><div class="line">  &#125;</div></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#!/usr/bin/env bash</span></div><div class="line"><span class="built_in">set</span> -x</div><div class="line"></div><div class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> -ne 4 ]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"参数个数为<span class="variable">$#</span>个"</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"请按照如下格式输入参数"</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"bash map-device.sh 商户信息配置路径 hardin流水路径 卡号和设备号对应关系路径 结果文件存放路径"</span></div><div class="line">        <span class="built_in">exit</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># koulb/cardmid/onemid koulb/cardmid/testtrans.lzo* koulb/cardmid/card_device_sm3 koulb/cardmid/out</span></div><div class="line"></div><div class="line">midconfPath=<span class="variable">$1</span></div><div class="line">transPath=<span class="variable">$2</span></div><div class="line">cardDevicePath=<span class="variable">$3</span></div><div class="line">resPath=<span class="variable">$4</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">spark-submit \</div><div class="line">--class com.upsmart.MapDevice  \</div><div class="line">--num-executors 100 \</div><div class="line">--executor-memory 6G \</div><div class="line">--executor-cores 4 \</div><div class="line">--driver-memory 1G \</div><div class="line">--conf spark.default.parallelism=1000 \</div><div class="line">--conf spark.storage.memoryFraction=0.5 \</div><div class="line">--conf spark.shuffle.memoryFraction=0.3 \</div><div class="line">--master yarn-client map-device-1.0.jar <span class="variable">$midconfPath</span> <span class="variable">$transPath</span> <span class="variable">$cardDevicePath</span> <span class="variable">$resPath</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ $? -ne 0 ];<span class="keyword">then</span></div><div class="line">   <span class="built_in">exit</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line">fileName=`date -d <span class="string">"1 hour ago"</span>  +<span class="string">"%Y%m%d%H"</span>`</div><div class="line"></div><div class="line">fileFullName=<span class="variable">$fileName</span><span class="string">".csv"</span></div><div class="line">hadoop fs -getmerge <span class="variable">$resPath</span> <span class="variable">$fileFullName</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ $? -ne 0 ];<span class="keyword">then</span></div><div class="line">   <span class="built_in">exit</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"></div><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $2  &gt;$1"_""'</span><span class="variable">$fileName</span><span class="string">'"".csv"&#125;'</span> <span class="variable">$fileFullName</span></div><div class="line"></div><div class="line">rm <span class="variable">$fileFullName</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `ls`;</div><div class="line"><span class="keyword">do</span></div><div class="line">fileSuffix=`<span class="built_in">echo</span> <span class="variable">$&#123;i##*_&#125;</span>`</div><div class="line">    <span class="keyword">if</span> [ <span class="variable">$fileSuffix</span> == <span class="variable">$fileFullName</span> ];<span class="keyword">then</span></div><div class="line">    fileSum=`md5sum <span class="variable">$i</span>  |cut -d<span class="string">' '</span> -f1`</div><div class="line">    <span class="built_in">echo</span> <span class="variable">$fileSum</span> &gt;<span class="variable">$i</span><span class="string">".md5"</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">done</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="built_in">test</span> -e .*.crc</div><div class="line"><span class="keyword">then</span></div><div class="line">    rm -f .*.crc</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure><h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><h3 id="怎么才算是有效的数据过滤？"><a href="#怎么才算是有效的数据过滤？" class="headerlink" title="怎么才算是有效的数据过滤？"></a>怎么才算是有效的数据过滤？</h3><blockquote><p>原本的思路是过滤掉空行就行，但是后续也会有角标越界的风险存在，从而过滤的最终条件为当前行按照分隔符切割以后，必须是标准列数<br>ps: java和scala都存在这样的bug,如果多行数据的最后一列为空，直接使用spit,得到的列数会少1,当然你去便利该数组，也会少个元素，必须这样使用spilt(str,-1),<br>核心代码：</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_._2.toString.split(comma, -1).length == 47</div></pre></td></tr></table></figure><h3 id="如果匹配到的设备号为空怎么办？"><a href="#如果匹配到的设备号为空怎么办？" class="headerlink" title="如果匹配到的设备号为空怎么办？"></a>如果匹配到的设备号为空怎么办？</h3><blockquote><p>开发之初，没有考虑到该因素，后来有问到数据提供的同事，不排除会存在设备好为空或者空格占位，所以使用正则过滤掉这些无意义的输出<br>代码:filter(_.device.matches(“\S+”))</p></blockquote><h3 id="怎么多列的配置文件的前提下，过滤掉同个城市下会存在重复的mid"><a href="#怎么多列的配置文件的前提下，过滤掉同个城市下会存在重复的mid" class="headerlink" title="怎么多列的配置文件的前提下，过滤掉同个城市下会存在重复的mid"></a>怎么多列的配置文件的前提下，过滤掉同个城市下会存在重复的mid</h3><blockquote><p>不多说，直接贴代码</p></blockquote><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 考虑到只有city和mid的前提下，就会产生重复数据，所以要过滤以后再建表。</span></div><div class="line"> <span class="keyword">import</span> sqlContext.implicits._</div><div class="line"> <span class="keyword">val</span> midFilePath = args(<span class="number">0</span>)</div><div class="line"> <span class="keyword">val</span> cardMids = sc.textFile(midFilePath)</div><div class="line">   .filter(_.trim.split(comma, <span class="number">-1</span>).length == <span class="number">6</span>)</div><div class="line">   .map(line =&gt; &#123;</div><div class="line">     <span class="keyword">val</span> details = line.split(comma, <span class="number">-1</span>)</div><div class="line">     details(<span class="number">0</span>) + comma + details(<span class="number">4</span>)</div><div class="line">   &#125;).distinct().map(line =&gt; &#123;</div><div class="line">   <span class="keyword">val</span> details = line.split(comma, <span class="number">-1</span>)</div><div class="line">   <span class="type">CityMid</span>(details(<span class="number">0</span>), details(<span class="number">1</span>))</div><div class="line"> &#125;).toDF()</div></pre></td></tr></table></figure><h3 id="如何在最终结果文件中按文件分发？（shell实现以及理论上的scala实现）"><a href="#如何在最终结果文件中按文件分发？（shell实现以及理论上的scala实现）" class="headerlink" title="如何在最终结果文件中按文件分发？（shell实现以及理论上的scala实现）"></a>如何在最终结果文件中按文件分发？（shell实现以及理论上的scala实现）</h3><h4 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">fileName=`date -d <span class="string">"1 hour ago"</span>  +<span class="string">"%Y%m%d%H"</span>`</div><div class="line">fileFullName=<span class="variable">$fileName</span><span class="string">".csv"</span></div><div class="line">hadoop fs -getmerge <span class="variable">$resPath</span> <span class="variable">$fileFullName</span></div><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $2  &gt;$1"_""'</span><span class="variable">$fileName</span><span class="string">'"".csv"&#125;'</span> <span class="variable">$fileFullName</span></div></pre></td></tr></table></figure><blockquote><p>难点1：按第一列去分发第二列内容，参考本博客的其他文章中的awk分发文件。<br>难点2：在awk中引用变量的值</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">koulb@koulb-ubantu:~$ a=<span class="string">"test"</span></div><div class="line">koulb@koulb-ubantu:~$ awk <span class="string">'BEGIN&#123;print "'</span><span class="variable">$a</span><span class="string">'"&#125;'</span> </div><div class="line"><span class="built_in">test</span></div></pre></td></tr></table></figure><h4 id="scala"><a href="#scala" class="headerlink" title="scala"></a>scala</h4><blockquote><p>最终的文件为多个城市对应设备号的结果，需要做的是，把第一列group by 去重，然后遍历该城市列表拿拿到对应的设备号，生成对应的结果文件。</p></blockquote>]]></content>
     
@@ -312,29 +327,21 @@
     </summary>
     
     
-      <category term="shell hadoop hdfs awk spark scala file suffix" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell-hadoop-hdfs-awk-spark-scala-file-suffix/"/>
+      <category term="hadoop" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hadoop/"/>
     
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/05/hello-world/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/05/hello-world/</id>
-    <published>2018-03-05T07:10:31.386Z</published>
-    <updated>2018-03-05T07:10:31.386Z</updated>
+      <category term="hdfs" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hdfs/"/>
     
-    <content type="html"><![CDATA[<p><strong>终于搭建成功,散花!!!</strong></p>]]></content>
+      <category term="shell" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell/"/>
     
-    <summary type="html">
+      <category term="awk" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/awk/"/>
     
-      
-      
-        &lt;p&gt;&lt;strong&gt;终于搭建成功,散花!!!&lt;/strong&gt;&lt;/p&gt;
-
-      
+      <category term="file" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/file/"/>
     
-    </summary>
+      <category term="spark" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/spark/"/>
     
+      <category term="scala" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/scala/"/>
+    
+      <category term="suffix" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/suffix/"/>
     
   </entry>
   
@@ -343,7 +350,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/02/28/hive-trim-%E5%8E%BB%E9%99%A4%E7%A9%BA%E6%A0%BC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/</id>
     <published>2018-02-28T05:49:22.000Z</published>
-    <updated>2018-03-23T03:14:12.161Z</updated>
+    <updated>2018-04-16T03:18:43.224Z</updated>
     
     <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，所以又查到hive有正则替换。</p></blockquote><a id="more"></a><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">hive <span class="number">0.10</span>.0源码</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> Text <span class="title">evaluate</span><span class="params">(Text s)</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (s == <span class="keyword">null</span>) &#123;</div><div class="line"></div><div class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    result.set(StringUtils.strip(s.toString(), <span class="string">" "</span>));</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line"></div><div class="line">  &#125;</div></pre></td></tr></table></figure><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">用法如下：</div><div class="line"></div><div class="line">      regexp_replace(yourcolname,'\\s+','')</div><div class="line"></div><div class="line">最后问题得以解决。​</div></pre></td></tr></table></figure>]]></content>
     
@@ -356,7 +363,17 @@
     </summary>
     
     
-      <category term="hive trim 空格 tab 制表符 regex_replace" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hive-trim-%E7%A9%BA%E6%A0%BC-tab-%E5%88%B6%E8%A1%A8%E7%AC%A6-regex-replace/"/>
+      <category term="hive" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hive/"/>
+    
+      <category term="trim" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/trim/"/>
+    
+      <category term="空格" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/%E7%A9%BA%E6%A0%BC/"/>
+    
+      <category term="tab" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/tab/"/>
+    
+      <category term="制表符" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/%E5%88%B6%E8%A1%A8%E7%AC%A6/"/>
+    
+      <category term="regex_replace" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/regex-replace/"/>
     
   </entry>
   
@@ -407,7 +424,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/01/11/hadoop-streaming-%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/</id>
     <published>2018-01-11T01:45:13.000Z</published>
-    <updated>2018-03-23T03:14:38.520Z</updated>
+    <updated>2018-04-16T03:16:11.162Z</updated>
     
     <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.<br><a id="more"></a></p><h2 id="问题汇总"><a href="#问题汇总" class="headerlink" title="问题汇总"></a>问题汇总</h2><h3 id="last-tool-output-null"><a href="#last-tool-output-null" class="headerlink" title="last tool output null"></a>last tool output null</h3><p>报错信息如下</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">USER=lming_08  </div><div class="line">HADOOP_USER=<span class="keyword">null</span>  </div><div class="line">last tool output: |<span class="keyword">null</span>|  </div><div class="line">  </div><div class="line">java.io.IOException: Broken pipe</div></pre></td></tr></table></figure><blockquote><p>刚开始以为是 map 程序中对空行未处理导致的，后来发现是 map 中有对一个上传的文件进行读取，而程序对该配置文件,读取而且读取以后还会用正则去遍历模糊匹配关键词，在处理该文件时会执行 10 多亿次循环，导致超时了。<br>解决方案:yield block 的使用,少用正则匹配,可以利用切词然后join来完成这样的匹配,本来mapreduce就是为了空间换时间,利用集群多个节点去并行处理逻辑.</p></blockquote>]]></content>
     
@@ -419,7 +436,11 @@
     </summary>
     
     
-      <category term="hadoop streaming python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hadoop-streaming-python/"/>
+      <category term="hadoop" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hadoop/"/>
+    
+      <category term="streaming" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/streaming/"/>
+    
+      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
     
   </entry>
   
@@ -428,7 +449,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/01/10/%E7%BB%99hive-mapreduce%E5%88%86%E9%85%8D%E9%98%9F%E5%88%97%E5%92%8C%E4%BC%98%E5%85%88%E7%BA%A7/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/</id>
     <published>2018-01-10T08:46:12.000Z</published>
-    <updated>2018-03-23T03:11:36.310Z</updated>
+    <updated>2018-04-16T03:26:25.308Z</updated>
     
     <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而当一个队列的资源有剩余时，可暂时将剩余资源共享给其他队列。<a id="more"></a></p></blockquote><h2 id="使用详解"><a href="#使用详解" class="headerlink" title="使用详解"></a>使用详解</h2><blockquote><p>hive –hiveconf mapreduce.job.queuename=root.fast –hiveconf mapreduce.job.name=’job name’ -f  etl.hql<br>hive<br>set mapreduce.job.queuename=root.fast;<br>set mapreduce.job.name=’job name’</p><p>yarn application  -movetoqueue  application_1478676388082_963529  -queue  root.etl #迁移任务到另一个队列</p></blockquote><p>ps:</p><blockquote><p>作业提交到的队列：mapreduce.job.queuename</p><p>作业优先级：mapreduce.job.priority，优先级默认有5个:LOW VERY_LOW NORMAL（默认） HIGH VERY_HIGH</p></blockquote>]]></content>
     
@@ -440,7 +461,13 @@
     </summary>
     
     
-      <category term="hive mapreduce queue priority" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hive-mapreduce-queue-priority/"/>
+      <category term="mapreduce" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mapreduce/"/>
+    
+      <category term="hive" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hive/"/>
+    
+      <category term="queue" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/queue/"/>
+    
+      <category term="priority" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/priority/"/>
     
   </entry>
   
@@ -449,7 +476,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/01/09/%E7%9F%A9%E9%98%B5%E5%8F%98%E5%BD%A2%E8%AE%B0/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/01/09/矩阵变形记/</id>
     <published>2018-01-09T09:29:37.000Z</published>
-    <updated>2018-03-23T03:11:26.507Z</updated>
+    <updated>2018-04-16T03:26:08.800Z</updated>
     
     <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>描述如下图所示:<br><img src="/ITWO/assets/rangeImg.png" alt="矩阵变换图"><br>把左边的图形转换为右边的模样<a id="more"></a></p></blockquote><h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote><p>使用的是快速上手的python脚本语言,逻辑理顺了,语言只是辅助.<br>逻辑分析:<br>既要控制纵向输出的列数,又要控制横向的输出格式,所以会用到两层的for循环,在控制纵向延伸的同时,往胖的控制膨胀,纵向的长度可以看出等于传入的c+k-1,横向的宽度是为k,因为使用的是二维角标遍历,所以要考虑到越界的问题,拿最极端的第c列来模拟通用的输出函数,好比这里传入的是3,print a[2][0],a[1][1],a[0][2],可以看出输出的一维二维的角标之和等于纵向遍历的i的值,而且可以看出一维的角标为降序,截止纵向角标越界之前,我们可以得到tempColl.append(str(a[i-j][j])),输出的结果可以这么堆积,这样的就可以把横向的输出控制在i的个数内,然后讨论偏移,我们可以看出偏移部分要补位,补位的个数又和纵向遍历的i-j&gt;c-1遍历的次数相等,利用该特性,我们不用刻意去补几个空位,利用纵向遍历超出c-1时,一维角标就要越界的特性,在横向遍历的时候,i-j&gt;c-1(角标等于长度减一)几次就补几个空格,当遍历到正常输出的二维角标时,也同时套用上边的通用公式输出tempColl.append(str(a[i-j][j])).<br><strong>核心</strong>:无论二维角标怎么变换,最终肯定会控制在i-j的范围内(越界的补位(空格)).</p></blockquote><h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*-coding:utf-8-*-  </span></div><div class="line"><span class="comment">#!/usr/bin/env python </span></div><div class="line"></div><div class="line"><span class="comment"># final version</span></div><div class="line"><span class="comment"># print a[0][0]</span></div><div class="line"><span class="comment"># print a[1][0],a[0][1]</span></div><div class="line"><span class="comment"># print a[2][0],a[1][1],a[0][2]</span></div><div class="line"><span class="comment"># print ' ',a[2][1],a[1][2]</span></div><div class="line"><span class="comment"># print ' ',' ',a[2][2]</span></div><div class="line"></div><div class="line"><span class="comment"># 0</span></div><div class="line"><span class="comment"># 3 1</span></div><div class="line"><span class="comment"># 6 4 2</span></div><div class="line"><span class="comment">#   7 5</span></div><div class="line"><span class="comment">#     8</span></div><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line">c = int(raw_input(<span class="string">'输入矩形长度：'</span>))</div><div class="line">k = int(raw_input(<span class="string">'输入矩形宽度: '</span>))</div><div class="line"></div><div class="line">a = arange(c*k).reshape(c,k)</div><div class="line"><span class="keyword">print</span> a</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># lines = a.shape[0]</span></div><div class="line"><span class="comment"># lines = lines + lines-1</span></div><div class="line"></div><div class="line"><span class="comment"># rows = a.shape[0]</span></div><div class="line"></div><div class="line"></div><div class="line">lines =c+k<span class="number">-1</span></div><div class="line"></div><div class="line">rows = k</div><div class="line"></div><div class="line">sep = <span class="string">' '</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(lines):</div><div class="line">tempColl = []</div><div class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(rows):</div><div class="line"><span class="keyword">if</span>(i-j&gt;c<span class="number">-1</span>):</div><div class="line">tempColl.append(sep)</div><div class="line"><span class="keyword">elif</span>(i-j&gt;=<span class="number">0</span>):</div><div class="line">tempColl.append(str(a[i-j][j]))</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">print</span> <span class="string">","</span>.join(tempColl)</div></pre></td></tr></table></figure><blockquote><p>接收输入参数来设定需要生成几行几列的数据矩阵<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">c = int(raw_input(<span class="string">'输入矩形长度：'</span>))</div><div class="line">k = int(raw_input(<span class="string">'输入矩形宽度: '</span>))</div><div class="line"></div><div class="line">a = arange(c*k).reshape(c,k)</div><div class="line"><span class="keyword">print</span> a</div></pre></td></tr></table></figure></p></blockquote>]]></content>
     
@@ -461,7 +488,34 @@
     </summary>
     
     
-      <category term="python numpy 矩阵" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python-numpy-%E7%9F%A9%E9%98%B5/"/>
+      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
+    
+      <category term="numpy" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/numpy/"/>
+    
+      <category term="矩阵" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/%E7%9F%A9%E9%98%B5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>crontab 使用规范</title>
+    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/01/02/crontab-%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/"/>
+    <id>https://tangyuxiaoyao.github.io/ITWO/2018/01/02/crontab-使用规范/</id>
+    <published>2018-01-02T02:17:01.000Z</published>
+    <updated>2018-04-16T03:15:22.017Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>在使用crontab定制定时任务时,没有结果输出,想去查看下log.但是没有找到,通过一下途径来定位问题.<br><a id="more"></a></p><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析:"></a>问题分析:</h2><p>①该服务有没有开启?</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">查看该服务是否开启?</div><div class="line">sudo /etc/init.d/crond status </div><div class="line">如果没有开启,启动该服务.</div><div class="line">sudo /etc/init.d/crond start</div></pre></td></tr></table></figure><blockquote><p>②确认该任务开启以后,查看log定位问题,然后并没有看到log.</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">修改rsyslog</div><div class="line">sudo vim /etc/rsyslog.d/50-default.conf</div><div class="line">cron.*              /var/log/cron.log #将cron前面的注释符去掉 </div><div class="line">重启rsyslog</div><div class="line">sudo  service rsyslog  restart</div><div class="line">查看crontab日志</div><div class="line">less  /var/log/cron.log</div></pre></td></tr></table></figure><h2 id="用法核心"><a href="#用法核心" class="headerlink" title="用法核心"></a>用法核心</h2><blockquote><p>语法规范:</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">m h  dom mon dow   command</div><div class="line">分 时 每月的第几日 每年的第几个月 每周的第几天 可执行任务</div></pre></td></tr></table></figure><blockquote><p>使用demo</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 每天的10:05输出<span class="string">"1232"</span>到<span class="built_in">log</span>中</span></div><div class="line">05 10 * * * echo '1232' &gt;&gt; /home/testuser/test.log 2&gt;&amp;1</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在使用crontab定制定时任务时,没有结果输出,想去查看下log.但是没有找到,通过一下途径来定位问题.&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="crontab" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/crontab/"/>
+    
+      <category term="log" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/log/"/>
     
   </entry>
   
