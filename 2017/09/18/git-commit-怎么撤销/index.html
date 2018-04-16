@@ -1,30 +1,34 @@
-<!DOCTYPE html><html lang="zh-Hans"><head>
-<!--[if lt IE 9]>
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
         <style>body {display: none; background: none !important} </style>
         <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
-    <![endif]--></head><body><script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+    <![endif]-->
+
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no">
-<meta name="author" content="&#x5510;&#x94B0;&#x900D;&#x9065;">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="唐钰逍遥" />
 
 
 
-<meta name="description" content="&amp;#x9700;&amp;#x6C42;&amp;#x80CC;&amp;#x666F;: &amp;#x5F53;&amp;#x4F60;&amp;#x4E0D;&amp;#x5C0F;&amp;#x5FC3;&amp;#x63D0;&amp;#x4EA4;&amp;#x9519;&amp;#x67D0;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x6216;&amp;#x8005;&amp;#x6216;&amp;#x8005;&amp;#x591A;&amp;#x63D0;&amp;#x4EA4;&amp;#x4E86;&amp;#x67D">
+<meta name="description" content="需求背景: 当你不小心提交错某个文件或者或者多提交了某些文件，并且还没有push.">
 <meta name="keywords" content="git commit">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git commit &#x600E;&#x4E48;&#x64A4;&#x9500;">
-<meta property="og:url" content="https://tangyuxiaoyao.github.io/ITWO/2017/09/18/git-commit-&#x600E;&#x4E48;&#x64A4;&#x9500;/index.html">
+<meta property="og:title" content="git commit 怎么撤销">
+<meta property="og:url" content="https://tangyuxiaoyao.github.io/ITWO/2017/09/18/git-commit-怎么撤销/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="&amp;#x9700;&amp;#x6C42;&amp;#x80CC;&amp;#x666F;: &amp;#x5F53;&amp;#x4F60;&amp;#x4E0D;&amp;#x5C0F;&amp;#x5FC3;&amp;#x63D0;&amp;#x4EA4;&amp;#x9519;&amp;#x67D0;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x6216;&amp;#x8005;&amp;#x6216;&amp;#x8005;&amp;#x591A;&amp;#x63D0;&amp;#x4EA4;&amp;#x4E86;&amp;#x67D">
+<meta property="og:description" content="需求背景: 当你不小心提交错某个文件或者或者多提交了某些文件，并且还没有push.">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-03-23T03:14:46.815Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git commit &#x600E;&#x4E48;&#x64A4;&#x9500;">
-<meta name="twitter:description" content="&amp;#x9700;&amp;#x6C42;&amp;#x80CC;&amp;#x666F;: &amp;#x5F53;&amp;#x4F60;&amp;#x4E0D;&amp;#x5C0F;&amp;#x5FC3;&amp;#x63D0;&amp;#x4EA4;&amp;#x9519;&amp;#x67D0;&amp;#x4E2A;&amp;#x6587;&amp;#x4EF6;&amp;#x6216;&amp;#x8005;&amp;#x6216;&amp;#x8005;&amp;#x591A;&amp;#x63D0;&amp;#x4EA4;&amp;#x4E86;&amp;#x67D">
+<meta name="twitter:title" content="git commit 怎么撤销">
+<meta name="twitter:description" content="需求背景: 当你不小心提交错某个文件或者或者多提交了某些文件，并且还没有push.">
 
-<link rel="apple-touch-icon" href="/ITWO//apple-touch-icon.png">
+<link rel="apple-touch-icon" href= "/ITWO//apple-touch-icon.png">
 
 
     <link rel="alternate" href="/atom.xml" title="ITWO" type="application/atom+xml">
@@ -54,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>git commit &#x600E;&#x4E48;&#x64A4;&#x9500; | ITWO</title>
+<title>git commit 怎么撤销 | ITWO</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -88,8 +92,8 @@
 
 
 
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
-
+</head>
+<body>
   <div id="container">
     <div class="left-col">
     <div class="overlay"></div>
@@ -99,11 +103,11 @@
             <img src="/ITWO/assets/webwxgeticon.jpg" class="animated zoomIn">
         </a>
         <hgroup>
-          <h1 class="header-author"><a href="/ITWO/">&#x5510;&#x94B0;&#x900D;&#x9065;</a></h1>
+          <h1 class="header-author"><a href="/ITWO/">唐钰逍遥</a></h1>
         </hgroup>
 
         
-        <p class="header-subtitle">&#x6BCB;&#x5EB8;&#x591A;&#x8A00;,&#x53EA;&#x7BA1;&#x524D;&#x884C;.</p>
+        <p class="header-subtitle">毋庸多言,只管前行.</p>
         
 
         
@@ -138,13 +142,13 @@
                 <div class="tips-box hide">
                     <div class="tips-arrow"></div>
                     <ul class="tips-inner">
-                        <li>&#x83DC;&#x5355;</li>
-                        <li>&#x6807;&#x7B7E;</li>
+                        <li>菜单</li>
+                        <li>标签</li>
                         
-                        <li>&#x53CB;&#x60C5;&#x94FE;&#x63A5;</li>
+                        <li>友情链接</li>
                         
                         
-                        <li>&#x5173;&#x4E8E;&#x6211;</li>
+                        <li>关于我</li>
                         
                     </ul>
                 </div>
@@ -157,13 +161,13 @@
                     <nav class="header-menu">
                         <ul>
                         
-                            <li><a href="/ITWO/">&#x4E3B;&#x9875;</a></li>
+                            <li><a href="/ITWO/">主页</a></li>
                         
-                            <li><a href="/ITWO/archives/">&#x6240;&#x6709;&#x6587;&#x7AE0;</a></li>
+                            <li><a href="/ITWO/archives/">所有文章</a></li>
                         
-                            <li><a href="/ITWO/tags/">&#x6807;&#x7B7E;&#x4E91;</a></li>
+                            <li><a href="/ITWO/tags/">标签云</a></li>
                         
-                            <li><a href="/ITWO/about/">&#x5173;&#x4E8E;&#x6211;</a></li>
+                            <li><a href="/ITWO/about/">关于我</a></li>
                         
                         </ul>
                     </nav>
@@ -183,7 +187,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/apache-https-ssl-NoClassDefFound/">apache https ssl NoClassDefFound</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/balancer/">balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/crontab-log/">crontab log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/git-commit/">git commit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/gradle/">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop/">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-mapreduce-streaming-hive-not-in/">hadoop mapreduce streaming hive not in</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-no-such-file/">hadoop no such file</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-streaming-join/">hadoop streaming join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-streaming-python/">hadoop streaming python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-streaming-mapreduce-python-numpy/">hadoop,streaming,mapreduce,python,numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hbase/">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hbase-bulkload-error/">hbase bulkload error</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hdfs/">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hexo-yilla-github/">hexo yilla github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hive-mapreduce-queue-priority/">hive mapreduce queue priority</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hive-trim-&#x7A7A;&#x683C;-tab-&#x5236;&#x8868;&#x7B26;-regex-replace/">hive trim &#x7A7A;&#x683C; tab &#x5236;&#x8868;&#x7B26; regex_replace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/idea-gradle-android/">idea gradle android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/java-&#x6570;&#x636E;&#x7ED3;&#x6784;-HashMap/">java &#x6570;&#x636E;&#x7ED3;&#x6784; HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/join-python-db-dict/">join python db dict</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mapreduce/">mapreduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/maven/">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mongo-groupby-where/">mongo groupby where</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/nohup/">nohup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-date-count-sum-aggr-mean-panda/">python date count sum aggr mean panda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-mobile-idfa-imei/">python mobile idfa imei</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-mongo/">python mongo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-mongo-count/">python mongo count</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-numpy-&#x77E9;&#x9635;/">python numpy &#x77E9;&#x9635;</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-scrapy/">python scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-split-join/">python,split,join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-date/">shell  date</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-awk/">shell awk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-aws-s3/">shell aws s3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-cat-xargs/">shell cat xargs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-hadoop-hdfs-awk-spark-scala-file-suffix/">shell hadoop hdfs awk spark scala file suffix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-sed/">shell sed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-file/">shell,file</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shuffer/">shuffer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark-RDD-DataFrame-DataSet/">spark RDD DataFrame DataSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark-local-error/">spark local error</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark-lzo/">spark lzo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark-not-match/">spark not match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark-scala-map-flatmap/">spark scala map flatmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spring-boot-layui/">spring boot layui</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spring-jpa-column/">spring jpa column</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ssh-hadoop-spark/">ssh hadoop spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/uabntu-mysql-&#x79FB;&#x9664;-remove/">uabntu mysql &#x79FB;&#x9664; remove</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ubantu-chrome/">ubantu chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ubantu-chrome-chromium-&#x6253;&#x4E0D;&#x5F00;/">ubantu chrome chromium &#x6253;&#x4E0D;&#x5F00;</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ubantu-shell-dash/">ubantu shell dash</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/apache-https-ssl-NoClassDefFound/">apache https ssl NoClassDefFound</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/balancer/">balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/crontab-log/">crontab log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/git-commit/">git commit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/gradle/">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop/">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-mapreduce-streaming-hive-not-in/">hadoop mapreduce streaming hive not in</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-no-such-file/">hadoop no such file</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-streaming-join/">hadoop streaming join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-streaming-python/">hadoop streaming python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-streaming-mapreduce-python-numpy/">hadoop,streaming,mapreduce,python,numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hbase/">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hbase-bulkload-error/">hbase bulkload error</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hdfs/">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hexo-yilla-github/">hexo yilla github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hive-mapreduce-queue-priority/">hive mapreduce queue priority</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hive-trim-空格-tab-制表符-regex-replace/">hive trim 空格 tab 制表符 regex_replace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/idea-gradle-android/">idea gradle android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/java-数据结构-HashMap/">java 数据结构 HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/join-python-db-dict/">join python db dict</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mapreduce/">mapreduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/maven/">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mongo-groupby-where/">mongo groupby where</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/nohup/">nohup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-date-count-sum-aggr-mean-panda/">python date count sum aggr mean panda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-mobile-idfa-imei/">python mobile idfa imei</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-mongo/">python mongo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-mongo-count/">python mongo count</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-numpy-矩阵/">python numpy 矩阵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-scrapy/">python scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python-split-join/">python,split,join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-date/">shell  date</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-awk/">shell awk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-aws-s3/">shell aws s3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-cat-xargs/">shell cat xargs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-hadoop-hdfs-awk-spark-scala-file-suffix/">shell hadoop hdfs awk spark scala file suffix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-sed/">shell sed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell-file/">shell,file</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shuffer/">shuffer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark-RDD-DataFrame-DataSet/">spark RDD DataFrame DataSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark-local-error/">spark local error</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark-lzo/">spark lzo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark-not-match/">spark not match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark-scala-map-flatmap/">spark scala map flatmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spring-boot-layui/">spring boot layui</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spring-jpa-column/">spring jpa column</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ssh-hadoop-spark/">ssh hadoop spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/uabntu-mysql-移除-remove/">uabntu mysql 移除 remove</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ubantu-chrome/">ubantu chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ubantu-chrome-chromium-打不开/">ubantu chrome chromium 打不开</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ubantu-shell-dash/">ubantu shell dash</a></li></ul>
                     </div>
                 </section>
                 
@@ -204,19 +208,19 @@
                 
                 <section class="switch-part switch-part4">
                 
-                    <div id="js-aboutme">&#x6BCB;&#x5EB8;&#x591A;&#x8A00;&#xFF0C;&#x53EA;&#x7BA1;&#x524D;&#x884C;&#x3002;</div>
+                    <div id="js-aboutme">毋庸多言，只管前行。</div>
                 </section>
                 
             </div>
         </div>
     </header>                
-</div><script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+</div>
     </div>
     <div class="mid-col">
       <nav id="mobile-nav">
       <div class="overlay">
           <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="&#x56DE;&#x5230;&#x4E3B;&#x9875;">&#x5510;&#x94B0;&#x900D;&#x9065;</a></h1>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">唐钰逍遥</a></h1>
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
@@ -224,21 +228,21 @@
                 <img src="/ITWO/assets/webwxgeticon.jpg" class="animated zoomIn">
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/ITWO/" title="&#x56DE;&#x5230;&#x4E3B;&#x9875;">&#x5510;&#x94B0;&#x900D;&#x9065;</a></h1>
+              <h1 class="header-author"><a href="/ITWO/" title="回到主页">唐钰逍遥</a></h1>
             </hgroup>
             
-            <p class="header-subtitle">&#x6BCB;&#x5EB8;&#x591A;&#x8A00;,&#x53EA;&#x7BA1;&#x524D;&#x884C;.</p>
+            <p class="header-subtitle">毋庸多言,只管前行.</p>
             
             <nav class="header-menu">
                 <ul>
                 
-                    <li><a href="/ITWO/">&#x4E3B;&#x9875;</a></li>
+                    <li><a href="/ITWO/">主页</a></li>
                 
-                    <li><a href="/ITWO/archives/">&#x6240;&#x6709;&#x6587;&#x7AE0;</a></li>
+                    <li><a href="/ITWO/archives/">所有文章</a></li>
                 
-                    <li><a href="/ITWO/tags/">&#x6807;&#x7B7E;&#x4E91;</a></li>
+                    <li><a href="/ITWO/tags/">标签云</a></li>
                 
-                    <li><a href="/ITWO/about/">&#x5173;&#x4E8E;&#x6211;</a></li>
+                    <li><a href="/ITWO/about/">关于我</a></li>
                 
                 <div class="clearfix"></div>
                 </ul>
@@ -256,37 +260,41 @@
             </nav>
         </header>                
     </div>
-    <link class="menu-list" tags="&#x6807;&#x7B7E;" friends="&#x53CB;&#x60C5;&#x94FE;&#x63A5;" about="&#x5173;&#x4E8E;&#x6211;">
-</nav><script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
-      <div class="body-wrap"><article id="post-git-commit-&#x600E;&#x4E48;&#x64A4;&#x9500;" class="article article-type-post" itemscope="" itemprop="blogPost">
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-git-commit-怎么撤销" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/ITWO/2017/09/18/git-commit-&#x600E;&#x4E48;&#x64A4;&#x9500;/" class="article-date">
+      <a href="/ITWO/2017/09/18/git-commit-怎么撤销/" class="article-date">
       <time datetime="2017-09-18T12:54:49.000Z" itemprop="datePublished">2017-09-18</time>
 </a>
 
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+
     </div>
   
   <div class="article-inner">
     
-      <input type="hidden" class="isFancy">
+      <input type="hidden" class="isFancy" />
     
     
       <header class="article-header">
-        <h1 class="article-title" itemprop="name">
-      git commit &#x600E;&#x4E48;&#x64A4;&#x9500;
+        
+  
+    <h1 class="article-title" itemprop="name">
+      git commit 怎么撤销
     </h1>
   
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+
       </header>
       
       <div class="article-info article-info-post">
-        <script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
-        <div class="article-tag tagcloud">
+        
+
+        
+    <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/git-commit/">git commit</a></li></ul>
     </div>
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+
         <div class="clearfix"></div>
       </div>
       
@@ -294,35 +302,36 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h1 id="&#x9700;&#x6C42;&#x80CC;&#x666F;"><a href="#&#x9700;&#x6C42;&#x80CC;&#x666F;" class="headerlink" title="&#x9700;&#x6C42;&#x80CC;&#x666F;:"></a>&#x9700;&#x6C42;&#x80CC;&#x666F;:</h1><blockquote>
-<p>&#x5F53;&#x4F60;&#x4E0D;&#x5C0F;&#x5FC3;&#x63D0;&#x4EA4;&#x9519;&#x67D0;&#x4E2A;&#x6587;&#x4EF6;&#x6216;&#x8005;&#x6216;&#x8005;&#x591A;&#x63D0;&#x4EA4;&#x4E86;&#x67D0;&#x4E9B;&#x6587;&#x4EF6;&#xFF0C;&#x5E76;&#x4E14;&#x8FD8;&#x6CA1;&#x6709;push.<br><a id="more"></a><br>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5982;&#x4E0B;&#x6B65;&#x9AA4;&#x6765;&#x56DE;&#x9000;&#x5230;&#x63D0;&#x4EA4;&#x524D;&#x7684;&#x72B6;&#x6001;.    &#xFF08;ps:&#x6BCF;&#x6B21;&#x63D0;&#x4EA4;&#x5148;stash,pull,stash pop &#x7136;&#x540E;&#x518D;commit,push&#xFF09;</p>
+        <h1 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景:"></a>需求背景:</h1><blockquote>
+<p>当你不小心提交错某个文件或者或者多提交了某些文件，并且还没有push.<br><a id="more"></a><br>可以使用如下步骤来回退到提交前的状态.    （ps:每次提交先stash,pull,stash pop 然后再commit,push）</p>
 </blockquote>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">log</span></div></pre></td></tr></tbody></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">log</span></div></pre></td></tr></table></figure>
 <blockquote>
-<p>&#x4F1A;&#x6253;&#x5370;&#x51FA;&#x6240;&#x6709;&#x7684;&#x63D0;&#x4EA4;&#x5386;&#x53F2;&#x3002;<br>&#x7136;&#x540E;&#x5B9A;&#x4F4D;&#x5230;&#x81EA;&#x5DF1;&#x60F3;&#x8981;&#x56DE;&#x9000;&#x5230;&#x7684;&#x5BF9;&#x5E94;&#x7248;&#x672C;,&#x627E;&#x5230;&#x5176;hash&#x503C;&#x3002;</p>
+<p>会打印出所有的提交历史。<br>然后定位到自己想要回退到的对应版本,找到其hash值。</p>
 </blockquote>
-<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">commit 0c17bf55de2054ffd6bd67714c75c0861618e3de</div><div class="line">Author: aa</div><div class="line">Date:   Tue Aug 8 18:14:16 2017 +0800</div><div class="line"></div><div class="line">    bug fix: aa fix</div><div class="line"></div><div class="line">commit 7fc618a62b219829089cb47a6c04db95157a2b4f</div><div class="line">Author: bb</div><div class="line">Date:   Tue Aug 8 17:56:04 2017 +0800</div><div class="line"></div><div class="line">   bb fix bug</div></pre></td></tr></tbody></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">commit 0c17bf55de2054ffd6bd67714c75c0861618e3de</div><div class="line">Author: aa</div><div class="line">Date:   Tue Aug 8 18:14:16 2017 +0800</div><div class="line"></div><div class="line">    bug fix: aa fix</div><div class="line"></div><div class="line">commit 7fc618a62b219829089cb47a6c04db95157a2b4f</div><div class="line">Author: bb</div><div class="line">Date:   Tue Aug 8 17:56:04 2017 +0800</div><div class="line"></div><div class="line">   bb fix bug</div></pre></td></tr></table></figure>
 <blockquote>
-<p>&#x7136;&#x540E;&#x4F7F;&#x7528;git reset &#x2013;hard commitid &#x56DE;&#x9000;&#x5230;&#x5BF9;&#x5E94;&#x7248;&#x672C;&#x3002;</p>
+<p>然后使用git reset –hard commitid 回退到对应版本。</p>
 </blockquote>
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+
       
     </div>
     
   </div>
   
+    
     <div class="copyright">
-        <p><span>&#x672C;&#x6587;&#x6807;&#x9898;:</span><a href="/ITWO/2017/09/18/git-commit-&#x600E;&#x4E48;&#x64A4;&#x9500;/">git commit &#x600E;&#x4E48;&#x64A4;&#x9500;</a></p>
-        <p><span>&#x6587;&#x7AE0;&#x4F5C;&#x8005;:</span><a href="/" title="&#x56DE;&#x5230;&#x4E3B;&#x9875;">&#x5510;&#x94B0;&#x900D;&#x9065;</a></p>
-        <p><span>&#x53D1;&#x5E03;&#x65F6;&#x95F4;:</span>2017-09-18, 20:54:49</p>
-        <p><span>&#x6700;&#x540E;&#x66F4;&#x65B0;:</span>2018-03-23, 11:14:46</p>
+        <p><span>本文标题:</span><a href="/ITWO/2017/09/18/git-commit-怎么撤销/">git commit 怎么撤销</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
+        <p><span>发布时间:</span>2017-09-18, 20:54:49</p>
+        <p><span>最后更新:</span>2018-03-23, 11:14:46</p>
         <p>
-            <span>&#x539F;&#x59CB;&#x94FE;&#x63A5;:</span><a class="post-url" href="/ITWO/2017/09/18/git-commit-&#x600E;&#x4E48;&#x64A4;&#x9500;/" title="git commit &#x600E;&#x4E48;&#x64A4;&#x9500;">https://tangyuxiaoyao.github.io/ITWO/2017/09/18/git-commit-&#x600E;&#x4E48;&#x64A4;&#x9500;/</a>
-            <span class="copy-path" data-clipboard-text="&#x539F;&#x6587;: https://tangyuxiaoyao.github.io/ITWO/2017/09/18/git-commit-&#x600E;&#x4E48;&#x64A4;&#x9500;/&#x3000;&#x3000;&#x4F5C;&#x8005;: &#x5510;&#x94B0;&#x900D;&#x9065;" title="&#x70B9;&#x51FB;&#x590D;&#x5236;&#x6587;&#x7AE0;&#x94FE;&#x63A5;"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/ITWO/2017/09/18/git-commit-怎么撤销/" title="git commit 怎么撤销">https://tangyuxiaoyao.github.io/ITWO/2017/09/18/git-commit-怎么撤销/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://tangyuxiaoyao.github.io/ITWO/2017/09/18/git-commit-怎么撤销/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>&#x8BB8;&#x53EF;&#x534F;&#x8BAE;:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">&quot;&#x7F72;&#x540D;-&#x975E;&#x5546;&#x7528;-&#x76F8;&#x540C;&#x65B9;&#x5F0F;&#x5171;&#x4EAB; 4.0&quot;</a> &#x8F6C;&#x8F7D;&#x8BF7;&#x4FDD;&#x7559;&#x539F;&#x6587;&#x94FE;&#x63A5;&#x53CA;&#x4F5C;&#x8005;&#x3002;
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -331,26 +340,27 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/ITWO/2017/09/18/ubantu16-04&#x600E;&#x4E48;&#x5F7B;&#x5E95;&#x79FB;&#x9664;mysql/">
-                    ubantu16.04&#x600E;&#x4E48;&#x5F7B;&#x5E95;&#x79FB;&#x9664;mysql
+                <a href="/ITWO/2017/09/18/ubantu16-04怎么彻底移除mysql/">
+                    ubantu16.04怎么彻底移除mysql
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/ITWO/2017/09/18/apache-http-ssl&#x6A21;&#x5757;NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/">
-                    apache http ssl&#x6A21;&#x5757;NoClassDefFoundError: org/apache/http/ssl/TrustStrategy
+                <a href="/ITWO/2017/09/18/apache-http-ssl模块NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/">
+                    apache http ssl模块NoClassDefFoundError: org/apache/http/ssl/TrustStrategy
                 </a>
             </div>
         
     </nav>
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+
   
 </article>
-<div id="toc" class="toc-article">
-        <strong class="toc-title">&#x6587;&#x7AE0;&#x76EE;&#x5F55;</strong>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#&#x9700;&#x6C42;&#x80CC;&#x666F;"><span class="toc-number">1.</span> <span class="toc-text">&#x9700;&#x6C42;&#x80CC;&#x666F;:</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#需求背景"><span class="toc-number">1.</span> <span class="toc-text">需求背景:</span></a></li></ol>
         
     </div>
     <style>
@@ -364,24 +374,25 @@
         }
     </style>
 
-    <input type="button" id="tocButton" value="&#x9690;&#x85CF;&#x76EE;&#x5F55;" title="&#x70B9;&#x51FB;&#x6309;&#x94AE;&#x9690;&#x85CF;&#x6216;&#x8005;&#x663E;&#x793A;&#x6587;&#x7AE0;&#x76EE;&#x5F55;">
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
     <script>
         yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
     </script>
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
 
 
-    <div class="share">
+
+    
+<div class="share">
     
         <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="&#x5206;&#x4EAB;&#x5230;&#x63A8;&#x7279;"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="&#x5206;&#x4EAB;&#x5230;&#x65B0;&#x6D6A;&#x5FAE;&#x535A;"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="&#x5206;&#x4EAB;&#x7ED9; QQ &#x597D;&#x53CB;"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="&#x590D;&#x5236;&#x7F51;&#x5740;"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="&#x901A;&#x8FC7;&#x90AE;&#x4EF6;&#x5206;&#x4EAB;"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="&#x751F;&#x6210;&#x6587;&#x7AE0;&#x4E8C;&#x7EF4;&#x7801;"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></a>
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
         </div>
         <script>
             window._bd_share_config={
@@ -394,54 +405,56 @@
 
 
 
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+
 
 
 
     
 
 
-<div class="scroll" id="post-nav-button">
+
+
+    <div class="scroll" id="post-nav-button">
         
-            <a href="/ITWO/2017/09/18/ubantu16-04&#x600E;&#x4E48;&#x5F7B;&#x5E95;&#x79FB;&#x9664;mysql/" title="&#x4E0A;&#x4E00;&#x7BC7;: ubantu16.04&#x600E;&#x4E48;&#x5F7B;&#x5E95;&#x79FB;&#x9664;mysql">
+            <a href="/ITWO/2017/09/18/ubantu16-04怎么彻底移除mysql/" title="上一篇: ubantu16.04怎么彻底移除mysql">
                 <i class="fa fa-angle-left"></i>
             </a>
         
 
-        <a title="&#x6587;&#x7AE0;&#x5217;&#x8868;"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/ITWO/2017/09/18/apache-http-ssl&#x6A21;&#x5757;NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/" title="&#x4E0B;&#x4E00;&#x7BC7;: apache http ssl&#x6A21;&#x5757;NoClassDefFoundError: org/apache/http/ssl/TrustStrategy">
+            <a href="/ITWO/2017/09/18/apache-http-ssl模块NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/" title="下一篇: apache http ssl模块NoClassDefFoundError: org/apache/http/ssl/TrustStrategy">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/11/&#x5982;&#x4F55;&#x5728;hadoop-streaming-mapreduce&#x4E2D;-&#x4F7F;&#x7528;python&#x7B2C;&#x4E09;&#x65B9;&#x5305;/">&#x5982;&#x4F55;&#x5728;hadoop streaming mapreduce&#x4E2D; &#x4F7F;&#x7528;python&#x7B2C;&#x4E09;&#x65B9;&#x5305;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/08/shell-&#x904D;&#x5386;&#x591A;&#x7EA7;&#x76EE;&#x5F55;&#x53D6;&#x6587;&#x4EF6;&#x7684;&#x7B2C;&#x4E00;&#x884C;/">shell &#x904D;&#x5386;&#x591A;&#x7EA7;&#x76EE;&#x5F55;&#x53D6;&#x6587;&#x4EF6;&#x7684;&#x7B2C;&#x4E00;&#x884C;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/04/mysql-&#x548C;mongo-&#x5BFC;&#x5165;&#x6570;&#x636E;&#x603B;&#x7ED3;/">mysql &#x548C;mongo &#x5BFC;&#x5165;&#x6570;&#x636E;&#x603B;&#x7ED3;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/30/&#x6E05;&#x6D17;&#x6D41;&#x6C34;&#x4E4B;&#x53BB;&#x9664;&#x5B57;&#x6BB5;&#x4E2D;&#x591A;&#x4F59;&#x7684;&#x5206;&#x9694;&#x7B26;/">&#x6E05;&#x6D17;&#x6D41;&#x6C34;&#x4E4B;&#x53BB;&#x9664;&#x5B57;&#x6BB5;&#x4E2D;&#x591A;&#x4F59;&#x7684;&#x5206;&#x9694;&#x7B26;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/28/&#x5DE7;&#x7528;hbase-shell-&#x6279;&#x91CF;&#x63D0;&#x53D6;&#x6570;&#x636E;/">&#x5DE7;&#x7528;hbase shell &#x6279;&#x91CF;&#x63D0;&#x53D6;&#x6570;&#x636E;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/23/ Hadoop HDFS &#x6570;&#x636E;&#x81EA;&#x52A8;&#x5E73;&#x8861;/">Hadoop HDFS &#x6570;&#x636E;&#x81EA;&#x52A8;&#x5E73;&#x8861;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/23/hexo yilia github &#x642D;&#x5EFA;&#x4E2A;&#x4EBA;&#x535A;&#x5BA2;/">hexo yilla &#x548C;github &#x7ED3;&#x5408;&#x642D;&#x5EFA;&#x4E2A;&#x4EBA;&#x535A;&#x5BA2;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/23/mapredcue &#x6E29;&#x4E60;/">mapreduce &#x6E29;&#x6545;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/14/nohup-&#x4F7F;&#x7528;&#x89E3;&#x91CA;/">nohup &amp; &gt; &#x4F7F;&#x7528;&#x89E3;&#x91CA;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/13/maven,gradle-&#x95EE;&#x9898;&#x89E3;&#x51B3;&#x603B;&#x7ED3;/">maven,gradle &#x95EE;&#x9898;&#x89E3;&#x51B3;&#x603B;&#x7ED3;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/13/idea-&#x5BFC;&#x5165;gradle&#x9879;&#x76EE;&#x62A5;&#x9519;/">idea &#x5BFC;&#x5165;gradle&#x9879;&#x76EE;&#x62A5;&#x9519;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/07/&#x89E3;&#x51B3;ubantu-&#x8C37;&#x6B4C;&#x6D4F;&#x89C8;&#x5668;&#x6253;&#x4E0D;&#x5F00;&#x95EE;&#x9898;/">&#x89E3;&#x51B3;ubantu &#x8C37;&#x6B4C;&#x6D4F;&#x89C8;&#x5668;&#x6253;&#x4E0D;&#x5F00;&#x95EE;&#x9898;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/06/shell-&#x5408;&#x5E76;hdfs&#x6587;&#x4EF6;-&#x5206;&#x53D1;-&#x5E76;&#x52A0;&#x6587;&#x4EF6;&#x6821;&#x9A8C;&#x548C;/">shell &#x5408;&#x5E76;hdfs&#x6587;&#x4EF6; &#x5206;&#x53D1; &#x5E76;&#x52A0;&#x6587;&#x4EF6;&#x6821;&#x9A8C;&#x548C;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/05/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/02/28/hive-trim-&#x53BB;&#x9664;&#x7A7A;&#x683C;&#x9047;&#x5230;&#x7684;&#x95EE;&#x9898;/">hive trim() &#x53BB;&#x9664;&#x7A7A;&#x683C;&#x9047;&#x5230;&#x7684;&#x95EE;&#x9898;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/30/python-&#x62FE;&#x9057;/">python &#x62FE;&#x9057;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/25/spark-ListBuffer&#x904D;&#x5386;/">spark ListBuffer&#x904D;&#x5386;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/11/hadoop-streaming-&#x4F7F;&#x7528;&#x4E2D;&#x9047;&#x5230;&#x7684;&#x95EE;&#x9898;&#x603B;&#x7ED3;/">hadoop streaming &#x4F7F;&#x7528;&#x4E2D;&#x9047;&#x5230;&#x7684;&#x95EE;&#x9898;&#x603B;&#x7ED3;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/10/&#x7ED9;hive-mapreduce&#x5206;&#x914D;&#x961F;&#x5217;&#x548C;&#x4F18;&#x5148;&#x7EA7;/">&#x7ED9;hive mapreduce&#x5206;&#x914D;&#x961F;&#x5217;&#x548C;&#x4F18;&#x5148;&#x7EA7;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/09/&#x77E9;&#x9635;&#x53D8;&#x5F62;&#x8BB0;/">&#x77E9;&#x9635;&#x53D8;&#x5F62;&#x8BB0;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/02/crontab-&#x4F7F;&#x7528;&#x89C4;&#x8303;/">crontab &#x4F7F;&#x7528;&#x89C4;&#x8303;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/28/spring-boot-&#x548C;layui-&#x96C6;&#x5408;&#x5B9E;&#x73B0;&#x7B80;&#x5355;&#x7684;&#x63D0;&#x4F9B;&#x9875;&#x9762;&#x52A0;&#x89E3;&#x5BC6;&#x5DE5;&#x5177;/">spring boot &#x548C;layui &#x96C6;&#x5408;&#x5B9E;&#x73B0;&#x7B80;&#x5355;&#x7684;&#x63D0;&#x4F9B;&#x9875;&#x9762;&#x52A0;&#x89E3;&#x5BC6;&#x5DE5;&#x5177;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/26/hbase-&#x6570;&#x636E;&#x5BFC;&#x5165;&#x95EE;&#x9898;&#x603B;&#x7ED3;/">hbase &#x6570;&#x636E;&#x5BFC;&#x5165;&#x95EE;&#x9898;&#x603B;&#x7ED3;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/22/yarn-&#x8BE6;&#x89E3;/">yarn &#x8BE6;&#x89E3;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/21/selenium-&#x722C;&#x53D6;&#x6DD8;&#x5B9D;&#x5546;&#x54C1;&#x660E;&#x7EC6;&#x6570;&#x636E;/">selenium &#x722C;&#x53D6;&#x6DD8;&#x5B9D;&#x5546;&#x54C1;&#x660E;&#x7EC6;&#x6570;&#x636E;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/19/hive-NullPointerExcption&#x89E3;&#x51B3;/">hive NullPointerExcption&#x89E3;&#x51B3;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/07/spark&#x4E2D;RDD&#x3001;DataFrame&#x548C;DataSet/">spark&#x4E2D;RDD&#x3001;DataFrame&#x548C;DataSet</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/06/&#x53E6;&#x7C7B;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;HashMap/">&#x53E6;&#x7C7B;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;HashMap</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/22/hadoop-mapredcue&#x548C;streaming-hive-&#x4E09;&#x79CD;&#x601D;&#x8DEF;&#x5B9E;&#x73B0;not-in-join/">hadoop mapredcue&#x548C;streaming hive &#x4E09;&#x79CD;&#x601D;&#x8DEF;&#x5B9E;&#x73B0;not in join</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/17/spark-&#x672C;&#x5730;&#x6A21;&#x5F0F;&#x5904;&#x7406;&#x6587;&#x4EF6;&#x65F6;&#x62A5;&#x9519;/">spark &#x672C;&#x5730;&#x6A21;&#x5F0F;&#x5904;&#x7406;&#x6587;&#x4EF6;&#x65F6;&#x62A5;&#x9519;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/hadoop-&#x4E8C;&#x6B21;&#x6392;&#x5E8F;join&#x7684;&#x5B9E;&#x73B0;/">hadoop  streaming &#x4E8C;&#x6B21;&#x6392;&#x5E8F;join&#x7684;&#x5B9E;&#x73B0;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-&#x89E3;&#x51B3;&#x529E;&#x6CD5;/">spring jpa no property column found for type &#x89E3;&#x51B3;&#x529E;&#x6CD5;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/scrapy-&#x5165;&#x95E8;/">scrapy &#x5165;&#x95E8;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/hadoop-&#x5EFA;&#x7ACB;&#x591A;&#x7EA7;&#x76EE;&#x5F55;-&#x62A5;&#x9519;&#x8BEF;-No-such-file-or-directory/">hadoop &#x5EFA;&#x7ACB;&#x591A;&#x7EA7;&#x76EE;&#x5F55;&#x3000;&#x62A5;&#x9519;&#x8BEF;&#x3000;&#x3000;No such file or directory</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/ubantu-&#x4E0B;chrome-&#x5D29;&#x6E83;&#x7684;&#x89E3;&#x51B3;&#x529E;&#x6CD5;/">ubantu &#x4E0B;chrome &#x5D29;&#x6E83;&#x7684;&#x89E3;&#x51B3;&#x529E;&#x6CD5;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/python-&#x600E;&#x4E48;&#x968F;&#x673A;&#x751F;&#x6210;15&#x4F4D;&#x968F;&#x673A;&#x6570;&#x5B57;/">python &#x600E;&#x4E48;&#x968F;&#x673A;&#x751F;&#x6210;15&#x4F4D;&#x968F;&#x673A;&#x6570;&#x5B57;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/aws-s3-&#x9012;&#x5F52;&#x4E0A;&#x4F20;&#x548C;&#x4E0B;&#x8F7D;/">aws s3 &#x3000;&#x9012;&#x5F52;&#x4E0A;&#x4F20;&#x548C;&#x4E0B;&#x8F7D; </a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/18/cat-&#x548C;-xargs-cat&#x7684;&#x533A;&#x522B;/">cat &#x548C;&#x3000;xargs cat&#x7684;&#x533A;&#x522B;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/16/&#x6570;&#x636E;&#x96C6;join&#x6742;&#x8C08;/">&#x6570;&#x636E;&#x96C6;join&#x6742;&#x8C08;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/13/mongo-&#x4E2D;count&#x7684;&#x6B63;&#x786E;&#x7528;&#x6CD5;/">mongo &#x4E2D;count&#x7684;&#x6B63;&#x786E;&#x7528;&#x6CD5;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/12/python-&#x64CD;&#x4F5C;mongo&#x5B9E;&#x73B0;&#x67E5;&#x8BE2;&#x548C;&#x805A;&#x5408;/">python &#x64CD;&#x4F5C;mongo&#x5B9E;&#x73B0;&#x67E5;&#x8BE2;&#x548C;&#x805A;&#x5408;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/10/python-&#x5B9E;&#x73B0;&#x805A;&#x5408;&#xFF08;&#x5355;&#x673A;&#x7248;&#x548C;mapreduce&#x7248;&#x672C;&#xFF09;/">python- &#x5B9E;&#x73B0;&#x805A;&#x5408;&#xFF08;&#x5355;&#x673A;&#x7248;&#x548C;mapreduce&#x7248;&#x672C;&#xFF09;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/09/mongo-&#x4E2D;&#x5B9E;&#x73B0;&#x5E26;where&#x7684;group-by/">mongo &#x4E2D;&#x5B9E;&#x73B0;&#x5E26;where&#x7684;group by</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/29/ssh-&#x514D;&#x767B;&#x9646;&#x8BBE;&#x7F6E;/">ssh &#x514D;&#x767B;&#x9646;&#x8BBE;&#x7F6E;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/spark-lzo-&#x4F53;&#x9A8C;/">spark lzo &#x4F53;&#x9A8C;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/sublime-&#x7ED9;&#x6587;&#x672C;&#x6392;&#x5E8F;/">sublime &#x7ED9;&#x6587;&#x672C;&#x6392;&#x5E8F;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/shell-&#x83B7;&#x53D6;&#x4E0A;&#x4E2A;&#x6708;&#x6216;&#x8005;&#x4E0A;&#x4E00;&#x5E74;/">shell &#x83B7;&#x53D6;&#x4E0A;&#x4E2A;&#x6708;&#x6216;&#x8005;&#x4E0A;&#x4E00;&#x5E74;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/spark-scala&#x4E2D;map&#x548C;flatmap&#x7684;&#x533A;&#x522B;/">spark scala&#x4E2D;map&#x548C;flatmap&#x7684;&#x533A;&#x522B;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/awk-&#x6309;&#x7167;&#x67D0;&#x4E2A;key&#x5206;&#x53D1;&#x6587;&#x4EF6;&#x7684;&#x5999;&#x7528;/">awk &#x6309;&#x7167;&#x67D0;&#x4E2A;key&#x5206;&#x53D1;&#x6587;&#x4EF6;&#x7684;&#x5999;&#x7528;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/&#x5982;&#x4F55;&#x5728;ubantu&#x4E2D;&#x8BBE;&#x7F6E;&#x4EFB;&#x52A1;&#x680F;&#x548C;&#x83DC;&#x5355;&#x4E2D;&#x7684;&#x5FEB;&#x901F;&#x542F;&#x52A8;&#x548C;&#x641C;&#x7D22;/">&#x5982;&#x4F55;&#x5728;ubantu&#x4E2D;&#x8BBE;&#x7F6E;&#x4EFB;&#x52A1;&#x680F;&#x548C;&#x83DC;&#x5355;&#x4E2D;&#x7684;&#x5FEB;&#x901F;&#x542F;&#x52A8;&#x548C;&#x641C;&#x7D22;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/spark-&#x9879;&#x76EE;&#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#x62A5;&#x51FA;&#x5982;&#x4E0B;&#x9519;&#x8BEF;/">spark &#x9879;&#x76EE;&#x542F;&#x52A8;&#x7684;&#x65F6;&#x5019;&#x62A5;&#x51FA;&#x5982;&#x4E0B;&#x9519;&#x8BEF;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/ubantu16-04&#x600E;&#x4E48;&#x5F7B;&#x5E95;&#x79FB;&#x9664;mysql/">ubantu16.04&#x600E;&#x4E48;&#x5F7B;&#x5E95;&#x79FB;&#x9664;mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/git-commit-&#x600E;&#x4E48;&#x64A4;&#x9500;/">git commit &#x600E;&#x4E48;&#x64A4;&#x9500;</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/apache-http-ssl&#x6A21;&#x5757;NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/">apache http ssl&#x6A21;&#x5757;NoClassDefFoundError: org/apache/http/ssl/TrustStrategy</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/shell&#x5728;&#x6307;&#x5B9A;&#x884C;&#x63D2;&#x5165;&#x6587;&#x672C;/">shell&#x5728;&#x6307;&#x5B9A;&#x884C;&#x63D2;&#x5165;&#x6587;&#x672C;</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/11/如何在hadoop-streaming-mapreduce中-使用python第三方包/">如何在hadoop streaming mapreduce中 使用python第三方包</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/08/shell-遍历多级目录取文件的第一行/">shell 遍历多级目录取文件的第一行</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/04/mysql-和mongo-导入数据总结/">mysql 和mongo 导入数据总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/30/清洗流水之去除字段中多余的分隔符/">清洗流水之去除字段中多余的分隔符</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/">巧用hbase shell 批量提取数据</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/23/ Hadoop HDFS 数据自动平衡/">Hadoop HDFS 数据自动平衡</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/23/hexo yilia github 搭建个人博客/">hexo yilla 和github 结合搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/23/mapredcue 温习/">mapreduce 温故</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/14/nohup-使用解释/">nohup & > 使用解释</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/13/maven,gradle-问题解决总结/">maven,gradle 问题解决总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/13/idea-导入gradle项目报错/">idea 导入gradle项目报错</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/07/解决ubantu-谷歌浏览器打不开问题/">解决ubantu 谷歌浏览器打不开问题</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/">shell 合并hdfs文件 分发 并加文件校验和</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/05/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/">hive trim() 去除空格遇到的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/30/python-拾遗/">python 拾遗</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/25/spark-ListBuffer遍历/">spark ListBuffer遍历</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/">hadoop streaming 使用中遇到的问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/">给hive mapreduce分配队列和优先级</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/09/矩阵变形记/">矩阵变形记</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/02/crontab-使用规范/">crontab 使用规范</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/28/spring-boot-和layui-集合实现简单的提供页面加解密工具/">spring boot 和layui 集合实现简单的提供页面加解密工具</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/26/hbase-数据导入问题总结/">hbase 数据导入问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/22/yarn-详解/">yarn 详解</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/21/selenium-爬取淘宝商品明细数据/">selenium 爬取淘宝商品明细数据</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/19/hive-NullPointerExcption解决/">hive NullPointerExcption解决</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/07/spark中RDD、DataFrame和DataSet/">spark中RDD、DataFrame和DataSet</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/06/另类的数据结构HashMap/">另类的数据结构HashMap</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/22/hadoop-mapredcue和streaming-hive-三种思路实现not-in-join/">hadoop mapredcue和streaming hive 三种思路实现not in join</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/17/spark-本地模式处理文件时报错/">spark 本地模式处理文件时报错</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/hadoop-二次排序join的实现/">hadoop  streaming 二次排序join的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-解决办法/">spring jpa no property column found for type 解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/scrapy-入门/">scrapy 入门</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/hadoop-建立多级目录-报错误-No-such-file-or-directory/">hadoop 建立多级目录　报错误　　No such file or directory</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/ubantu-下chrome-崩溃的解决办法/">ubantu 下chrome 崩溃的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/python-怎么随机生成15位随机数字/">python 怎么随机生成15位随机数字</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/aws-s3-递归上传和下载/">aws s3 　递归上传和下载 </a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/18/cat-和-xargs-cat的区别/">cat 和　xargs cat的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/16/数据集join杂谈/">数据集join杂谈</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/13/mongo-中count的正确用法/">mongo 中count的正确用法</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/12/python-操作mongo实现查询和聚合/">python 操作mongo实现查询和聚合</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/10/python-实现聚合（单机版和mapreduce版本）/">python- 实现聚合（单机版和mapreduce版本）</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/09/mongo-中实现带where的group-by/">mongo 中实现带where的group by</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/29/ssh-免登陆设置/">ssh 免登陆设置</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/spark-lzo-体验/">spark lzo 体验</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/sublime-给文本排序/">sublime 给文本排序</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/shell-获取上个月或者上一年/">shell 获取上个月或者上一年</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/spark-scala中map和flatmap的区别/">spark scala中map和flatmap的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/awk-按照某个key分发文件的妙用/">awk 按照某个key分发文件的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/">如何在ubantu中设置任务栏和菜单中的快速启动和搜索</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/spark-项目启动的时候报出如下错误/">spark 项目启动的时候报出如下错误</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/ubantu16-04怎么彻底移除mysql/">ubantu16.04怎么彻底移除mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/git-commit-怎么撤销/">git commit 怎么撤销</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/apache-http-ssl模块NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/">apache http ssl模块NoClassDefFoundError: org/apache/http/ssl/TrustStrategy</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/shell在指定行插入文本/">shell在指定行插入文本</a></li></ul>
 
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+
 
 
     <script>
         
     </script>
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script><script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script></div>
+</div>
       <footer id="footer">
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2016-2018 &#x5510;&#x94B0;&#x900D;&#x9065;
+                2016-2018 唐钰逍遥
             </div>
             <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="&#x5FEB;&#x901F;&#x3001;&#x7B80;&#x6D01;&#x4E14;&#x9AD8;&#x6548;&#x7684;&#x535A;&#x5BA2;&#x6846;&#x67B6;">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="&#x7B80;&#x800C;&#x4E0D;&#x51CF; Hexo &#x53CC;&#x680F;&#x535A;&#x5BA2;&#x4E3B;&#x9898;  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
             </div>
         </div>
         
             <div class="visit">
                 
-                    <span id="busuanzi_container_site_pv" style="display:none">
-                        <span id="site-visit" title="&#x672C;&#x7AD9;&#x5230;&#x8BBF;&#x6570;"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
                         </span>
                     </span>
                 
@@ -449,26 +462,28 @@
                     <span>| </span>
                 
                 
-                    <span id="busuanzi_container_page_pv" style="display:none">
-                        <span id="page-visit" title="&#x672C;&#x9875;&#x9605;&#x8BFB;&#x91CF;"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
                         </span>
                     </span>
                 
             </div>
         
     </div>
-</footer><script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+</footer>
     </div>
-    <script data-main="/ITWO/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+    
+<script data-main="/ITWO/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
 
 <div class="scroll" id="scroll">
-    <a href="#" title="&#x8FD4;&#x56DE;&#x9876;&#x90E8;"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="&#x67E5;&#x770B;&#x8BC4;&#x8BBA;"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="&#x8F6C;&#x5230;&#x5E95;&#x90E8;"><i class="fa fa-arrow-down"></i></a>
-</div><script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
 <script>
     // Open in New Window
     
@@ -489,8 +504,9 @@
             $(oOpenInNew[x]).attr("target", "_blank");
         }
     
-</script><script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
-<script>
+</script>
+
+    <script>
         var originTitle = document.title;
         var titleTime;
         document.addEventListener("visibilitychange", function() {
@@ -506,10 +522,9 @@
             }
         })
     </script>
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-</script><script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script>
+</script>
   </div>
-
-
-<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({});</script></body></html>
+</body>
+</html>
