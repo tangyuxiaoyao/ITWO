@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://tangyuxiaoyao.github.io/ITWO/"/>
-  <updated>2018-04-11T09:50:08.851Z</updated>
+  <updated>2018-04-16T02:43:46.578Z</updated>
   <id>https://tangyuxiaoyao.github.io/ITWO/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/04/11/%E5%A6%82%E4%BD%95%E5%9C%A8hadoop-streaming-mapreduce%E4%B8%AD-%E4%BD%BF%E7%94%A8python%E7%AC%AC%E4%B8%89%E6%96%B9%E5%8C%85/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/04/11/如何在hadoop-streaming-mapreduce中-使用python第三方包/</id>
     <published>2018-04-11T09:26:09.000Z</published>
-    <updated>2018-04-11T09:50:08.851Z</updated>
+    <updated>2018-04-16T02:43:46.578Z</updated>
     
     <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>当我们需要在大数据平台使用python第三方包的时候，第一印象是在集群的每台集群都安装该第三方Python包，但是这样需要集群重启，很明显此方案扑街。<br><a id="more"></a></p><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我们使用hadoop streaming提供你的压缩文件分发命令来使用我们的第三方Python包。</p></blockquote><h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><blockquote><p>我们先了解下该命令：</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-archivesOptionalSpecify comma-separated archives to be unarchived on the compute machines</div></pre></td></tr></table></figure><blockquote><p>字面意思是上传多个以逗号分割的压缩包到集群然后会分发解压到各个计算节点。</p></blockquote><h3 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h3><blockquote><p>打包集成python和第三方python包。</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 需要使用第三方库如bs4,numpy等时，需要用到虚拟环境virtualenv</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> virtualenv的使用</span></div><div class="line"><span class="meta">#</span><span class="bash"> 安装</span></div><div class="line"></div><div class="line">pip install virtualenv</div><div class="line"><span class="meta">#</span><span class="bash"> 新建虚拟环境</span></div><div class="line"></div><div class="line">virtualenv kxvp</div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> 使得虚拟环境的路径为相对路径</span></div><div class="line"></div><div class="line">virtualenv --relocatable kxvp</div><div class="line"><span class="meta">#</span><span class="bash"> 激活虚拟环境</span></div><div class="line"></div><div class="line">source kxvp/bin/activate</div><div class="line"><span class="meta">#</span><span class="bash"> 如果想退出，可以使用下面的命令</span></div><div class="line"></div><div class="line">deactivate</div><div class="line"><span class="meta">#</span><span class="bash"> 激活后直接安装各种需要的包</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> pip install XXX</span></div><div class="line"><span class="meta">#</span><span class="bash"> 压缩环境包</span></div><div class="line"></div><div class="line">tar -czf kxvp.tar.gz kxvp</div></pre></td></tr></table></figure><blockquote><p>上传到集群客户端</p></blockquote><h3 id="编写测试脚本"><a href="#编写测试脚本" class="headerlink" title="编写测试脚本"></a>编写测试脚本</h3><blockquote><p>test.sh</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></div><div class="line"></div><div class="line">hadoop fs -rmr $&#123;2&#125;</div><div class="line"></div><div class="line">hadoop jar /opt/cloudera/parcels/CDH-5.4.0-1.cdh5.4.0.p0.27/jars/hadoop-streaming-2.6.0-cdh5.4.0.jar \</div><div class="line">        -input $&#123;1&#125;\</div><div class="line">        -output $&#123;2&#125; \</div><div class="line">        -file map.py \</div><div class="line">        -mapper "kx/kxvp/bin/python map.py" \</div><div class="line">-cacheArchive '/user/upsmart/koulb/kxvp.tar.gz#kx'\</div><div class="line">        -jobconf mapred.reduce.tasks=0 \</div><div class="line">        -jobconf mapred.job.name="cache_archive_test"</div></pre></td></tr></table></figure><blockquote><p>map.py</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(separator = <span class="string">','</span>)</span>:</span></div><div class="line"><span class="keyword">print</span> np.__version__</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure><blockquote><p>tip:Python的执行路径注意要加上#后面的前缀</p></blockquote><h3 id="结果验证"><a href="#结果验证" class="headerlink" title="结果验证"></a>结果验证</h3><blockquote><p>看下集群客户端的numpy版本</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">upsmart@cluster-8:~/test_tmp$ python</div><div class="line">Python 2.7.6 (default, Oct 26 2016, 20:30:19) </div><div class="line">[GCC 4.8.4] on linux2</div><div class="line">Type "help", "copyright", "credits" or "license" for more information.</div><div class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; import numpy</span></div><div class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">print</span> numpy.__version__</span></div><div class="line">1.8.2</div></pre></td></tr></table></figure><blockquote><p>看下mapreduce输出的结果</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">upsmart@cluster-8:~/test_tmp$ hadoop fs -getmerge koulb/test/p* rs</div><div class="line">upsmart@cluster-8:~/test_tmp$ more rs</div><div class="line">1.14.2</div></pre></td></tr></table></figure><blockquote><p>不一样验证通过.</p></blockquote>]]></content>
     
@@ -33,7 +33,15 @@
     </summary>
     
     
-      <category term="hadoop,streaming,mapreduce,python,numpy" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hadoop-streaming-mapreduce-python-numpy/"/>
+      <category term="hadoop" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hadoop/"/>
+    
+      <category term="mapreduce" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mapreduce/"/>
+    
+      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
+    
+      <category term="streaming" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/streaming/"/>
+    
+      <category term="numpy" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/numpy/"/>
     
   </entry>
   
@@ -42,7 +50,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/04/08/shell-%E9%81%8D%E5%8E%86%E5%A4%9A%E7%BA%A7%E7%9B%AE%E5%BD%95%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E7%AC%AC%E4%B8%80%E8%A1%8C/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/04/08/shell-遍历多级目录取文件的第一行/</id>
     <published>2018-04-08T11:45:10.000Z</published>
-    <updated>2018-04-08T11:50:11.408Z</updated>
+    <updated>2018-04-16T02:44:03.373Z</updated>
     
     <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>数据取样，从当前目录下去遍历多级目录拿到每个文件的第一行数据输出到一个文件中。<br><a id="more"></a></p></blockquote><h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote><p>当听到该需求时，注意点有两点</p></blockquote><ol><li>多级目录</li><li>取文件的第一行</li></ol><blockquote><p>for循环去递归遍历</p></blockquote><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>viewFile.sh<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></div><div class="line">function getdir()&#123;</div><div class="line">    for element in `ls $1`</div><div class="line">    do  </div><div class="line">        dir_or_file=$1"/"$element</div><div class="line">        if [ -d $dir_or_file ]</div><div class="line">        then </div><div class="line">            getdir $dir_or_file</div><div class="line">        else</div><div class="line">           head -1 $dir_or_file</div><div class="line">        fi  </div><div class="line">    done</div><div class="line">&#125;</div><div class="line">root_dir="/home/test/multiFolder"</div><div class="line">getdir $root_dir</div></pre></td></tr></table></figure></p><p>代码如上请笑纳。</p></blockquote>]]></content>
     
@@ -54,7 +62,9 @@
     </summary>
     
     
-      <category term="shell,file" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell-file/"/>
+      <category term="shell" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell/"/>
+    
+      <category term="file" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/file/"/>
     
   </entry>
   
@@ -63,7 +73,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/04/04/mysql-%E5%92%8Cmongo-%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/04/04/mysql-和mongo-导入数据总结/</id>
     <published>2018-04-04T07:17:22.000Z</published>
-    <updated>2018-04-04T07:43:05.575Z</updated>
+    <updated>2018-04-16T02:43:57.221Z</updated>
     
     <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝迁移。<br><a id="more"></a></p><h2 id="实现分析"><a href="#实现分析" class="headerlink" title="实现分析"></a>实现分析</h2><p>因为系统落地之前都会放到队列里面等待消费，然后落库，所以新系统保证服务正常以后，域名解析到新环境，然后流程环节知道队列，等待老版环境队列消费完了而且ngnix中无用户请求记录进来（因为域名解析会有几分钟的时间），我们开始提取增量的数据，mysql记录的是表记录的最大id，mongo记录也是最大的集合objectId，然后批量导出。</p></blockquote><h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">导出</span></div><div class="line">mysql -uupsmart -p dbname -e 'select * from t where id&gt;max(id)' &gt;new_data.tsv</div><div class="line"><span class="meta">#</span><span class="bash">导入</span></div><div class="line">mysqlimport [options] db_name textfile1 ...</div></pre></td></tr></table></figure><blockquote><p>tip①:max(id)为dump之前记录的最大id。<br>tip②:mysqllimport导入的时候一定要指定-local，当然这部分属于options，或者写的是绝对路径否则会报错，默认找的是和mysqlimport命令同一路径下面的文件<br>tip③:dbname紧贴要导入的文件，而且textfile1的前缀名即为表名（.之前的那货）</p></blockquote><h3 id="mongo"><a href="#mongo" class="headerlink" title="mongo"></a>mongo</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">导出</span></div><div class="line">mongoexport -d dbanme -c collname --type=json -o new_data.csv --query='&#123;"_id":"&#123;"$gt":ObjectId("max(id)")&#125;"&#125;' </div><div class="line"><span class="meta">#</span><span class="bash">导入</span></div><div class="line">mongoimport  -d dbanme -c collname  --type=json --file new_data.csv</div></pre></td></tr></table></figure><blockquote><p>tip:本来打算是导出的时候指定csv格式然后导出，但是使用mongexport制定–type=csv的时候不能导出全部的字段，后来选择了默认的json格式导出。</p></blockquote>]]></content>
     
@@ -75,6 +85,10 @@
     </summary>
     
     
+      <category term="mysql" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mysql/"/>
+    
+      <category term="mongo" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mongo/"/>
+    
   </entry>
   
   <entry>
@@ -82,7 +96,7 @@
     <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/30/%E6%B8%85%E6%B4%97%E6%B5%81%E6%B0%B4%E4%B9%8B%E5%8E%BB%E9%99%A4%E5%AD%97%E6%AE%B5%E4%B8%AD%E5%A4%9A%E4%BD%99%E7%9A%84%E5%88%86%E9%9A%94%E7%AC%A6/"/>
     <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/30/清洗流水之去除字段中多余的分隔符/</id>
     <published>2018-03-30T06:48:57.000Z</published>
-    <updated>2018-03-30T07:10:42.149Z</updated>
+    <updated>2018-04-16T02:44:10.945Z</updated>
     
     <content type="html"><![CDATA[<h2 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h2><blockquote><p>正常的公司流水是47个字段，在做ETL的时候发现里面用分隔符去切割流水处理发现有超过47长度的，毋庸置疑肯定是其中有个别字段中含有分隔符，后来定位到是商户地址中含有分隔符而且不规则会出现多个，现在需要做的是将商户名称中的分隔符替换为空，然后重新拼装成我们需要的流水输出。<br><a id="more"></a></p><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><p>直接贴代码</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeDirtyData</span><span class="params">(sep=<span class="string">","</span>)</span>:</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">details = line.strip().split(sep,<span class="number">39</span>)</div><div class="line">bad_col = details[<span class="number">39</span>].split(sep)[:<span class="number">-7</span>]</div><div class="line"><span class="keyword">if</span>(len(bad_col)&gt;<span class="number">1</span>):</div><div class="line">fix_col = <span class="string">""</span>.join(bad_col)</div><div class="line"><span class="keyword">print</span> <span class="string">"%s,%s,%s"</span> % (sep.join(details[:<span class="number">39</span>]),fix_col,sep.join(details[<span class="number">39</span>].split(sep)[<span class="number">-7</span>:]))</div><div class="line"><span class="keyword">else</span>:</div><div class="line"><span class="keyword">print</span>  line.strip()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">removeDirtyData()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">main()</div></pre></td></tr></table></figure><h2 id="细节分析"><a href="#细节分析" class="headerlink" title="细节分析"></a>细节分析</h2><ol><li>先定位到需要的截取字段之前的位置切割，然后把后面的部分单独处理。</li><li>后面部分的数据使用[:-num]的方式，拿到脏数据中的异常字段数组</li><li>通过join的特性用空替换掉里面的分隔符</li><li>分三部分把清洗好的流水拼接起来。</li><li>当然正常的数据不用处理正常输出。</li></ol>]]></content>
     
@@ -94,7 +108,11 @@
     </summary>
     
     
-      <category term="python,split,join" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python-split-join/"/>
+      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
+    
+      <category term="split" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/split/"/>
+    
+      <category term="join" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/join/"/>
     
   </entry>
   
@@ -117,9 +135,9 @@
     
       <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
     
-      <category term="hbase" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hbase/"/>
-    
       <category term="shell" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell/"/>
+    
+      <category term="hbase" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hbase/"/>
     
   </entry>
   
