@@ -133,9 +133,9 @@
     </summary>
     
     
-      <category term="join" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/join/"/>
-    
       <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
+    
+      <category term="join" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/join/"/>
     
       <category term="split" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/split/"/>
     
@@ -327,13 +327,13 @@
     </summary>
     
     
-      <category term="shell" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell/"/>
-    
-      <category term="awk" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/awk/"/>
-    
       <category term="hadoop" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hadoop/"/>
     
       <category term="hdfs" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hdfs/"/>
+    
+      <category term="shell" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell/"/>
+    
+      <category term="awk" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/awk/"/>
     
       <category term="file" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/file/"/>
     

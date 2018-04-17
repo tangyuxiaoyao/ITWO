@@ -87,9 +87,9 @@
       
         <tags>
             
-            <tag> join </tag>
-            
             <tag> python </tag>
+            
+            <tag> join </tag>
             
             <tag> split </tag>
             
@@ -233,13 +233,13 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
-            <tag> awk </tag>
-            
             <tag> hadoop </tag>
             
             <tag> hdfs </tag>
+            
+            <tag> shell </tag>
+            
+            <tag> awk </tag>
             
             <tag> file </tag>
             
@@ -714,9 +714,9 @@
       
         <tags>
             
-            <tag> join </tag>
-            
             <tag> python </tag>
+            
+            <tag> join </tag>
             
             <tag> db </tag>
             
