@@ -5,9 +5,9 @@
   <subtitle>毋庸多言,只管前行.</subtitle>
   <link href="/ITWO/atom.xml" rel="self"/>
   
-  <link href="https://tangyuxiaoyao.github.io/ITWO/"/>
+  <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
   <updated>2018-04-16T03:17:28.083Z</updated>
-  <id>https://tangyuxiaoyao.github.io/ITWO/</id>
+  <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
     <name>唐钰逍遥</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>hexo yilla 和github 结合搭建个人博客</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/04/16/hexo%20yilia%20github%20%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/04/16/hexo yilia github 搭建个人博客/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/16/hexo%20yilia%20github%20%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/16/hexo yilia github 搭建个人博客/</id>
     <published>2018-04-16T03:17:28.107Z</published>
     <updated>2018-04-16T03:17:28.083Z</updated>
     
@@ -33,18 +33,18 @@
     </summary>
     
     
-      <category term="hexo" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hexo/"/>
+      <category term="hexo" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hexo/"/>
     
-      <category term="yilla" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/yilla/"/>
+      <category term="yilla" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/yilla/"/>
     
-      <category term="github" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/github/"/>
+      <category term="github" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/github/"/>
     
   </entry>
   
   <entry>
     <title>如何在hadoop streaming mapreduce中 使用python第三方包</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/04/11/%E5%A6%82%E4%BD%95%E5%9C%A8hadoop-streaming-mapreduce%E4%B8%AD-%E4%BD%BF%E7%94%A8python%E7%AC%AC%E4%B8%89%E6%96%B9%E5%8C%85/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/04/11/如何在hadoop-streaming-mapreduce中-使用python第三方包/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/11/%E5%A6%82%E4%BD%95%E5%9C%A8hadoop-streaming-mapreduce%E4%B8%AD-%E4%BD%BF%E7%94%A8python%E7%AC%AC%E4%B8%89%E6%96%B9%E5%8C%85/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/11/如何在hadoop-streaming-mapreduce中-使用python第三方包/</id>
     <published>2018-04-11T09:26:09.000Z</published>
     <updated>2018-04-16T02:43:46.578Z</updated>
     
@@ -58,22 +58,22 @@
     </summary>
     
     
-      <category term="hadoop" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hadoop/"/>
+      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
     
-      <category term="mapreduce" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mapreduce/"/>
+      <category term="streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/streaming/"/>
     
-      <category term="streaming" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/streaming/"/>
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
-      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
+      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
     
-      <category term="numpy" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/numpy/"/>
+      <category term="numpy" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/numpy/"/>
     
   </entry>
   
   <entry>
     <title>shell 遍历多级目录取文件的第一行</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/04/08/shell-%E9%81%8D%E5%8E%86%E5%A4%9A%E7%BA%A7%E7%9B%AE%E5%BD%95%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E7%AC%AC%E4%B8%80%E8%A1%8C/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/04/08/shell-遍历多级目录取文件的第一行/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/08/shell-%E9%81%8D%E5%8E%86%E5%A4%9A%E7%BA%A7%E7%9B%AE%E5%BD%95%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E7%AC%AC%E4%B8%80%E8%A1%8C/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/08/shell-遍历多级目录取文件的第一行/</id>
     <published>2018-04-08T11:45:10.000Z</published>
     <updated>2018-04-16T02:44:03.373Z</updated>
     
@@ -87,16 +87,16 @@
     </summary>
     
     
-      <category term="shell" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell/"/>
+      <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
     
-      <category term="file" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/file/"/>
+      <category term="file" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
     
   </entry>
   
   <entry>
     <title>mysql 和mongo 导入数据总结</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/04/04/mysql-%E5%92%8Cmongo-%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/04/04/mysql-和mongo-导入数据总结/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/04/mysql-%E5%92%8Cmongo-%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/04/mysql-和mongo-导入数据总结/</id>
     <published>2018-04-04T07:17:22.000Z</published>
     <updated>2018-04-16T02:43:57.221Z</updated>
     
@@ -110,16 +110,16 @@
     </summary>
     
     
-      <category term="mongo" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mongo/"/>
+      <category term="mongo" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mongo/"/>
     
-      <category term="mysql" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mysql/"/>
+      <category term="mysql" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mysql/"/>
     
   </entry>
   
   <entry>
     <title>清洗流水之去除字段中多余的分隔符</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/30/%E6%B8%85%E6%B4%97%E6%B5%81%E6%B0%B4%E4%B9%8B%E5%8E%BB%E9%99%A4%E5%AD%97%E6%AE%B5%E4%B8%AD%E5%A4%9A%E4%BD%99%E7%9A%84%E5%88%86%E9%9A%94%E7%AC%A6/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/30/清洗流水之去除字段中多余的分隔符/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/30/%E6%B8%85%E6%B4%97%E6%B5%81%E6%B0%B4%E4%B9%8B%E5%8E%BB%E9%99%A4%E5%AD%97%E6%AE%B5%E4%B8%AD%E5%A4%9A%E4%BD%99%E7%9A%84%E5%88%86%E9%9A%94%E7%AC%A6/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/30/清洗流水之去除字段中多余的分隔符/</id>
     <published>2018-03-30T06:48:57.000Z</published>
     <updated>2018-04-16T02:44:10.945Z</updated>
     
@@ -133,18 +133,18 @@
     </summary>
     
     
-      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
-      <category term="join" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/join/"/>
+      <category term="join" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/join/"/>
     
-      <category term="split" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/split/"/>
+      <category term="split" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/split/"/>
     
   </entry>
   
   <entry>
     <title>巧用hbase shell 批量提取数据</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/28/%E5%B7%A7%E7%94%A8hbase-shell-%E6%89%B9%E9%87%8F%E6%8F%90%E5%8F%96%E6%95%B0%E6%8D%AE/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/28/%E5%B7%A7%E7%94%A8hbase-shell-%E6%89%B9%E9%87%8F%E6%8F%90%E5%8F%96%E6%95%B0%E6%8D%AE/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/</id>
     <published>2018-03-28T06:47:09.000Z</published>
     <updated>2018-03-28T07:44:56.571Z</updated>
     
@@ -158,18 +158,18 @@
     </summary>
     
     
-      <category term="shell" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell/"/>
+      <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
     
-      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
-      <category term="hbase" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hbase/"/>
+      <category term="hbase" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hbase/"/>
     
   </entry>
   
   <entry>
     <title>Hadoop HDFS 数据自动平衡</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/23/%20Hadoop%20HDFS%20%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E5%B9%B3%E8%A1%A1/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/23/ Hadoop HDFS 数据自动平衡/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/23/%20Hadoop%20HDFS%20%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E5%B9%B3%E8%A1%A1/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/23/ Hadoop HDFS 数据自动平衡/</id>
     <published>2018-03-23T08:45:34.330Z</published>
     <updated>2018-03-23T08:45:34.330Z</updated>
     
@@ -183,18 +183,18 @@
     </summary>
     
     
-      <category term="hadoop" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hadoop/"/>
+      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
     
-      <category term="hdfs" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hdfs/"/>
+      <category term="hdfs" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hdfs/"/>
     
-      <category term="balancer" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/balancer/"/>
+      <category term="balancer" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/balancer/"/>
     
   </entry>
   
   <entry>
     <title>mapreduce 温故</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/23/mapredcue%20%E6%B8%A9%E4%B9%A0/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/23/mapredcue 温习/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/23/mapredcue%20%E6%B8%A9%E4%B9%A0/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/23/mapredcue 温习/</id>
     <published>2018-03-23T03:09:47.374Z</published>
     <updated>2018-03-23T03:09:47.374Z</updated>
     
@@ -208,16 +208,16 @@
     </summary>
     
     
-      <category term="mapreduce" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mapreduce/"/>
+      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
     
-      <category term="shuffer" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shuffer/"/>
+      <category term="shuffer" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shuffer/"/>
     
   </entry>
   
   <entry>
     <title>nohup &amp; &gt; 使用解释</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/14/nohup-%E4%BD%BF%E7%94%A8%E8%A7%A3%E9%87%8A/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/14/nohup-使用解释/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/14/nohup-%E4%BD%BF%E7%94%A8%E8%A7%A3%E9%87%8A/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/14/nohup-使用解释/</id>
     <published>2018-03-14T01:54:12.000Z</published>
     <updated>2018-04-16T03:19:39.333Z</updated>
     
@@ -231,14 +231,14 @@
     </summary>
     
     
-      <category term="nohup" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/nohup/"/>
+      <category term="nohup" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/nohup/"/>
     
   </entry>
   
   <entry>
     <title>maven,gradle 问题解决总结</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/13/maven,gradle-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%80%BB%E7%BB%93/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/13/maven,gradle-问题解决总结/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/13/maven,gradle-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%80%BB%E7%BB%93/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/13/maven,gradle-问题解决总结/</id>
     <published>2018-03-13T01:47:51.000Z</published>
     <updated>2018-03-23T03:09:39.999Z</updated>
     
@@ -251,16 +251,16 @@
     </summary>
     
     
-      <category term="gradle" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/gradle/"/>
+      <category term="gradle" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/gradle/"/>
     
-      <category term="maven" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/maven/"/>
+      <category term="maven" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/maven/"/>
     
   </entry>
   
   <entry>
     <title>idea 导入gradle项目报错</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/13/idea-%E5%AF%BC%E5%85%A5gradle%E9%A1%B9%E7%9B%AE%E6%8A%A5%E9%94%99/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/13/idea-导入gradle项目报错/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/13/idea-%E5%AF%BC%E5%85%A5gradle%E9%A1%B9%E7%9B%AE%E6%8A%A5%E9%94%99/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/13/idea-导入gradle项目报错/</id>
     <published>2018-03-13T01:17:08.000Z</published>
     <updated>2018-04-16T03:18:58.315Z</updated>
     
@@ -274,18 +274,18 @@
     </summary>
     
     
-      <category term="idea" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/idea/"/>
+      <category term="idea" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/idea/"/>
     
-      <category term="gradle" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/gradle/"/>
+      <category term="gradle" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/gradle/"/>
     
-      <category term="android" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/android/"/>
+      <category term="android" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/android/"/>
     
   </entry>
   
   <entry>
     <title>解决ubantu 谷歌浏览器打不开问题</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/07/%E8%A7%A3%E5%86%B3ubantu-%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%93%E4%B8%8D%E5%BC%80%E9%97%AE%E9%A2%98/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/07/解决ubantu-谷歌浏览器打不开问题/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/07/%E8%A7%A3%E5%86%B3ubantu-%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%93%E4%B8%8D%E5%BC%80%E9%97%AE%E9%A2%98/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/07/解决ubantu-谷歌浏览器打不开问题/</id>
     <published>2018-03-07T06:19:10.000Z</published>
     <updated>2018-04-16T03:26:57.819Z</updated>
     
@@ -300,20 +300,20 @@
     </summary>
     
     
-      <category term="ubantu" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/ubantu/"/>
+      <category term="ubantu" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/ubantu/"/>
     
-      <category term="chrome" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/chrome/"/>
+      <category term="chrome" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/chrome/"/>
     
-      <category term="chromium" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/chromium/"/>
+      <category term="chromium" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/chromium/"/>
     
-      <category term="打不开" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/%E6%89%93%E4%B8%8D%E5%BC%80/"/>
+      <category term="打不开" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/%E6%89%93%E4%B8%8D%E5%BC%80/"/>
     
   </entry>
   
   <entry>
     <title>shell 合并hdfs文件 分发 并加文件校验和</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/03/06/shell-%E5%90%88%E5%B9%B6hdfs%E6%96%87%E4%BB%B6-%E5%88%86%E5%8F%91-%E5%B9%B6%E5%8A%A0%E6%96%87%E4%BB%B6%E6%A0%A1%E9%AA%8C%E5%92%8C/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/06/shell-%E5%90%88%E5%B9%B6hdfs%E6%96%87%E4%BB%B6-%E5%88%86%E5%8F%91-%E5%B9%B6%E5%8A%A0%E6%96%87%E4%BB%B6%E6%A0%A1%E9%AA%8C%E5%92%8C/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/</id>
     <published>2018-03-06T02:40:13.000Z</published>
     <updated>2018-04-16T03:21:29.832Z</updated>
     
@@ -327,28 +327,28 @@
     </summary>
     
     
-      <category term="hadoop" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hadoop/"/>
+      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
     
-      <category term="hdfs" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hdfs/"/>
+      <category term="hdfs" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hdfs/"/>
     
-      <category term="shell" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/shell/"/>
+      <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
     
-      <category term="awk" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/awk/"/>
+      <category term="awk" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/awk/"/>
     
-      <category term="file" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/file/"/>
+      <category term="file" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
     
-      <category term="spark" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/spark/"/>
+      <category term="spark" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/spark/"/>
     
-      <category term="scala" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/scala/"/>
+      <category term="scala" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/scala/"/>
     
-      <category term="suffix" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/suffix/"/>
+      <category term="suffix" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/suffix/"/>
     
   </entry>
   
   <entry>
     <title>hive trim() 去除空格遇到的问题</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/02/28/hive-trim-%E5%8E%BB%E9%99%A4%E7%A9%BA%E6%A0%BC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-%E5%8E%BB%E9%99%A4%E7%A9%BA%E6%A0%BC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/</id>
     <published>2018-02-28T05:49:22.000Z</published>
     <updated>2018-04-16T03:18:43.224Z</updated>
     
@@ -363,24 +363,24 @@
     </summary>
     
     
-      <category term="hive" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hive/"/>
+      <category term="hive" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hive/"/>
     
-      <category term="trim" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/trim/"/>
+      <category term="trim" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/trim/"/>
     
-      <category term="空格" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/%E7%A9%BA%E6%A0%BC/"/>
+      <category term="空格" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/%E7%A9%BA%E6%A0%BC/"/>
     
-      <category term="tab" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/tab/"/>
+      <category term="tab" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/tab/"/>
     
-      <category term="制表符" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/%E5%88%B6%E8%A1%A8%E7%AC%A6/"/>
+      <category term="制表符" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/%E5%88%B6%E8%A1%A8%E7%AC%A6/"/>
     
-      <category term="regex_replace" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/regex-replace/"/>
+      <category term="regex_replace" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/regex-replace/"/>
     
   </entry>
   
   <entry>
     <title>python 拾遗</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/01/30/python-%E6%8B%BE%E9%81%97/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/01/30/python-拾遗/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/01/30/python-%E6%8B%BE%E9%81%97/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/01/30/python-拾遗/</id>
     <published>2018-01-30T12:09:42.000Z</published>
     <updated>2018-03-23T03:13:45.990Z</updated>
     
@@ -394,14 +394,14 @@
     </summary>
     
     
-      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
   </entry>
   
   <entry>
     <title>spark ListBuffer遍历</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/01/25/spark-ListBuffer%E9%81%8D%E5%8E%86/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/01/25/spark-ListBuffer遍历/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/01/25/spark-ListBuffer%E9%81%8D%E5%8E%86/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/01/25/spark-ListBuffer遍历/</id>
     <published>2018-01-25T12:49:50.000Z</published>
     <updated>2018-03-23T03:13:28.194Z</updated>
     
@@ -421,8 +421,8 @@
   
   <entry>
     <title>hadoop streaming 使用中遇到的问题总结</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/01/11/hadoop-streaming-%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/01/11/hadoop-streaming-%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/</id>
     <published>2018-01-11T01:45:13.000Z</published>
     <updated>2018-04-16T03:16:11.162Z</updated>
     
@@ -436,18 +436,18 @@
     </summary>
     
     
-      <category term="hadoop" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hadoop/"/>
+      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
     
-      <category term="streaming" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/streaming/"/>
+      <category term="streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/streaming/"/>
     
-      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
   </entry>
   
   <entry>
     <title>给hive mapreduce分配队列和优先级</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/01/10/%E7%BB%99hive-mapreduce%E5%88%86%E9%85%8D%E9%98%9F%E5%88%97%E5%92%8C%E4%BC%98%E5%85%88%E7%BA%A7/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/01/10/%E7%BB%99hive-mapreduce%E5%88%86%E9%85%8D%E9%98%9F%E5%88%97%E5%92%8C%E4%BC%98%E5%85%88%E7%BA%A7/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/</id>
     <published>2018-01-10T08:46:12.000Z</published>
     <updated>2018-04-16T03:26:25.308Z</updated>
     
@@ -461,20 +461,20 @@
     </summary>
     
     
-      <category term="mapreduce" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/mapreduce/"/>
+      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
     
-      <category term="hive" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/hive/"/>
+      <category term="hive" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hive/"/>
     
-      <category term="queue" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/queue/"/>
+      <category term="queue" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/queue/"/>
     
-      <category term="priority" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/priority/"/>
+      <category term="priority" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/priority/"/>
     
   </entry>
   
   <entry>
     <title>矩阵变形记</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/01/09/%E7%9F%A9%E9%98%B5%E5%8F%98%E5%BD%A2%E8%AE%B0/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/01/09/矩阵变形记/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/01/09/%E7%9F%A9%E9%98%B5%E5%8F%98%E5%BD%A2%E8%AE%B0/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/01/09/矩阵变形记/</id>
     <published>2018-01-09T09:29:37.000Z</published>
     <updated>2018-04-16T03:26:08.800Z</updated>
     
@@ -488,18 +488,18 @@
     </summary>
     
     
-      <category term="python" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/python/"/>
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
-      <category term="numpy" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/numpy/"/>
+      <category term="numpy" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/numpy/"/>
     
-      <category term="矩阵" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/%E7%9F%A9%E9%98%B5/"/>
+      <category term="矩阵" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/%E7%9F%A9%E9%98%B5/"/>
     
   </entry>
   
   <entry>
     <title>crontab 使用规范</title>
-    <link href="https://tangyuxiaoyao.github.io/ITWO/2018/01/02/crontab-%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/"/>
-    <id>https://tangyuxiaoyao.github.io/ITWO/2018/01/02/crontab-使用规范/</id>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/01/02/crontab-%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/01/02/crontab-使用规范/</id>
     <published>2018-01-02T02:17:01.000Z</published>
     <updated>2018-04-16T03:15:22.017Z</updated>
     
@@ -513,9 +513,9 @@
     </summary>
     
     
-      <category term="crontab" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/crontab/"/>
+      <category term="crontab" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/crontab/"/>
     
-      <category term="log" scheme="https://tangyuxiaoyao.github.io/ITWO/tags/log/"/>
+      <category term="log" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/log/"/>
     
   </entry>
   

@@ -19,7 +19,7 @@
 <meta name="keywords" content="hive,trim,空格,tab,制表符,regex_replace">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hive trim() 去除空格遇到的问题">
-<meta property="og:url" content="https://tangyuxiaoyao.github.io/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/index.html">
+<meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/index.html">
 <meta property="og:site_name" content="ITWO">
 <meta property="og:description" content="需求背景 在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，">
 <meta property="og:locale" content="zh-Hans">
@@ -328,8 +328,8 @@
         <p><span>发布时间:</span>2018-02-28, 13:49:22</p>
         <p><span>最后更新:</span>2018-04-16, 11:18:43</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/" title="hive trim() 去除空格遇到的问题">https://tangyuxiaoyao.github.io/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://tangyuxiaoyao.github.io/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/" title="hive trim() 去除空格遇到的问题">https://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
