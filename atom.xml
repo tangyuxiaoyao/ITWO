@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-04-27T09:15:16.722Z</updated>
+  <updated>2018-04-27T10:30:15.111Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mapreduce 结果集中在多个reduce输出part中的一个</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/27/mapreduce-%E7%BB%93%E6%9E%9C%E9%9B%86%E4%B8%AD%E5%9C%A8%E5%A4%9A%E4%B8%AAreduce%E8%BE%93%E5%87%BA%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/27/mapreduce-结果集中在多个reduce输出中的一个/</id>
+    <published>2018-04-27T10:19:57.000Z</published>
+    <updated>2018-04-27T10:30:15.111Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>17G的输入数据经过map处理输出,map中只有打标记的处理,然后reduce只有cat操作,但是结果这些结果集中到一个part中</p></blockquote><h2 id="细节分析"><a href="#细节分析" class="headerlink" title="细节分析"></a>细节分析</h2><blockquote><p>先贴代码</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashPartitioner</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">Partitioner</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt; </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashPartitioner</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPartition</span><span class="params">(K key, V value, <span class="keyword">int</span> numReduceTasks)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> (key.hashCode() &amp; <span class="number">2147483647</span>) % numReduceTasks;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><blockquote><p>map.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> random</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">sep = <span class="string">"\t"</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">details = line.strip().split(sep)</div><div class="line">card = details[<span class="number">0</span>]</div><div class="line"><span class="keyword">print</span> card+sep+str(random.random())</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">main()</div></pre></td></tr></table></figure></p><p>start.sh</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/bin/bash</span></div><div class="line"></div><div class="line">hadoop fs -rmr $&#123;<span class="number">2</span>&#125;</div><div class="line">set -x</div><div class="line">hadoop jar /opt/cloudera/parcels/CDH<span class="number">-5.4</span><span class="number">.0</span><span class="number">-1.</span>cdh5<span class="number">.4</span><span class="number">.0</span>.p0<span class="number">.27</span>/jars/hadoop-streaming<span class="number">-2.6</span><span class="number">.0</span>-mr1-cdh5<span class="number">.4</span><span class="number">.0</span>.jar \</div><div class="line">        -input $&#123;<span class="number">1</span>&#125; \</div><div class="line">        -output $&#123;<span class="number">2</span>&#125; \</div><div class="line">        -file map.py \</div><div class="line">        -mapper <span class="string">"python map.py"</span> \</div><div class="line">        -reducer <span class="string">"cat"</span> \</div><div class="line">        -jobconf mapred.reduce.tasks=$&#123;<span class="number">3</span>&#125; \</div><div class="line">        -jobconf mapred.job.name=<span class="string">"reduce_test"</span></div></pre></td></tr></table></figure><blockquote><p>根据默认使用的HashPartitioner可以得出是不是key分布在同一个分区中取决于reduce个数和hashcode,所以我们需要做的就是实现一个程序计算得出这些key是不是会被放到同一个分区中.</p><p>getCode.py</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_n_bytes</span><span class="params">(n, b)</span>:</span></div><div class="line">    bits = b*<span class="number">8</span></div><div class="line">    <span class="keyword">return</span> (n + <span class="number">2</span>**(bits<span class="number">-1</span>)) % <span class="number">2</span>**bits - <span class="number">2</span>**(bits<span class="number">-1</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_4_bytes</span><span class="params">(n)</span>:</span></div><div class="line">    <span class="keyword">return</span> convert_n_bytes(n, <span class="number">4</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getHashCode</span><span class="params">(s)</span>:</span></div><div class="line">    h = <span class="number">0</span></div><div class="line">    n = len(s)</div><div class="line">    <span class="keyword">for</span> i, c <span class="keyword">in</span> enumerate(s):</div><div class="line">        h = h + ord(c)*<span class="number">31</span>**(n<span class="number">-1</span>-i)</div><div class="line">    <span class="keyword">return</span> convert_4_bytes(h)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">hashCode = getHashCode(line.strip())</div><div class="line"></div><div class="line"><span class="keyword">print</span>  (hashCode &amp; <span class="number">2147483647</span>) % reduceNum</div></pre></td></tr></table></figure><blockquote><p>经过以上的代码验证得出这些key确实是会被放到同一个partition中,后来了解到同事用的是上一个mapreduce计算逻辑的输出中的一个part作为输入,所以也就可以捋顺之前为什么会集中到reduce输出结果中的某一个part中而不分散的缘故.</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;17G的输入数据经过map处理输出,map中只有打标记的处理,然后reduce只有cat操作,但是
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>spring 优雅地关闭程序</title>
@@ -204,9 +226,9 @@
     </summary>
     
     
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
       <category term="join" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/join/"/>
+    
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
       <category term="split" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/split/"/>
     
@@ -487,33 +509,6 @@
       <category term="streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/streaming/"/>
     
       <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>给hive mapreduce分配队列和优先级</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/01/10/%E7%BB%99hive-mapreduce%E5%88%86%E9%85%8D%E9%98%9F%E5%88%97%E5%92%8C%E4%BC%98%E5%85%88%E7%BA%A7/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/</id>
-    <published>2018-01-10T08:46:12.000Z</published>
-    <updated>2018-04-16T03:26:25.308Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而当一个队列的资源有剩余时，可暂时将剩余资源共享给其他队列。<a id="more"></a></p></blockquote><h2 id="使用详解"><a href="#使用详解" class="headerlink" title="使用详解"></a>使用详解</h2><blockquote><p>hive –hiveconf mapreduce.job.queuename=root.fast –hiveconf mapreduce.job.name=’job name’ -f  etl.hql<br>hive<br>set mapreduce.job.queuename=root.fast;<br>set mapreduce.job.name=’job name’</p><p>yarn application  -movetoqueue  application_1478676388082_963529  -queue  root.etl #迁移任务到另一个队列</p></blockquote><p>ps:</p><blockquote><p>作业提交到的队列：mapreduce.job.queuename</p><p>作业优先级：mapreduce.job.priority，优先级默认有5个:LOW VERY_LOW NORMAL（默认） HIGH VERY_HIGH</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;需求背景&quot;&gt;&lt;a href=&quot;#需求背景&quot; class=&quot;headerlink&quot; title=&quot;需求背景&quot;&gt;&lt;/a&gt;需求背景&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而当一个队列的资源有剩余时，可暂时将剩余资源共享给其他队列。
-    
-    </summary>
-    
-    
-      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
-    
-      <category term="hive" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hive/"/>
-    
-      <category term="queue" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/queue/"/>
-    
-      <category term="priority" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/priority/"/>
     
   </entry>
   
