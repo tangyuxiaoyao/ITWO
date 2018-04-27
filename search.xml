@@ -3,6 +3,15 @@
   
     
     <entry>
+      <title>spring 优雅地关闭程序</title>
+      <link href="/ITWO/2018/04/27/spring-%E4%BC%98%E9%9B%85%E5%9C%B0%E5%85%B3%E9%97%AD%E7%A8%8B%E5%BA%8F/"/>
+      <url>/ITWO/2018/04/27/spring-%E4%BC%98%E9%9B%85%E5%9C%B0%E5%85%B3%E9%97%AD%E7%A8%8B%E5%BA%8F/</url>
+      <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><blockquote><p>如何优雅地退出spring容器环境?</p></blockquote><a id="more"></a><h2 id="细节描述"><a href="#细节描述" class="headerlink" title="细节描述"></a>细节描述</h2><h3 id="Spring关闭钩子"><a href="#Spring关闭钩子" class="headerlink" title="Spring关闭钩子"></a>Spring关闭钩子</h3><blockquote><p>Spring在AbstractApplicationContext里维护了一个shutdownHook属性，用来关闭Spring上下文。但这个钩子不是默认生效的，需要手动调用&gt;ApplicationContext.registerShutdownHook()来开启，在自行维护ApplicationContext（而不是托管给tomcat之类的容器时），注意尽量使用&gt;ApplicationContext.registerShutdownHook()或者手动调用ApplicationContext.close()来关闭Spring上下文，否则应用退出时可能会残留资源。</p></blockquote><h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><blockquote><p>Runtime.getRuntime().addShutdownHook的方法的意思就是在jvm中增加一个关闭的钩子，当jvm关闭的时候，会执行系统中已设置的所有通过addShutdownHook添加的钩子，当系统执行完这些钩子后，jvm才会关闭。</p></blockquote>]]></content>
+      
+      
+    </entry>
+    
+    <entry>
       <title>Hadoop HDFS 数据自动平衡</title>
       <link href="/ITWO/2018/04/27/%20Hadoop%20HDFS%20%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E5%B9%B3%E8%A1%A1/"/>
       <url>/ITWO/2018/04/27/%20Hadoop%20HDFS%20%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E5%B9%B3%E8%A1%A1/</url>
