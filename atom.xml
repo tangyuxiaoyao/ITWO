@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-04-16T03:17:28.083Z</updated>
+  <updated>2018-04-27T02:24:08.011Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python utc时间转换为本地时间</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/27/python-utc%E6%97%B6%E9%97%B4%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%9C%AC%E5%9C%B0%E6%97%B6%E9%97%B4/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/27/python-utc时间转换为本地时间/</id>
+    <published>2018-04-27T02:13:35.000Z</published>
+    <updated>2018-04-27T02:24:08.011Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>公司业务mongo库中,存了之前很多日志,但是日志中时间没有预处理,也就是说用的是默认的utc时间,我们现实中用到的东八区的时间,公司报表系统要用到这个业务字段,导出日志的时候用的是mongoexport,后续要对时间做处理,想到了用python脚本来二次处理.</p></blockquote><a id="more"></a><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>因为mongo导出的时间都是字符串,所以预先要考虑的是字符串格式的数据转换为时间格式的,然后对该时间加八小时格式化输出即可.</p></blockquote><h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节:"></a>技术细节:</h2><blockquote><p>先贴代码为敬:</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> dateutil <span class="keyword">import</span> parser</div><div class="line"><span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">details = line.strip().split(<span class="string">","</span>)</div><div class="line">time_string = details[<span class="number">0</span>]</div><div class="line">datetime_struct = parser.parse(time_string)</div><div class="line"><span class="comment"># print type(datetime_struct)</span></div><div class="line">o = datetime.timedelta(hours=<span class="number">8</span>)</div><div class="line">details[<span class="number">0</span>] = (datetime_struct+o).strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"\t"</span>.join(details)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">main()</div></pre></td></tr></table></figure><blockquote><p>字符串时间转为时间格式用到的是dateutil里面parser,是不是很像java里面的?这个模块不是Java自带,我们需要使用pip安装名称如下</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install python-dateutil</div></pre></td></tr></table></figure><blockquote><p>然后使用datetime中的timedelta函数格式化八小时增量模块然后与之前的格式化的时间做相加操作,得到最终要的东八区时间.</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;公司业务mongo库中,存了之前很多日志,但是日志中时间没有预处理,也就是说用的是默认的utc时间,我们现实中用到的东八区的时间,公司报表系统要用到这个业务字段,导出日志的时候用的是mongoexport,后续要对时间做处理,想到了用python脚本来二次处理.&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+    
+      <category term="utc" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/utc/"/>
+    
+      <category term="dateutil" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/dateutil/"/>
+    
+  </entry>
   
   <entry>
     <title>hexo yilla 和github 结合搭建个人博客</title>
@@ -121,9 +147,9 @@
     <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/30/%E6%B8%85%E6%B4%97%E6%B5%81%E6%B0%B4%E4%B9%8B%E5%8E%BB%E9%99%A4%E5%AD%97%E6%AE%B5%E4%B8%AD%E5%A4%9A%E4%BD%99%E7%9A%84%E5%88%86%E9%9A%94%E7%AC%A6/"/>
     <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/30/清洗流水之去除字段中多余的分隔符/</id>
     <published>2018-03-30T06:48:57.000Z</published>
-    <updated>2018-04-16T02:44:10.945Z</updated>
+    <updated>2018-04-24T08:05:46.797Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h2><blockquote><p>正常的公司流水是47个字段，在做ETL的时候发现里面用分隔符去切割流水处理发现有超过47长度的，毋庸置疑肯定是其中有个别字段中含有分隔符，后来定位到是商户地址中含有分隔符而且不规则会出现多个，现在需要做的是将商户名称中的分隔符替换为空，然后重新拼装成我们需要的流水输出。<br><a id="more"></a></p><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><p>直接贴代码</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeDirtyData</span><span class="params">(sep=<span class="string">","</span>)</span>:</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">details = line.strip().split(sep,<span class="number">39</span>)</div><div class="line">bad_col = details[<span class="number">39</span>].split(sep)[:<span class="number">-7</span>]</div><div class="line"><span class="keyword">if</span>(len(bad_col)&gt;<span class="number">1</span>):</div><div class="line">fix_col = <span class="string">""</span>.join(bad_col)</div><div class="line"><span class="keyword">print</span> <span class="string">"%s,%s,%s"</span> % (sep.join(details[:<span class="number">39</span>]),fix_col,sep.join(details[<span class="number">39</span>].split(sep)[<span class="number">-7</span>:]))</div><div class="line"><span class="keyword">else</span>:</div><div class="line"><span class="keyword">print</span>  line.strip()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">removeDirtyData()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">main()</div></pre></td></tr></table></figure><h2 id="细节分析"><a href="#细节分析" class="headerlink" title="细节分析"></a>细节分析</h2><ol><li>先定位到需要的截取字段之前的位置切割，然后把后面的部分单独处理。</li><li>后面部分的数据使用[:-num]的方式，拿到脏数据中的异常字段数组</li><li>通过join的特性用空替换掉里面的分隔符</li><li>分三部分把清洗好的流水拼接起来。</li><li>当然正常的数据不用处理正常输出。</li></ol>]]></content>
+    <content type="html"><![CDATA[<h2 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h2><blockquote><p>正常的公司流水是47个字段，在做ETL的时候发现里面用分隔符去切割流水处理发现有超过47长度的，毋庸置疑肯定是其中有个别字段中含有分隔符，后来定位到是商户地址中含有分隔符而且不规则会出现多个，现在需要做的是将商户名称中的分隔符替换为空，然后重新拼装成我们需要的流水输出。<br><a id="more"></a></p></blockquote><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>直接贴代码</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeDirtyData</span><span class="params">(sep=<span class="string">","</span>)</span>:</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">details = line.strip().split(sep,<span class="number">39</span>)</div><div class="line">bad_col = details[<span class="number">39</span>].split(sep)[:<span class="number">-7</span>]</div><div class="line"><span class="keyword">if</span>(len(bad_col)&gt;<span class="number">1</span>):</div><div class="line">fix_col = <span class="string">""</span>.join(bad_col)</div><div class="line"><span class="keyword">print</span> <span class="string">"%s,%s,%s"</span> % (sep.join(details[:<span class="number">39</span>]),fix_col,sep.join(details[<span class="number">39</span>].split(sep)[<span class="number">-7</span>:]))</div><div class="line"><span class="keyword">else</span>:</div><div class="line"><span class="keyword">print</span>  line.strip()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">removeDirtyData()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">main()</div></pre></td></tr></table></figure><h2 id="细节分析"><a href="#细节分析" class="headerlink" title="细节分析"></a>细节分析</h2><ol><li>先定位到需要的截取字段之前的位置切割，然后把后面的部分单独处理。</li><li>后面部分的数据使用[:-num]的方式，拿到脏数据中的异常字段数组</li><li>通过join的特性用空替换掉里面的分隔符</li><li>分三部分把清洗好的流水拼接起来。</li><li>当然正常的数据不用处理正常输出。</li></ol>]]></content>
     
     <summary type="html">
     
@@ -327,15 +353,15 @@
     </summary>
     
     
-      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
-    
-      <category term="hdfs" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hdfs/"/>
-    
       <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
     
       <category term="awk" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/awk/"/>
     
+      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
+    
       <category term="file" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
+    
+      <category term="hdfs" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hdfs/"/>
     
       <category term="spark" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/spark/"/>
     
@@ -493,29 +519,6 @@
       <category term="numpy" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/numpy/"/>
     
       <category term="矩阵" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/%E7%9F%A9%E9%98%B5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>crontab 使用规范</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/01/02/crontab-%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/01/02/crontab-使用规范/</id>
-    <published>2018-01-02T02:17:01.000Z</published>
-    <updated>2018-04-16T03:15:22.017Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>在使用crontab定制定时任务时,没有结果输出,想去查看下log.但是没有找到,通过一下途径来定位问题.<br><a id="more"></a></p><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析:"></a>问题分析:</h2><p>①该服务有没有开启?</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">查看该服务是否开启?</div><div class="line">sudo /etc/init.d/crond status </div><div class="line">如果没有开启,启动该服务.</div><div class="line">sudo /etc/init.d/crond start</div></pre></td></tr></table></figure><blockquote><p>②确认该任务开启以后,查看log定位问题,然后并没有看到log.</p></blockquote><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">修改rsyslog</div><div class="line">sudo vim /etc/rsyslog.d/50-default.conf</div><div class="line">cron.*              /var/log/cron.log #将cron前面的注释符去掉 </div><div class="line">重启rsyslog</div><div class="line">sudo  service rsyslog  restart</div><div class="line">查看crontab日志</div><div class="line">less  /var/log/cron.log</div></pre></td></tr></table></figure><h2 id="用法核心"><a href="#用法核心" class="headerlink" title="用法核心"></a>用法核心</h2><blockquote><p>语法规范:</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">m h  dom mon dow   command</div><div class="line">分 时 每月的第几日 每年的第几个月 每周的第几天 可执行任务</div></pre></td></tr></table></figure><blockquote><p>使用demo</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 每天的10:05输出<span class="string">"1232"</span>到<span class="built_in">log</span>中</span></div><div class="line">05 10 * * * echo '1232' &gt;&gt; /home/testuser/test.log 2&gt;&amp;1</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;在使用crontab定制定时任务时,没有结果输出,想去查看下log.但是没有找到,通过一下途径来定位问题.&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="crontab" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/crontab/"/>
-    
-      <category term="log" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/log/"/>
     
   </entry>
   
