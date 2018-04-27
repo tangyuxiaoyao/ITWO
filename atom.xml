@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-04-27T02:24:08.011Z</updated>
+  <updated>2018-04-27T05:53:42.269Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -17,13 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Hadoop HDFS 数据自动平衡</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/27/%20Hadoop%20HDFS%20%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E5%B9%B3%E8%A1%A1/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/27/ Hadoop HDFS 数据自动平衡/</id>
+    <published>2018-04-27T05:53:42.269Z</published>
+    <updated>2018-04-27T05:53:42.269Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Hadoop-HDFS-数据自动平衡脚本使用方法"><a href="#Hadoop-HDFS-数据自动平衡脚本使用方法" class="headerlink" title="Hadoop HDFS 数据自动平衡脚本使用方法"></a>Hadoop HDFS 数据自动平衡脚本使用方法</h2><blockquote><p>在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Hadoop_home/bin/start-balancer.sh –threshold`<br><a id="more"></a></p></blockquote><h2 id="影响Balancer的几个参数："><a href="#影响Balancer的几个参数：" class="headerlink" title="影响Balancer的几个参数："></a>影响Balancer的几个参数：</h2><p>-threshold</p><blockquote><p>默认设置：10，参数取值范围：0-100<br>参数含义：判断集群是否平衡的阈值。理论上，该参数设置的越小，整个集群就越平衡<br>dfs.balance.bandwidthPerSec<br>默认设置：1048576（1M/S）<br>参数含义：Balancer运行时允许占用的带宽<br>示例如下：</p></blockquote><p>#启动数据均衡，默认阈值为 10%<br>$Hadoop_home/bin/start-balancer.sh</p><p>#启动数据均衡，阈值 5%<br>bin/start-balancer.sh –threshold 5</p><p>#停止数据均衡<br>$Hadoop_home/bin/stop-balancer.sh<br>在hdfs-site.xml文件中可以设置数据均衡占用的网络带宽限制</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.balance.bandwidthPerSec<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1048576<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span> Specifies the maximum bandwidth that each datanode can utilize for the balancing purpose in term of the number of bytes per second. <span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Hadoop-HDFS-数据自动平衡脚本使用方法&quot;&gt;&lt;a href=&quot;#Hadoop-HDFS-数据自动平衡脚本使用方法&quot; class=&quot;headerlink&quot; title=&quot;Hadoop HDFS 数据自动平衡脚本使用方法&quot;&gt;&lt;/a&gt;Hadoop HDFS 数据自动平衡脚本使用方法&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Hadoop_home/bin/start-balancer.sh –threshold`&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
+    
+      <category term="hdfs" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hdfs/"/>
+    
+      <category term="balancer" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/balancer/"/>
+    
+  </entry>
+  
+  <entry>
     <title>python utc时间转换为本地时间</title>
     <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/27/python-utc%E6%97%B6%E9%97%B4%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%9C%AC%E5%9C%B0%E6%97%B6%E9%97%B4/"/>
     <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/27/python-utc时间转换为本地时间/</id>
     <published>2018-04-27T02:13:35.000Z</published>
-    <updated>2018-04-27T02:24:08.011Z</updated>
+    <updated>2018-04-27T08:38:17.157Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>公司业务mongo库中,存了之前很多日志,但是日志中时间没有预处理,也就是说用的是默认的utc时间,我们现实中用到的东八区的时间,公司报表系统要用到这个业务字段,导出日志的时候用的是mongoexport,后续要对时间做处理,想到了用python脚本来二次处理.</p></blockquote><a id="more"></a><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>因为mongo导出的时间都是字符串,所以预先要考虑的是字符串格式的数据转换为时间格式的,然后对该时间加八小时格式化输出即可.</p></blockquote><h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节:"></a>技术细节:</h2><blockquote><p>先贴代码为敬:</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> dateutil <span class="keyword">import</span> parser</div><div class="line"><span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">details = line.strip().split(<span class="string">","</span>)</div><div class="line">time_string = details[<span class="number">0</span>]</div><div class="line">datetime_struct = parser.parse(time_string)</div><div class="line"><span class="comment"># print type(datetime_struct)</span></div><div class="line">o = datetime.timedelta(hours=<span class="number">8</span>)</div><div class="line">details[<span class="number">0</span>] = (datetime_struct+o).strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"\t"</span>.join(details)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">main()</div></pre></td></tr></table></figure><blockquote><p>字符串时间转为时间格式用到的是dateutil里面parser,是不是很像java里面的?这个模块不是Java自带,我们需要使用pip安装名称如下</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install python-dateutil</div></pre></td></tr></table></figure><blockquote><p>然后使用datetime中的timedelta函数格式化八小时增量模块然后与之前的格式化的时间做相加操作,得到最终要的东八区时间.</p></blockquote>]]></content>
+    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>公司业务mongo库中,存了之前很多日志,但是日志中时间没有预处理,也就是说用的是默认的utc时间,我们现实中用到的东八区的时间,公司报表系统要用到这个业务字段,导出日志的时候用的是mongoexport,后续要对时间做处理,想到了用python脚本来二次处理.</p></blockquote><a id="more"></a><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>因为mongo导出的时间都是字符串,所以预先要考虑的是字符串格式的数据转换为时间格式的,然后对该时间加八小时格式化输出即可.</p></blockquote><h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节:"></a>技术细节:</h2><blockquote><p>先贴代码为敬:</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> dateutil <span class="keyword">import</span> parser</div><div class="line"><span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">details = line.strip().split(<span class="string">","</span>)</div><div class="line">time_string = details[<span class="number">0</span>]</div><div class="line">datetime_struct = parser.parse(time_string)</div><div class="line"><span class="comment"># print type(datetime_struct)</span></div><div class="line">o = datetime.timedelta(hours=<span class="number">8</span>)</div><div class="line">details[<span class="number">0</span>] = (datetime_struct+o).strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"\t"</span>.join(details)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">main()</div></pre></td></tr></table></figure><blockquote><p>字符串时间转为时间格式用到的是dateutil里面parser,是不是很像java里面的?这个模块不是Java自带,我们需要使用pip安装名称如下</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install python-dateutil</div></pre></td></tr></table></figure><blockquote><p>然后使用datetime中的timedelta函数格式化八小时增量模块然后与之前的格式化的时间做相加操作,得到最终要的东八区时间.</p></blockquote><h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><blockquote><p>如何打印出从某个日期往后顺延指定个数的日期,枚举出来.</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> datetime</div><div class="line">start = datetime.datetime(<span class="number">2017</span>,<span class="number">10</span>,<span class="number">15</span>)</div><div class="line">zone = datetime.timedelta(days=<span class="number">1</span>)</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">184</span>):</div><div class="line">    day = start + zone*i</div><div class="line">    <span class="keyword">print</span> datetime.datetime.strftime(day,<span class="string">"%Y-%m-%d"</span>)</div></pre></td></tr></table></figure><blockquote><p>思路:推算之前大概预估下你要统计多久的顺延的日子,然后使用timedelta以此累加,遍历打印就是最终想要的结果.</p><p>ps:以此类推:某个特定小时,某个特定的月份,往后顺延,大同小异.</p></blockquote>]]></content>
     
     <summary type="html">
     
@@ -193,31 +218,6 @@
   </entry>
   
   <entry>
-    <title>Hadoop HDFS 数据自动平衡</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/23/%20Hadoop%20HDFS%20%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E5%B9%B3%E8%A1%A1/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/23/ Hadoop HDFS 数据自动平衡/</id>
-    <published>2018-03-23T08:45:34.330Z</published>
-    <updated>2018-03-23T08:45:34.330Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Hadoop-HDFS-数据自动平衡脚本使用方法"><a href="#Hadoop-HDFS-数据自动平衡脚本使用方法" class="headerlink" title="Hadoop HDFS 数据自动平衡脚本使用方法"></a>Hadoop HDFS 数据自动平衡脚本使用方法</h2><blockquote><p>在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Hadoop_home/bin/start-balancer.sh –threshold`<br><a id="more"></a></p><h2 id="影响Balancer的几个参数："><a href="#影响Balancer的几个参数：" class="headerlink" title="影响Balancer的几个参数："></a>影响Balancer的几个参数：</h2></blockquote><p>-threshold</p><blockquote><p>默认设置：10，参数取值范围：0-100<br>参数含义：判断集群是否平衡的阈值。理论上，该参数设置的越小，整个集群就越平衡<br>dfs.balance.bandwidthPerSec<br>默认设置：1048576（1M/S）<br>参数含义：Balancer运行时允许占用的带宽<br>示例如下：</p></blockquote><p>#启动数据均衡，默认阈值为 10%<br>$Hadoop_home/bin/start-balancer.sh</p><p>#启动数据均衡，阈值 5%<br>bin/start-balancer.sh –threshold 5</p><p>#停止数据均衡<br>$Hadoop_home/bin/stop-balancer.sh<br>在hdfs-site.xml文件中可以设置数据均衡占用的网络带宽限制</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.balance.bandwidthPerSec<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1048576<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span> Specifies the maximum bandwidth that each datanode can utilize for the balancing purpose in term of the number of bytes per second. <span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Hadoop-HDFS-数据自动平衡脚本使用方法&quot;&gt;&lt;a href=&quot;#Hadoop-HDFS-数据自动平衡脚本使用方法&quot; class=&quot;headerlink&quot; title=&quot;Hadoop HDFS 数据自动平衡脚本使用方法&quot;&gt;&lt;/a&gt;Hadoop HDFS 数据自动平衡脚本使用方法&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Hadoop_home/bin/start-balancer.sh –threshold`&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
-    
-      <category term="hdfs" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hdfs/"/>
-    
-      <category term="balancer" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/balancer/"/>
-    
-  </entry>
-  
-  <entry>
     <title>mapreduce 温故</title>
     <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/23/mapredcue%20%E6%B8%A9%E4%B9%A0/"/>
     <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/23/mapredcue 温习/</id>
@@ -353,15 +353,15 @@
     </summary>
     
     
+      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
+    
+      <category term="hdfs" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hdfs/"/>
+    
       <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
     
       <category term="awk" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/awk/"/>
     
-      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
-    
       <category term="file" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
-    
-      <category term="hdfs" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hdfs/"/>
     
       <category term="spark" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/spark/"/>
     
