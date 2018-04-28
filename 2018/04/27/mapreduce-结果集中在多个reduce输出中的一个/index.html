@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="ITWO">
 <meta property="og:description" content="背景描述 17G的输入数据经过map处理输出,map中只有打标记的处理,然后reduce只有cat操作,但是结果这些结果集中到一个part中">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-28T00:52:08.491Z">
+<meta property="og:updated_time" content="2018-04-28T03:02:12.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mapreduce 结果集中在多个reduce输出part中的一个">
 <meta name="twitter:description" content="背景描述 17G的输入数据经过map处理输出,map中只有打标记的处理,然后reduce只有cat操作,但是结果这些结果集中到一个part中">
@@ -325,6 +325,9 @@
 <blockquote>
 <p>经过以上的代码验证得出这些key确实是会被放到同一个partition中,后来了解到同事用的是上一个mapreduce计算逻辑的输出中的一个part作为输入,所以也就可以捋顺之前为什么会集中到reduce输出结果中的某一个part中而不分散的缘故.</p>
 </blockquote>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><blockquote>
+<p>由此可见这样的方法,我们可以预估到这些key是不是交给同一个reduce去处理,但是并不能准确定位到它会出现在reduce输出结果的那个part中,只会是按照排序之后依次向下排序.所以如果所有的key最终如果只会交给一个reduce处理它的结果就只会出现在part0000中.</p>
+</blockquote>
 
       
     </div>
@@ -336,7 +339,7 @@
         <p><span>本文标题:</span><a href="/ITWO/2018/04/27/mapreduce-结果集中在多个reduce输出中的一个/">mapreduce 结果集中在多个reduce输出part中的一个</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
         <p><span>发布时间:</span>2018-04-27, 18:19:57</p>
-        <p><span>最后更新:</span>2018-04-28, 08:52:08</p>
+        <p><span>最后更新:</span>2018-04-28, 11:02:12</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ITWO/2018/04/27/mapreduce-结果集中在多个reduce输出中的一个/" title="mapreduce 结果集中在多个reduce输出part中的一个">https://www.tangyuxiaoyao.club/ITWO/2018/04/27/mapreduce-结果集中在多个reduce输出中的一个/</a>
             <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/04/27/mapreduce-结果集中在多个reduce输出中的一个/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -366,7 +369,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景描述"><span class="toc-number">1.</span> <span class="toc-text">背景描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#细节分析"><span class="toc-number">2.</span> <span class="toc-text">细节分析</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景描述"><span class="toc-number">1.</span> <span class="toc-text">背景描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#细节分析"><span class="toc-number">2.</span> <span class="toc-text">细节分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拓展"><span class="toc-number">3.</span> <span class="toc-text">拓展</span></a></li></ol>
         
     </div>
     <style>
