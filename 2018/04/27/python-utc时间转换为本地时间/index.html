@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="ITWO">
 <meta property="og:description" content="背景描述 公司业务mongo库中,存了之前很多日志,但是日志中时间没有预处理,也就是说用的是默认的utc时间,我们现实中用到的东八区的时间,公司报表系统要用到这个业务字段,导出日志的时候用的是mongoexport,后续要对时间做处理,想到了用python脚本来二次处理.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-27T08:38:17.157Z">
+<meta property="og:updated_time" content="2018-05-02T01:30:08.350Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python utc时间转换为本地时间">
 <meta name="twitter:description" content="背景描述 公司业务mongo库中,存了之前很多日志,但是日志中时间没有预处理,也就是说用的是默认的utc时间,我们现实中用到的东八区的时间,公司报表系统要用到这个业务字段,导出日志的时候用的是mongoexport,后续要对时间做处理,想到了用python脚本来二次处理.">
@@ -321,7 +321,7 @@
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> dateutil <span class="keyword">import</span> parser</div><div class="line"><span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line"></div><div class="line">	<span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">		details = line.strip().split(<span class="string">","</span>)</div><div class="line">		time_string = details[<span class="number">0</span>]</div><div class="line">		datetime_struct = parser.parse(time_string)</div><div class="line">		<span class="comment"># print type(datetime_struct)</span></div><div class="line">		o = datetime.timedelta(hours=<span class="number">8</span>)</div><div class="line">		details[<span class="number">0</span>] = (datetime_struct+o).strftime(<span class="string">'%Y-%m-%d %H:%M:%S'</span>)</div><div class="line">		<span class="keyword">print</span> <span class="string">"\t"</span>.join(details)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">	main()</div></pre></td></tr></table></figure>
 <blockquote>
-<p>字符串时间转为时间格式用到的是dateutil里面parser,是不是很像java里面的?这个模块不是Java自带,我们需要使用pip安装名称如下</p>
+<p>字符串时间转为时间格式用到的是dateutil里面parser,是不是很像java里面的?这个模块不是Python自带,我们需要使用pip安装名称如下</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pip install python-dateutil</div></pre></td></tr></table></figure>
 <blockquote>
@@ -346,7 +346,7 @@
         <p><span>本文标题:</span><a href="/ITWO/2018/04/27/python-utc时间转换为本地时间/">python utc时间转换为本地时间</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
         <p><span>发布时间:</span>2018-04-27, 10:13:35</p>
-        <p><span>最后更新:</span>2018-04-27, 16:38:17</p>
+        <p><span>最后更新:</span>2018-05-02, 09:30:08</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ITWO/2018/04/27/python-utc时间转换为本地时间/" title="python utc时间转换为本地时间">https://www.tangyuxiaoyao.club/ITWO/2018/04/27/python-utc时间转换为本地时间/</a>
             <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/04/27/python-utc时间转换为本地时间/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
