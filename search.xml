@@ -3,6 +3,36 @@
   
     
     <entry>
+      <title>chrome 浏览器页面乱码问题</title>
+      <link href="/ITWO/2018/05/09/chrome-%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A1%B5%E9%9D%A2%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/"/>
+      <url>/ITWO/2018/05/09/chrome-%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A1%B5%E9%9D%A2%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>在做es分词的时候用到了ik分词器要用热分词,要用到一个web容器来搭建在线词库,遇到了以下的问题.<br><a id="more"></a></p><p>建立词库的时候原本打算是在服务器上建立的后来,无法确认它的编码格式,后来在本地用文本建立的词典,同时也另存为了utf-8格式,然后传到了tomcat服务器的ROOT目录下,然后启动在页面预览,但是出现了乱码.</p></blockquote><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><blockquote><p>原本下意识的解决思路是修改tomcat自带的server.xml配置,但是改了以后于事无补,在页面预览还是乱码.<br>后来考虑到是不是浏览器自己的编码格式问题,使用了curl直接访问这个文本静态文件,没有乱码的问题出现,从而定位去修改浏览器的默认格式问题,但是最新版本的chrome浏览器没有提供直接修改默认编码的通道,后来在chrome商店有搜到有以下这款插件可以解决问题.<br>ps:(A Google Chrome extension used to modify the page default encoding for Google Chrome 55+.)<br>55版本以后已经不支持在自定义字体里面修改.<br><a href="https://chrome.google.com/webstore/detail/oenllhgkiiljibhfagbfogdbchhdchml" target="_blank" rel="external">Charset</a></p></blockquote><h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><blockquote><p>后来发现其实跟server.xml的配置没关系,是不是新版本已经没有该问题了?(apache-tomcat-8.5.31)</p></blockquote>]]></content>
+      
+      
+        <tags>
+            
+            <tag> chrome </tag>
+            
+            <tag> ubantu </tag>
+            
+            <tag> utf-8 </tag>
+            
+            <tag> tomcat </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>linux 实用技巧总结</title>
+      <link href="/ITWO/2018/05/04/linux-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/"/>
+      <url>/ITWO/2018/05/04/linux-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</url>
+      <content type="html"><![CDATA[<blockquote><p>总结以往在使用linux时,用到的一点小技巧或者命令集合</p></blockquote><a id="more"></a><h2 id="批量图片格式文件转换成一个pdf"><a href="#批量图片格式文件转换成一个pdf" class="headerlink" title="批量图片格式文件转换成一个pdf"></a>批量图片格式文件转换成一个pdf</h2><blockquote><p>convert *.jpg output.pdf<br>ps:就是这么任性</p></blockquote><h2 id="awk-按照某个key分发文件的妙用"><a href="#awk-按照某个key分发文件的妙用" class="headerlink" title="awk 按照某个key分发文件的妙用"></a>awk 按照某个key分发文件的妙用</h2><h3 id="需求背景："><a href="#需求背景：" class="headerlink" title="需求背景："></a>需求背景：</h3><blockquote><p>本来的需求是提取一个月的数据，但是出来以后产品又要拆分为每天的量<br><!--more--></p></blockquote><h3 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h3><blockquote><p>本来打算使用python foreach去解决，但是想到以前用过awk处理过类似的问题，乍一看日期后面还有时分秒，必然又用到了substr，妙的是awk也支持，脚本如下：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $3  &gt;substr($2,1,10)".csv"&#125;'</span> sy*.txt;</div></pre></td></tr></table></figure><blockquote><p>完美的解决了我的问题，第二列是时间(带有时分秒,日期格式为2017-06-13的样式)，第三列为个人标示，唯一标示一条记录，当然你也可以使用$0，完成真正意义上的拆分文件。</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $0 &gt;substr($2,1,10)".csv"&#125;'</span>  sy*.txt;</div></pre></td></tr></table></figure>]]></content>
+      
+      
+    </entry>
+    
+    <entry>
       <title>mapreduce 结果集中在多个reduce输出part中的一个</title>
       <link href="/ITWO/2018/04/27/mapreduce-%E7%BB%93%E6%9E%9C%E9%9B%86%E4%B8%AD%E5%9C%A8%E5%A4%9A%E4%B8%AAreduce%E8%BE%93%E5%87%BA%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA/"/>
       <url>/ITWO/2018/04/27/mapreduce-%E7%BB%93%E6%9E%9C%E9%9B%86%E4%B8%AD%E5%9C%A8%E5%A4%9A%E4%B8%AAreduce%E8%BE%93%E5%87%BA%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA/</url>
@@ -88,11 +118,11 @@
             
             <tag> hadoop </tag>
             
+            <tag> mapreduce </tag>
+            
             <tag> streaming </tag>
             
             <tag> python </tag>
-            
-            <tag> mapreduce </tag>
             
             <tag> numpy </tag>
             
@@ -249,9 +279,9 @@
       
         <tags>
             
-            <tag> ubantu </tag>
-            
             <tag> chrome </tag>
+            
+            <tag> ubantu </tag>
             
             <tag> chromium </tag>
             
@@ -276,9 +306,9 @@
             
             <tag> shell </tag>
             
-            <tag> awk </tag>
-            
             <tag> file </tag>
+            
+            <tag> awk </tag>
             
             <tag> spark </tag>
             
@@ -559,9 +589,9 @@
             
             <tag> hadoop </tag>
             
-            <tag> streaming </tag>
-            
             <tag> mapreduce </tag>
+            
+            <tag> streaming </tag>
             
             <tag> hive </tag>
             
@@ -675,9 +705,9 @@
       
         <tags>
             
-            <tag> ubantu </tag>
-            
             <tag> chrome </tag>
+            
+            <tag> ubantu </tag>
             
         </tags>
       
@@ -939,23 +969,6 @@
     </entry>
     
     <entry>
-      <title>awk 按照某个key分发文件的妙用</title>
-      <link href="/ITWO/2017/09/19/awk-%E6%8C%89%E7%85%A7%E6%9F%90%E4%B8%AAkey%E5%88%86%E5%8F%91%E6%96%87%E4%BB%B6%E7%9A%84%E5%A6%99%E7%94%A8/"/>
-      <url>/ITWO/2017/09/19/awk-%E6%8C%89%E7%85%A7%E6%9F%90%E4%B8%AAkey%E5%88%86%E5%8F%91%E6%96%87%E4%BB%B6%E7%9A%84%E5%A6%99%E7%94%A8/</url>
-      <content type="html"><![CDATA[<h2 id="需求背景："><a href="#需求背景：" class="headerlink" title="需求背景："></a>需求背景：</h2><blockquote><p>本来的需求是提取一个月的数据，但是出来以后产品又要拆分为每天的量<br><a id="more"></a></p><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><p>本来打算使用python foreach去解决，但是想到以前用过awk处理过类似的问题，乍一看日期后面还有时分秒，必然又用到了substr，妙的是awk也支持，脚本如下：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $3  &gt;substr($2,1,10)".csv"&#125;'</span> sy*.txt;</div></pre></td></tr></table></figure><blockquote><p>完美的解决了我的问题，第二列是时间(带有时分秒,日期格式为2017-06-13的样式)，第三列为个人标示，唯一标示一条记录，当然你也可以使用$0，完成真正意义上的拆分文件。</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $0 &gt;substr($2,1,10)".csv"&#125;'</span>  sy*.txt;</div></pre></td></tr></table></figure>]]></content>
-      
-      
-        <tags>
-            
-            <tag> shell </tag>
-            
-            <tag> awk </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
       <title>如何在ubantu中设置任务栏和菜单中的快速启动和搜索</title>
       <link href="/ITWO/2017/09/19/%E5%A6%82%E4%BD%95%E5%9C%A8ubantu%E4%B8%AD%E8%AE%BE%E7%BD%AE%E4%BB%BB%E5%8A%A1%E6%A0%8F%E5%92%8C%E8%8F%9C%E5%8D%95%E4%B8%AD%E7%9A%84%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E5%92%8C%E6%90%9C%E7%B4%A2/"/>
       <url>/ITWO/2017/09/19/%E5%A6%82%E4%BD%95%E5%9C%A8ubantu%E4%B8%AD%E8%AE%BE%E7%BD%AE%E4%BB%BB%E5%8A%A1%E6%A0%8F%E5%92%8C%E8%8F%9C%E5%8D%95%E4%B8%AD%E7%9A%84%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8%E5%92%8C%E6%90%9C%E7%B4%A2/</url>
@@ -964,9 +977,9 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> ubantu </tag>
+            
+            <tag> shell </tag>
             
             <tag> dash </tag>
             
@@ -1002,9 +1015,9 @@
       
         <tags>
             
-            <tag> mysql </tag>
-            
             <tag> ubantu </tag>
+            
+            <tag> mysql </tag>
             
             <tag> 移除 </tag>
             

@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-04-28T03:09:17.825Z</updated>
+  <updated>2018-05-09T02:16:27.818Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>chrome 浏览器页面乱码问题</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/05/09/chrome-%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A1%B5%E9%9D%A2%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/05/09/chrome-浏览器页面乱码问题/</id>
+    <published>2018-05-09T01:51:20.000Z</published>
+    <updated>2018-05-09T02:16:27.818Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>在做es分词的时候用到了ik分词器要用热分词,要用到一个web容器来搭建在线词库,遇到了以下的问题.<br><a id="more"></a></p><p>建立词库的时候原本打算是在服务器上建立的后来,无法确认它的编码格式,后来在本地用文本建立的词典,同时也另存为了utf-8格式,然后传到了tomcat服务器的ROOT目录下,然后启动在页面预览,但是出现了乱码.</p></blockquote><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><blockquote><p>原本下意识的解决思路是修改tomcat自带的server.xml配置,但是改了以后于事无补,在页面预览还是乱码.<br>后来考虑到是不是浏览器自己的编码格式问题,使用了curl直接访问这个文本静态文件,没有乱码的问题出现,从而定位去修改浏览器的默认格式问题,但是最新版本的chrome浏览器没有提供直接修改默认编码的通道,后来在chrome商店有搜到有以下这款插件可以解决问题.<br>ps:(A Google Chrome extension used to modify the page default encoding for Google Chrome 55+.)<br>55版本以后已经不支持在自定义字体里面修改.<br><a href="https://chrome.google.com/webstore/detail/oenllhgkiiljibhfagbfogdbchhdchml" target="_blank" rel="external">Charset</a></p></blockquote><h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><blockquote><p>后来发现其实跟server.xml的配置没关系,是不是新版本已经没有该问题了?(apache-tomcat-8.5.31)</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在做es分词的时候用到了ik分词器要用热分词,要用到一个web容器来搭建在线词库,遇到了以下的问题.&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="chrome" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/chrome/"/>
+    
+      <category term="ubantu" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/ubantu/"/>
+    
+      <category term="utf-8" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/utf-8/"/>
+    
+      <category term="tomcat" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/tomcat/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux 实用技巧总结</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/05/04/linux-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/05/04/linux-实用技巧总结/</id>
+    <published>2018-05-04T02:32:29.000Z</published>
+    <updated>2018-05-04T02:36:44.321Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>总结以往在使用linux时,用到的一点小技巧或者命令集合</p></blockquote><a id="more"></a><h2 id="批量图片格式文件转换成一个pdf"><a href="#批量图片格式文件转换成一个pdf" class="headerlink" title="批量图片格式文件转换成一个pdf"></a>批量图片格式文件转换成一个pdf</h2><blockquote><p>convert *.jpg output.pdf<br>ps:就是这么任性</p></blockquote><h2 id="awk-按照某个key分发文件的妙用"><a href="#awk-按照某个key分发文件的妙用" class="headerlink" title="awk 按照某个key分发文件的妙用"></a>awk 按照某个key分发文件的妙用</h2><h3 id="需求背景："><a href="#需求背景：" class="headerlink" title="需求背景："></a>需求背景：</h3><blockquote><p>本来的需求是提取一个月的数据，但是出来以后产品又要拆分为每天的量<br><!--more--></p></blockquote><h3 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h3><blockquote><p>本来打算使用python foreach去解决，但是想到以前用过awk处理过类似的问题，乍一看日期后面还有时分秒，必然又用到了substr，妙的是awk也支持，脚本如下：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $3  &gt;substr($2,1,10)".csv"&#125;'</span> sy*.txt;</div></pre></td></tr></table></figure><blockquote><p>完美的解决了我的问题，第二列是时间(带有时分秒,日期格式为2017-06-13的样式)，第三列为个人标示，唯一标示一条记录，当然你也可以使用$0，完成真正意义上的拆分文件。</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $0 &gt;substr($2,1,10)".csv"&#125;'</span>  sy*.txt;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;总结以往在使用linux时,用到的一点小技巧或者命令集合&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>mapreduce 结果集中在多个reduce输出part中的一个</title>
@@ -151,11 +198,11 @@
     
       <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
     
+      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
+    
       <category term="streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/streaming/"/>
     
       <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
-      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
     
       <category term="numpy" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/numpy/"/>
     
@@ -366,9 +413,9 @@
     </summary>
     
     
-      <category term="ubantu" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/ubantu/"/>
-    
       <category term="chrome" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/chrome/"/>
+    
+      <category term="ubantu" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/ubantu/"/>
     
       <category term="chromium" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/chromium/"/>
     
@@ -399,9 +446,9 @@
     
       <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
     
-      <category term="awk" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/awk/"/>
-    
       <category term="file" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
+    
+      <category term="awk" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/awk/"/>
     
       <category term="spark" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/spark/"/>
     
@@ -459,52 +506,6 @@
     
     </summary>
     
-    
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spark ListBuffer遍历</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/01/25/spark-ListBuffer%E9%81%8D%E5%8E%86/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/01/25/spark-ListBuffer遍历/</id>
-    <published>2018-01-25T12:49:50.000Z</published>
-    <updated>2018-03-23T03:13:28.194Z</updated>
-    
-    <content type="html"><![CDATA[<a id="more"></a>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>hadoop streaming 使用中遇到的问题总结</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/01/11/hadoop-streaming-%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/</id>
-    <published>2018-01-11T01:45:13.000Z</published>
-    <updated>2018-04-16T03:16:11.162Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.<br><a id="more"></a></p><h2 id="问题汇总"><a href="#问题汇总" class="headerlink" title="问题汇总"></a>问题汇总</h2><h3 id="last-tool-output-null"><a href="#last-tool-output-null" class="headerlink" title="last tool output null"></a>last tool output null</h3><p>报错信息如下</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">USER=lming_08  </div><div class="line">HADOOP_USER=<span class="keyword">null</span>  </div><div class="line">last tool output: |<span class="keyword">null</span>|  </div><div class="line">  </div><div class="line">java.io.IOException: Broken pipe</div></pre></td></tr></table></figure><blockquote><p>刚开始以为是 map 程序中对空行未处理导致的，后来发现是 map 中有对一个上传的文件进行读取，而程序对该配置文件,读取而且读取以后还会用正则去遍历模糊匹配关键词，在处理该文件时会执行 10 多亿次循环，导致超时了。<br>解决方案:yield block 的使用,少用正则匹配,可以利用切词然后join来完成这样的匹配,本来mapreduce就是为了空间换时间,利用集群多个节点去并行处理逻辑.</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;需求背景&quot;&gt;&lt;a href=&quot;#需求背景&quot; class=&quot;headerlink&quot; title=&quot;需求背景&quot;&gt;&lt;/a&gt;需求背景&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
-    
-      <category term="streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/streaming/"/>
     
       <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
