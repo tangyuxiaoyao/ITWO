@@ -15,20 +15,17 @@
 
 
 
-<meta name="description" content="需求背景 描述如下图所示:把左边的图形转换为右边的模样">
-<meta name="keywords" content="python,numpy,矩阵">
+<meta name="description" content="背景描述 通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
 <meta property="og:type" content="article">
-<meta property="og:title" content="矩阵变形记">
-<meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2018/01/09/矩阵变形记/index.html">
+<meta property="og:title" content="hadoop streming 配置文件和字典文件分发方式">
+<meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 描述如下图所示:把左边的图形转换为右边的模样">
+<meta property="og:description" content="背景描述 通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.tangyuxiaoyao.club/ITWO/assets/rangeImg.png">
-<meta property="og:updated_time" content="2018-04-16T03:26:08.800Z">
+<meta property="og:updated_time" content="2018-05-10T13:06:08.511Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="矩阵变形记">
-<meta name="twitter:description" content="需求背景 描述如下图所示:把左边的图形转换为右边的模样">
-<meta name="twitter:image" content="https://www.tangyuxiaoyao.club/ITWO/assets/rangeImg.png">
+<meta name="twitter:title" content="hadoop streming 配置文件和字典文件分发方式">
+<meta name="twitter:description" content="背景描述 通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
 
 <link rel="apple-touch-icon" href= "/ITWO//apple-touch-icon.png">
 
@@ -60,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>矩阵变形记 | ITWO</title>
+<title>hadoop streming 配置文件和字典文件分发方式 | ITWO</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -271,11 +268,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-矩阵变形记" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-hadoop-streaming-配置文件和字典文件分发方式" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/ITWO/2018/01/09/矩阵变形记/" class="article-date">
-      <time datetime="2018-01-09T09:29:37.000Z" itemprop="datePublished">2018-01-09</time>
+      <a href="/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/" class="article-date">
+      <time datetime="2018-05-10T12:48:07.000Z" itemprop="datePublished">2018-05-10</time>
 </a>
 
 
@@ -290,7 +287,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      矩阵变形记
+      hadoop streming 配置文件和字典文件分发方式
     </h1>
   
 
@@ -300,10 +297,6 @@
         
 
         
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/numpy/">numpy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/矩阵/">矩阵</a></li></ul>
-    </div>
-
         <div class="clearfix"></div>
       </div>
       
@@ -311,17 +304,24 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
-<p>描述如下图所示:<br><img src="/ITWO/assets/rangeImg.png" alt="矩阵变换图"><br>把左边的图形转换为右边的模样<a id="more"></a></p>
+        <h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote>
+<p>通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?</p>
 </blockquote>
-<h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote>
-<p>使用的是快速上手的python脚本语言,逻辑理顺了,语言只是辅助.<br>逻辑分析:<br>既要控制纵向输出的列数,又要控制横向的输出格式,所以会用到两层的for循环,在控制纵向延伸的同时,往胖的控制膨胀,纵向的长度可以看出等于传入的c+k-1,横向的宽度是为k,因为使用的是二维角标遍历,所以要考虑到越界的问题,拿最极端的第c列来模拟通用的输出函数,好比这里传入的是3,print a[2][0],a[1][1],a[0][2],可以看出输出的一维二维的角标之和等于纵向遍历的i的值,而且可以看出一维的角标为降序,截止纵向角标越界之前,我们可以得到tempColl.append(str(a[i-j][j])),输出的结果可以这么堆积,这样的就可以把横向的输出控制在i的个数内,然后讨论偏移,我们可以看出偏移部分要补位,补位的个数又和纵向遍历的i-j&gt;c-1遍历的次数相等,利用该特性,我们不用刻意去补几个空位,利用纵向遍历超出c-1时,一维角标就要越界的特性,在横向遍历的时候,i-j&gt;c-1(角标等于长度减一)几次就补几个空格,当遍历到正常输出的二维角标时,也同时套用上边的通用公式输出tempColl.append(str(a[i-j][j])).<br><strong>核心</strong>:无论二维角标怎么变换,最终肯定会控制在i-j的范围内(越界的补位(空格)).</p>
+<a id="more"></a>
+<h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><blockquote>
+<p>这里使用python来实现,我们的第一思路是:</p>
 </blockquote>
-<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*-coding:utf-8-*-  </span></div><div class="line"><span class="comment">#!/usr/bin/env python </span></div><div class="line"></div><div class="line"><span class="comment"># final version</span></div><div class="line"><span class="comment"># print a[0][0]</span></div><div class="line"><span class="comment"># print a[1][0],a[0][1]</span></div><div class="line"><span class="comment"># print a[2][0],a[1][1],a[0][2]</span></div><div class="line"><span class="comment"># print ' ',a[2][1],a[1][2]</span></div><div class="line"><span class="comment"># print ' ',' ',a[2][2]	</span></div><div class="line"></div><div class="line"><span class="comment"># 0</span></div><div class="line"><span class="comment"># 3 1</span></div><div class="line"><span class="comment"># 6 4 2</span></div><div class="line"><span class="comment">#   7 5</span></div><div class="line"><span class="comment">#     8</span></div><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line">c = int(raw_input(<span class="string">'输入矩形长度：'</span>))</div><div class="line">k = int(raw_input(<span class="string">'输入矩形宽度: '</span>))</div><div class="line"></div><div class="line">a = arange(c*k).reshape(c,k)</div><div class="line"><span class="keyword">print</span> a</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># lines = a.shape[0]</span></div><div class="line"><span class="comment"># lines = lines + lines-1</span></div><div class="line"></div><div class="line"><span class="comment"># rows = a.shape[0]</span></div><div class="line"></div><div class="line"></div><div class="line">lines =c+k<span class="number">-1</span></div><div class="line"></div><div class="line">rows = k</div><div class="line"></div><div class="line">sep = <span class="string">' '</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(lines):</div><div class="line">	tempColl = []</div><div class="line">	<span class="keyword">for</span> j <span class="keyword">in</span> range(rows):</div><div class="line">		<span class="keyword">if</span>(i-j&gt;c<span class="number">-1</span>):</div><div class="line">			tempColl.append(sep)</div><div class="line">		<span class="keyword">elif</span>(i-j&gt;=<span class="number">0</span>):</div><div class="line">			tempColl.append(str(a[i-j][j]))</div><div class="line"></div><div class="line"></div><div class="line">	<span class="keyword">print</span> <span class="string">","</span>.join(tempColl)</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">python test.py dict.txt</div><div class="line">-file dict.txt</div></pre></td></tr></table></figure>
 <blockquote>
-<p>接收输入参数来设定需要生成几行几列的数据矩阵<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">c = int(raw_input(<span class="string">'输入矩形长度：'</span>))</div><div class="line">k = int(raw_input(<span class="string">'输入矩形宽度: '</span>))</div><div class="line"></div><div class="line">a = arange(c*k).reshape(c,k)</div><div class="line"><span class="keyword">print</span> a</div></pre></td></tr></table></figure></p>
+<p>当然这种方案只可以针对本地文件,一方面这样的文件每次都要分发带来很大的局限性(如果文件很大怎么办?是不是会很耗费性能?显然是的),另一方面如果我们需要使用的文件在hdfs上怎么实施?<br>先贴下官网的普及文档</p>
 </blockquote>
-
+<h3 id="Hadoop-Streaming中的大文件和档案"><a href="#Hadoop-Streaming中的大文件和档案" class="headerlink" title="Hadoop Streaming中的大文件和档案"></a>Hadoop Streaming中的大文件和档案</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">任务使用-cacheFile和-cacheArchive选项在集群中分发文件和档案，选项的参数是用户已上传至HDFS的文件或档案的URI。这些文件和档案在不同的作业间缓存。用户可以通过fs.default.name.config配置参数的值得到文件所在的host和fs_port。</div><div class="line"></div><div class="line">这个是使用-cacheFile选项的例子：</div><div class="line"></div><div class="line">-cacheFile hdfs://host:fs_port/user/testfile.txt#testlink</div><div class="line">在上面的例子里，url中#后面的部分是建立在任务当前工作目录下的符号链接的名字。这里的任务的当前工作目录下有一个“testlink”符号链接，它指向testfile.txt文件在本地的拷贝。如果有多个文件，选项可以写成：</div><div class="line"></div><div class="line">-cacheFile hdfs://host:fs_port/user/testfile1.txt#testlink1 -cacheFile hdfs://host:fs_port/user/testfile2.txt#testlink2</div><div class="line">-cacheArchive选项用于把jar文件拷贝到任务当前工作目录并自动把jar文件解压缩。例如：</div><div class="line"></div><div class="line">-cacheArchive hdfs://host:fs_port/user/testfile.jar#testlink3</div><div class="line">在上面的例子中，testlink3是当前工作目录下的符号链接，它指向testfile.jar解压后的目录。</div><div class="line"></div><div class="line">下面是使用-cacheArchive选项的另一个例子。其中，input.txt文件有两行内容，分别是两个文件的名字：testlink/cache.txt和testlink/cache2.txt。“testlink”是指向档案目录（jar文件解压后的目录）的符号链接，这个目录下有“cache.txt”和“cache2.txt”两个文件。</div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash">HADOOP_HOME/bin/hadoop  jar <span class="variable">$HADOOP_HOME</span>/hadoop-streaming.jar \</span></div><div class="line">                  -input "/user/me/samples/cachefile/input.txt"  \</div><div class="line">                  -mapper "xargs cat"  \</div><div class="line">                  -reducer "cat"  \</div><div class="line">                  -output "/user/me/samples/cachefile/out" \  </div><div class="line">                  -cacheArchive 'hdfs://hadoop-nn1.example.com/user/me/samples/cachefile/cachedir.jar#testlink' \  </div><div class="line">                  -jobconf mapred.map.tasks=1 \</div><div class="line">                  -jobconf mapred.reduce.tasks=1 \ </div><div class="line">                  -jobconf mapred.job.name="Experiment"</div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> ls test_jar/</span></div><div class="line">cache.txt  cache2.txt</div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> jar cvf cachedir.jar -C test_jar/ .</span></div><div class="line">added manifest</div><div class="line">adding: cache.txt(in = 30) (out= 29)(deflated 3%)</div><div class="line">adding: cache2.txt(in = 37) (out= 35)(deflated 5%)</div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> hadoop dfs -put cachedir.jar samples/cachefile</span></div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> hadoop dfs -cat /user/me/samples/cachefile/input.txt</span></div><div class="line">testlink/cache.txt</div><div class="line">testlink/cache2.txt</div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> cat test_jar/cache.txt </span></div><div class="line">This is just the cache string</div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> cat test_jar/cache2.txt </span></div><div class="line">This is just the second cache string</div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> hadoop dfs -ls /user/me/samples/cachefile/out      </span></div><div class="line">Found 1 items</div><div class="line">/user/me/samples/cachefile/out/part-00000 </div><div class="line"></div><div class="line"><span class="meta">$</span><span class="bash"> hadoop dfs -cat /user/me/samples/cachefile/out/part-00000</span></div><div class="line">This is just the cache string   </div><div class="line">This is just the second cache string</div></pre></td></tr></table></figure>
+<h3 id="实践校验"><a href="#实践校验" class="headerlink" title="实践校验"></a>实践校验</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></div><div class="line"></div><div class="line">hadoop fs -rmr $&#123;2&#125;</div><div class="line"></div><div class="line">hadoop jar /opt/cloudera/parcels/CDH-5.4.0-1.cdh5.4.0.p0.27/jars/hadoop-streaming-2.6.0-mr1-cdh5.4.0.jar \</div><div class="line">        -files testSymlink.py,hdfs:///user/upsmart/koulb/dict.txt#test \</div><div class="line">        -input $&#123;1&#125; \</div><div class="line">        -output $&#123;2&#125; \</div><div class="line">        -mapper "cat" \</div><div class="line">        -reducer "python testSymlink.py" \</div><div class="line">        -jobconf mapred.reduce.tasks=1 \</div><div class="line">        -jobconf mapred.job.name="testSymlink"</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"></div><div class="line"><span class="comment"># 打开一个文件</span></div><div class="line">fo = open(<span class="string">"test"</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"文件名: "</span>, fo.name</div><div class="line"></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</div><div class="line">        <span class="keyword">print</span> line.strip()</div><div class="line"><span class="comment"># 关闭打开的文件</span></div><div class="line">fo.close()</div></pre></td></tr></table></figure>
+<h2 id="细节描述"><a href="#细节描述" class="headerlink" title="细节描述"></a>细节描述</h2><blockquote>
+<p>未完待续</p>
+</blockquote>
+<h3 id="map使用细节"><a href="#map使用细节" class="headerlink" title="map使用细节"></a>map使用细节</h3><h3 id="recude使用细节"><a href="#recude使用细节" class="headerlink" title="recude使用细节"></a>recude使用细节</h3>
       
     </div>
     
@@ -329,13 +329,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/ITWO/2018/01/09/矩阵变形记/">矩阵变形记</a></p>
+        <p><span>本文标题:</span><a href="/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/">hadoop streming 配置文件和字典文件分发方式</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
-        <p><span>发布时间:</span>2018-01-09, 17:29:37</p>
-        <p><span>最后更新:</span>2018-04-16, 11:26:08</p>
+        <p><span>发布时间:</span>2018-05-10, 20:48:07</p>
+        <p><span>最后更新:</span>2018-05-10, 21:06:08</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/ITWO/2018/01/09/矩阵变形记/" title="矩阵变形记">https://www.tangyuxiaoyao.club/ITWO/2018/01/09/矩阵变形记/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/01/09/矩阵变形记/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/" title="hadoop streming 配置文件和字典文件分发方式">https://www.tangyuxiaoyao.club/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -347,16 +347,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/">
-                    给hive mapreduce分配队列和优先级
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/ITWO/2018/01/02/crontab-使用规范/">
-                    crontab 使用规范
+                <a href="/ITWO/2018/05/10/mapredcue 温习/">
+                    mapreduce 温故
                 </a>
             </div>
         
@@ -368,7 +362,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求背景"><span class="toc-number">1.</span> <span class="toc-text">需求背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技术分析"><span class="toc-number">2.</span> <span class="toc-text">技术分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码分析"><span class="toc-number">3.</span> <span class="toc-text">代码分析</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景描述"><span class="toc-number">1.</span> <span class="toc-text">背景描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技术细节"><span class="toc-number">2.</span> <span class="toc-text">技术细节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Hadoop-Streaming中的大文件和档案"><span class="toc-number">2.1.</span> <span class="toc-text">Hadoop Streaming中的大文件和档案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实践校验"><span class="toc-number">2.2.</span> <span class="toc-text">实践校验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#细节描述"><span class="toc-number">3.</span> <span class="toc-text">细节描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#map使用细节"><span class="toc-number">3.1.</span> <span class="toc-text">map使用细节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#recude使用细节"><span class="toc-number">3.2.</span> <span class="toc-text">recude使用细节</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -404,7 +398,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"矩阵变形记　| ITWO　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"hadoop streming 配置文件和字典文件分发方式　| ITWO　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -424,15 +418,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/" title="上一篇: 给hive mapreduce分配队列和优先级">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/ITWO/2018/01/02/crontab-使用规范/" title="下一篇: crontab 使用规范">
+            <a href="/ITWO/2018/05/10/mapredcue 温习/" title="下一篇: mapreduce 温故">
                 <i class="fa fa-angle-right"></i>
             </a>
         
