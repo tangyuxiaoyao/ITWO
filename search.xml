@@ -144,11 +144,11 @@
             
             <tag> hadoop </tag>
             
+            <tag> mapreduce </tag>
+            
             <tag> streaming </tag>
             
             <tag> python </tag>
-            
-            <tag> mapreduce </tag>
             
             <tag> numpy </tag>
             
@@ -598,9 +598,9 @@
             
             <tag> hadoop </tag>
             
-            <tag> streaming </tag>
-            
             <tag> mapreduce </tag>
+            
+            <tag> streaming </tag>
             
             <tag> hive </tag>
             
