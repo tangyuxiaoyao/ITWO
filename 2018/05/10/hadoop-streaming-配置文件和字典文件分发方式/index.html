@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="ITWO">
 <meta property="og:description" content="背景描述 通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-11T02:40:40.345Z">
+<meta property="og:updated_time" content="2018-05-11T02:45:44.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hadoop streaming 配置文件和字典文件分发方式">
 <meta name="twitter:description" content="背景描述 通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
@@ -327,7 +327,7 @@
 <blockquote>
 <p>看细节:</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">number of splits:3</div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">  配置文件结果输出</span></div><div class="line">文件名:  test</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div><div class="line">e</div><div class="line">文件名:  test</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div><div class="line">e</div><div class="line">文件名:  test</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div><div class="line">e</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">JobSubmitter: number of splits:3</div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">  配置文件结果输出</span></div><div class="line">文件名:  test</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div><div class="line">e</div><div class="line">文件名:  test</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div><div class="line">e</div><div class="line">文件名:  test</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div><div class="line">e</div></pre></td></tr></table></figure>
 <blockquote>
 <p>从上可以看出我们使用的配置文件打印了三次,和我么你的splits个数一致.也就是说和map个数一致.</p>
 </blockquote>
@@ -341,6 +341,7 @@
 </blockquote>
 <h3 id="使用总结"><a href="#使用总结" class="headerlink" title="使用总结"></a>使用总结</h3><blockquote>
 <p>综上可得,完全达到了配置文件分发的目的,可以保证每个map和reduce都可以使用到所需的配置文件.</p>
+<p>tips:<strong>JobSubmitter: number of splits:3</strong>,<br><strong>3</strong>  = <strong>files:2</strong> + <strong>input1</strong></p>
 </blockquote>
 
       
@@ -353,7 +354,7 @@
         <p><span>本文标题:</span><a href="/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/">hadoop streaming 配置文件和字典文件分发方式</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
         <p><span>发布时间:</span>2018-05-10, 20:48:07</p>
-        <p><span>最后更新:</span>2018-05-11, 10:40:40</p>
+        <p><span>最后更新:</span>2018-05-11, 10:45:44</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/" title="hadoop streaming 配置文件和字典文件分发方式">https://www.tangyuxiaoyao.club/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/</a>
             <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
