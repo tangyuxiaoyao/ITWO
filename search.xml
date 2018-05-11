@@ -309,11 +309,11 @@
       
         <tags>
             
+            <tag> shell </tag>
+            
             <tag> hadoop </tag>
             
             <tag> hdfs </tag>
-            
-            <tag> shell </tag>
             
             <tag> file </tag>
             
