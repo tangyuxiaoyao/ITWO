@@ -62,11 +62,11 @@
     
       <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
-      <category term="file" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
-    
       <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
     
       <category term="cacheFile" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/cacheFile/"/>
+    
+      <category term="file" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
     
       <category term="files" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/files/"/>
     
@@ -366,9 +366,9 @@
     </summary>
     
     
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
       <category term="join" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/join/"/>
+    
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
       <category term="split" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/split/"/>
     

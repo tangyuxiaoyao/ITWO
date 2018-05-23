@@ -32,11 +32,11 @@
             
             <tag> python </tag>
             
-            <tag> file </tag>
-            
             <tag> hadoop streaming </tag>
             
             <tag> cacheFile </tag>
+            
+            <tag> file </tag>
             
             <tag> files </tag>
             
@@ -260,9 +260,9 @@
       
         <tags>
             
-            <tag> python </tag>
-            
             <tag> join </tag>
+            
+            <tag> python </tag>
             
             <tag> split </tag>
             
@@ -756,11 +756,11 @@
             
             <tag> hadoop </tag>
             
+            <tag> file </tag>
+            
             <tag> no </tag>
             
             <tag> such </tag>
-            
-            <tag> file </tag>
             
         </tags>
       
@@ -851,9 +851,9 @@
       
         <tags>
             
-            <tag> python </tag>
-            
             <tag> join </tag>
+            
+            <tag> python </tag>
             
             <tag> db </tag>
             
