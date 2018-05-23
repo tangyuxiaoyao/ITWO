@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-05-14T01:48:11.952Z</updated>
+  <updated>2018-05-23T07:21:33.180Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mongo查询慢排查</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/05/23/mongo%E6%9F%A5%E8%AF%A2%E6%85%A2%E6%8E%92%E6%9F%A5/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/05/23/mongo查询慢排查/</id>
+    <published>2018-05-23T06:11:34.000Z</published>
+    <updated>2018-05-23T07:21:33.180Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><blockquote><p>线上建模结果缓存在mongo中，之前由于数据量较少，进来一段时间由于老系统业务迁移过来，数据量也上来了，随之而来暴露出来一个问题.</p></blockquote><a id="more"></a><blockquote><p>查询很慢，但是只是个别客户的账号有问题，起初以为是客户建模的数据（客户部分代码有异常）有问题导致，但是从日志来看也有正常返回的数据但是也会有超时，后来把该客户的数据导入到开发集群来排查问题。</p></blockquote><h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><blockquote><p>之前接口层面建的索引执行计划给出执行过程</p></blockquote><p><img src="/ITWO/assets/index_01.png" alt="之前接口层面建的索引执行计划给出执行过程"></p><blockquote><p>分解图示：<br>Explain部分分为</p></blockquote><ol><li>IXSCAN（检索索引）<br>  耗费250ms,排查（examined）文档965978个，该步骤返回文档965978个，用到的索引是account_1_analysisId_1，该索引匹配到的数据965978.</li><li>FETCH（拉取数据）<br> 耗时660ms,排查（examined）文档965978个，该步骤返回文档１个，遍历加判断最终拿到想要的结果，这步耗时也是最多的一步。</li><li>KEEP_MUTATIONS（暂时不知道是干嘛的）</li></ol><blockquote><p>其实仔细看已经看出端倪了，这边提示的是Index account_1_analysisId_1 was used to find matching values for account,<strong>analysisId</strong>，还有looking for these criteria: {<strong>“analysis_id”.</strong>:{“$eq”:”bc70380f-47b0-40f9-9e24-f54d61ce8bd6”}}，复合索引中的字段并不是我们检索的mongo字段，后来翻查代码，</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Document</span>(collection = <span class="string">"bill_analysis_info"</span>)</div><div class="line"><span class="meta">@CompoundIndexes</span>(&#123; <span class="meta">@CompoundIndex</span>(name = <span class="string">"query_index"</span>, def = <span class="string">"&#123;account : 1, analysisId : 1&#125;"</span>) &#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BillAnalysisInfo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;……&#125;</div></pre></td></tr></table></figure><blockquote><p>找到如上的根源。</p></blockquote><h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><blockquote><p>手动建立针对这两个业务字段的复合索引</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.bill_analysis_info.ensureIndex(&#123;"account":1,"analysis_id":1&#125;)</div></pre></td></tr></table></figure><blockquote><p>再次查看同样查询的执行计划</p></blockquote><p><img src="/ITWO/assets/index_02.png" alt="重建索引执行计划给出执行过程"></p><blockquote><p><strong>效果很明显</strong></p></blockquote><h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><blockquote><p>mongo中原本以为会对建立索引过程中的字段是否为该集合的字段做判断，但此次排查下来明显没有，引以为戒。<br>细节，认真。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;线上建模结果缓存在mongo中，之前由于数据量较少，进来一段时间由于老系统业务迁移过来，数据量也上来了，随之而来暴露出来一个问题.&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
+    
+      <category term="mongo" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mongo/"/>
+    
+      <category term="dbKoda" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/dbKoda/"/>
+    
+  </entry>
   
   <entry>
     <title>hadoop streaming 配置文件和字典文件分发方式</title>
@@ -501,38 +527,6 @@
       <category term="scala" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/scala/"/>
     
       <category term="suffix" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/suffix/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hive trim() 去除空格遇到的问题</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-%E5%8E%BB%E9%99%A4%E7%A9%BA%E6%A0%BC%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/</id>
-    <published>2018-02-28T05:49:22.000Z</published>
-    <updated>2018-04-16T03:18:43.224Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，所以又查到hive有正则替换。</p></blockquote><a id="more"></a><h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">hive <span class="number">0.10</span>.0源码</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> Text <span class="title">evaluate</span><span class="params">(Text s)</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (s == <span class="keyword">null</span>) &#123;</div><div class="line"></div><div class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    result.set(StringUtils.strip(s.toString(), <span class="string">" "</span>));</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line"></div><div class="line">  &#125;</div></pre></td></tr></table></figure><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">用法如下：</div><div class="line"></div><div class="line">      regexp_replace(yourcolname,'\\s+','')</div><div class="line"></div><div class="line">最后问题得以解决。​</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;需求背景&quot;&gt;&lt;a href=&quot;#需求背景&quot; class=&quot;headerlink&quot; title=&quot;需求背景&quot;&gt;&lt;/a&gt;需求背景&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，所以又查到hive有正则替换。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-    
-      <category term="hive" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hive/"/>
-    
-      <category term="trim" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/trim/"/>
-    
-      <category term="空格" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/%E7%A9%BA%E6%A0%BC/"/>
-    
-      <category term="tab" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/tab/"/>
-    
-      <category term="制表符" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/%E5%88%B6%E8%A1%A8%E7%AC%A6/"/>
-    
-      <category term="regex_replace" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/regex-replace/"/>
     
   </entry>
   
