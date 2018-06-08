@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-05-28T01:24:00.749Z</updated>
+  <updated>2018-06-08T02:32:12.410Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>比较两个文件内容的不同</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/06/08/%E6%AF%94%E8%BE%83%E4%B8%A4%E4%B8%AA%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E4%B8%8D%E5%90%8C/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/06/08/比较两个文件内容的不同/</id>
+    <published>2018-06-08T02:29:06.000Z</published>
+    <updated>2018-06-08T02:32:12.410Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>比较两个文件的不同</p></blockquote><a id="more"></a><h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">koulb@koulb-ubantu:~/testdata$ more a</div><div class="line">1</div><div class="line">a</div><div class="line">b</div><div class="line">d</div><div class="line">c</div><div class="line">koulb@koulb-ubantu:~/testdata$ more b</div><div class="line">a</div><div class="line">b</div></pre></td></tr></table></figure><blockquote><p>这时你去比较</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">koulb@koulb-ubantu:~/testdata$ comm -23 a b</div><div class="line">1</div><div class="line">f</div><div class="line">comm: 文件1 没有被正确排序</div><div class="line">e</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div></pre></td></tr></table></figure><blockquote><p>你需要做的是:</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">koulb@koulb-ubantu:~/testdata$ sort a &gt;c</div><div class="line">koulb@koulb-ubantu:~/testdata$ comm -23 c b</div><div class="line">1</div><div class="line">c</div><div class="line">d</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;比较两个文件的不同&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
+    
+      <category term="file" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
+    
+      <category term="comm" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/comm/"/>
+    
+  </entry>
   
   <entry>
     <title>安装es遇到的问题和解决方案</title>
@@ -82,9 +108,9 @@
     </summary>
     
     
-      <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
-    
       <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+    
+      <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
     
       <category term="cacheFile" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/cacheFile/"/>
     
@@ -315,11 +341,11 @@
     
       <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
     
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
     
       <category term="streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/streaming/"/>
     
-      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
       <category term="numpy" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/numpy/"/>
     
@@ -486,34 +512,6 @@
       <category term="gradle" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/gradle/"/>
     
       <category term="android" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>解决ubantu 谷歌浏览器打不开问题</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/07/%E8%A7%A3%E5%86%B3ubantu-%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%93%E4%B8%8D%E5%BC%80%E9%97%AE%E9%A2%98/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/07/解决ubantu-谷歌浏览器打不开问题/</id>
-    <published>2018-03-07T06:19:10.000Z</published>
-    <updated>2018-04-16T03:26:57.819Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>遇到chrome/chromium启动不了</p></blockquote><a id="more"></a><h2 id="定位问题"><a href="#定位问题" class="headerlink" title="定位问题"></a>定位问题</h2><blockquote><p>在/usr/bin/./chromium-browser启动命令，　查看log输出</p><p>log输出如下：<br>[20049:20083:0302/221800.660699:FATAL:nss_util.cc(631)] NSS_VersionCheck(“3.26”) failed. NSS &gt;= 3.26 is required. Please upgrade to the latest NSS, and if you still get this error, contact your distribution maintainer.<br>已放弃 (核心已转储)</p></blockquote><h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install libnss3</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;遇到chrome/chromium启动不了&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-    
-      <category term="chrome" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/chrome/"/>
-    
-      <category term="ubantu" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/ubantu/"/>
-    
-      <category term="chromium" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/chromium/"/>
-    
-      <category term="打不开" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/%E6%89%93%E4%B8%8D%E5%BC%80/"/>
     
   </entry>
   
