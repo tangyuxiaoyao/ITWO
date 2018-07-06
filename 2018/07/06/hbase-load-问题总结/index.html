@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。  实现思路HBase部分 因为数据量大的缘故，使用的是将多个HDFS文件下的数据切割然后组合成tsv，再使用PUT元素转换为HFile文件，进而使用bulkload导">
+<meta name="description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
 <meta name="keywords" content="hbase,bulkload,es">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hbase&#x2F;es load 问题总结">
 <meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。  实现思路HBase部分 因为数据量大的缘故，使用的是将多个HDFS文件下的数据切割然后组合成tsv，再使用PUT元素转换为HFile文件，进而使用bulkload导">
+<meta property="og:description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-06T03:22:45.734Z">
+<meta property="og:updated_time" content="2018-07-06T05:31:00.175Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hbase&#x2F;es load 问题总结">
-<meta name="twitter:description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。  实现思路HBase部分 因为数据量大的缘故，使用的是将多个HDFS文件下的数据切割然后组合成tsv，再使用PUT元素转换为HFile文件，进而使用bulkload导">
+<meta name="twitter:description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
 
 <link rel="apple-touch-icon" href= "/ITWO//apple-touch-icon.png">
 
@@ -312,6 +312,7 @@
         <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
 <p>公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="HBase部分"><a href="#HBase部分" class="headerlink" title="HBase部分"></a>HBase部分</h3><blockquote>
 <p>因为数据量大的缘故，使用的是将多个HDFS文件下的数据切割然后组合成tsv，再使用PUT元素转换为HFile文件，进而使用bulkload导入hbase中。</p>
 </blockquote>
@@ -358,7 +359,7 @@
         <p><span>本文标题:</span><a href="/ITWO/2018/07/06/hbase-load-问题总结/">hbase/es load 问题总结</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
         <p><span>发布时间:</span>2018-07-06, 09:48:49</p>
-        <p><span>最后更新:</span>2018-07-06, 11:22:45</p>
+        <p><span>最后更新:</span>2018-07-06, 13:31:00</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ITWO/2018/07/06/hbase-load-问题总结/" title="hbase/es load 问题总结">https://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/</a>
             <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
