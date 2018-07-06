@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="ITWO">
 <meta property="og:description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-06T05:31:00.175Z">
+<meta property="og:updated_time" content="2018-07-06T10:03:50.651Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hbase&#x2F;es load 问题总结">
 <meta name="twitter:description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
@@ -348,6 +348,10 @@
 <blockquote>
 <p>我的理解是解析pom的时候和打包去除某些依赖是不同的解析顺序</p>
 </blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.htrace&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;htrace-core&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;3.0.4&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line"></div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.apache.htrace&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;htrace-core&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;3.1.0-incubating&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>这两个包都要加否则会报错找不到。</p>
+</blockquote>
 
       
     </div>
@@ -359,7 +363,7 @@
         <p><span>本文标题:</span><a href="/ITWO/2018/07/06/hbase-load-问题总结/">hbase/es load 问题总结</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
         <p><span>发布时间:</span>2018-07-06, 09:48:49</p>
-        <p><span>最后更新:</span>2018-07-06, 13:31:00</p>
+        <p><span>最后更新:</span>2018-07-06, 18:03:50</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ITWO/2018/07/06/hbase-load-问题总结/" title="hbase/es load 问题总结">https://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/</a>
             <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
