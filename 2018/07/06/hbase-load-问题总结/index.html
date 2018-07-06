@@ -15,20 +15,18 @@
 
 
 
-<meta name="description" content="需求背景 提供一批卡号，去提取这批卡号的流水(lzo格式的交易流水)一个典型的Map-Reduce过程包 括：Input-&amp;gt;Map-&amp;gt;Partition-&amp;gt;Reduce-&amp;gt;Output。">
-<meta name="keywords" content="hadoop,streaming,join">
+<meta name="description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。  实现思路HBase部分 因为数据量大的缘故，使用的是将多个HDFS文件下的数据切割然后组合成tsv，再使用PUT元素转换为HFile文件，进而使用bulkload导">
+<meta name="keywords" content="hbase,bulkload,es">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hadoop  streaming 二次排序join的实现">
-<meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2017/11/02/hadoop-二次排序join的实现/index.html">
+<meta property="og:title" content="hbase&#x2F;es load 问题总结">
+<meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 提供一批卡号，去提取这批卡号的流水(lzo格式的交易流水)一个典型的Map-Reduce过程包 括：Input-&amp;gt;Map-&amp;gt;Partition-&amp;gt;Reduce-&amp;gt;Output。">
+<meta property="og:description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。  实现思路HBase部分 因为数据量大的缘故，使用的是将多个HDFS文件下的数据切割然后组合成tsv，再使用PUT元素转换为HFile文件，进而使用bulkload导">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.tangyuxiaoyao.club/ITWO/assets/mapreduce03.jpg">
-<meta property="og:updated_time" content="2018-04-16T03:16:26.182Z">
+<meta property="og:updated_time" content="2018-07-06T03:22:45.734Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hadoop  streaming 二次排序join的实现">
-<meta name="twitter:description" content="需求背景 提供一批卡号，去提取这批卡号的流水(lzo格式的交易流水)一个典型的Map-Reduce过程包 括：Input-&amp;gt;Map-&amp;gt;Partition-&amp;gt;Reduce-&amp;gt;Output。">
-<meta name="twitter:image" content="https://www.tangyuxiaoyao.club/ITWO/assets/mapreduce03.jpg">
+<meta name="twitter:title" content="hbase&#x2F;es load 问题总结">
+<meta name="twitter:description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。  实现思路HBase部分 因为数据量大的缘故，使用的是将多个HDFS文件下的数据切割然后组合成tsv，再使用PUT元素转换为HFile文件，进而使用bulkload导">
 
 <link rel="apple-touch-icon" href= "/ITWO//apple-touch-icon.png">
 
@@ -60,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>hadoop  streaming 二次排序join的实现 | ITWO</title>
+<title>hbase/es load 问题总结 | ITWO</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -271,11 +269,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-hadoop-二次排序join的实现" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-hbase-load-问题总结" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/ITWO/2017/11/02/hadoop-二次排序join的实现/" class="article-date">
-      <time datetime="2017-11-02T12:46:25.000Z" itemprop="datePublished">2017-11-02</time>
+      <a href="/ITWO/2018/07/06/hbase-load-问题总结/" class="article-date">
+      <time datetime="2018-07-06T01:48:49.000Z" itemprop="datePublished">2018-07-06</time>
 </a>
 
 
@@ -290,7 +288,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      hadoop  streaming 二次排序join的实现
+      hbase/es load 问题总结
     </h1>
   
 
@@ -301,7 +299,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/hadoop/">hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/join/">join</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/streaming/">streaming</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/bulkload/">bulkload</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/es/">es</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/hbase/">hbase</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -312,16 +310,43 @@
       
           
         <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
-<p>提供一批卡号，去提取这批卡号的流水(lzo格式的交易流水)<br>一个典型的Map-Reduce过程包 括：Input-&gt;Map-&gt;Partition-&gt;Reduce-&gt;Output。<br><a id="more"></a></p>
-<h2 id="模拟实现逻辑"><a href="#模拟实现逻辑" class="headerlink" title="模拟实现逻辑"></a>模拟实现逻辑</h2></blockquote>
-<p><img src="/ITWO/assets/mapreduce03.jpg" alt="scrapy 流程图"></p>
-<h2 id="配置文件如下"><a href="#配置文件如下" class="headerlink" title="配置文件如下"></a>配置文件如下</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line">hadoop fs -<span class="built_in">test</span> -d  <span class="variable">$&#123;2&#125;</span></div><div class="line"><span class="keyword">if</span> [$? -eq 0]</div><div class="line"><span class="keyword">then</span></div><div class="line">	hadoop fs -rmr card_match_2/output</div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line">hadoop jar ~/koulb/softjar/hadoop-streaming-2.0.0-mr1-cdh4.7.0.jar \</div><div class="line"></div><div class="line">-D map.output.key.field.separator=_ \</div><div class="line"></div><div class="line">-D num.key.fields.for.partition=1 \</div><div class="line"></div><div class="line">-D stream.map.input.ignoreKey=<span class="literal">true</span> \</div><div class="line"></div><div class="line">-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner \</div><div class="line"></div><div class="line">-inputformat com.hadoop.mapred.DeprecatedLzoTextInputFormat \</div><div class="line"></div><div class="line">-input <span class="variable">$&#123;1&#125;</span>\</div><div class="line"></div><div class="line">-output <span class="variable">$&#123;2&#125;</span> \</div><div class="line"></div><div class="line">-file map.py \</div><div class="line"></div><div class="line">-file red.py \</div><div class="line"></div><div class="line">-mapper <span class="string">"python map.py"</span> \</div><div class="line"></div><div class="line">-reducer <span class="string">"python red.py"</span> \</div><div class="line"></div><div class="line">-jobconf mapred.job.priority=VERY_HIGH \</div><div class="line"></div><div class="line">-jobconf mapred.reduce.tasks=40 \</div><div class="line"></div><div class="line">-jobconf mapred.job.name=<span class="string">"card_match"</span></div></pre></td></tr></table></figure>
-<h2 id="参数普及"><a href="#参数普及" class="headerlink" title="参数普及"></a>参数普及</h2><blockquote>
-<p>一个典型的Map-Reduce过程包 括：Input-&gt;Map-&gt;Partition-&gt;Reduce-&gt;Output。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">hadoop streaming /    </div><div class="line">-D stream.map.output.field.separator=, /    </div><div class="line">-D stream.num.map.output.key.fields=4 /    </div><div class="line">-D map.output.key.field.separator=, /    </div><div class="line">-D num.key.fields.for.partition=2 /    </div><div class="line">-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner /</div></pre></td></tr></table></figure></p>
-<p>stream.map.output.field.separator 指定map输出时使用的分隔符<br>stream.num.map.output.key.fields 指定用上面的分隔符分割的前四部分作为map输出的key<br>map.output.key.field.separator 指定二次排序的key内部使用的分隔符<br>num.key.fields.for.partition 指定使用上面设置的分隔符,切割key出的前两部分作为二次排序的依据<br>org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner 指定分区用的分割器<br>如果不指定默认的分割器为HashedPartitioner<br>以上实现的效果为:map输出时指定以”,”为分割符的字段的前四个key,其余部分作为value,这时,map输出的key被3个”,”分割成4部分,前2部分用于Partition,前2部分相同的key切分到同一个reducer,因此reduce内部的key排序时前2部分相同的key实际上是对后面2部分排序,这样就相当于前2部分作为排序主键,后2部分作为排序的辅键.</p>
-<h2 id="疑惑"><a href="#疑惑" class="headerlink" title="疑惑"></a>疑惑</h2><p>在使用默认的分隔符”\t”去实现二次排序,一定不要指定stream分割符和partitioner分隔符,否则会导致二次排序失效. 类似 cut -d “\t”  ??,使用java mapredue时如果直接用”\t”,就会出现结果文件里面分隔符为\t字符,是否也是同样道理?</p>
+<p>公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-jobconf stream.num.map.output.key.fields=4 \</div><div class="line">-jobconf num.key.fields.for.partition=3 \</div><div class="line">-jobconf mapred.reduce.tasks=2 \</div><div class="line">-input koulb/aa \</div><div class="line">-output $1 \</div><div class="line">-mapper "cat" \</div><div class="line">-reducer "cat" \</div><div class="line">-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner</div></pre></td></tr></table></figure>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><h3 id="HBase部分"><a href="#HBase部分" class="headerlink" title="HBase部分"></a>HBase部分</h3><blockquote>
+<p>因为数据量大的缘故，使用的是将多个HDFS文件下的数据切割然后组合成tsv，再使用PUT元素转换为HFile文件，进而使用bulkload导入hbase中。</p>
+</blockquote>
+<h3 id="ES部分"><a href="#ES部分" class="headerlink" title="ES部分"></a>ES部分</h3><blockquote>
+<p>复用之前生成好的tsv文件，组装好MapWritable，然后使用EsOutputFormat完成格式化输出。</p>
+</blockquote>
+<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><blockquote>
+<p>这部分时间耗费在本地调试过渡到集群跑批，因为在本地集群单节点测试，你再怎么折腾也不出现配置文件找不到的问题，当然这里的前提是我使用了Properties文件做为传递配置参数的载体，在多节点测试服务器跑批的时候就会出现找不到配置文件的问题，因为该配置文件只会存在client端，而不会分发到各个其他的节点，所以会有找不到配置文件的问题出现。当然这部分也因为在使用的是ToolRunner.run(conf, new BootApplication(), args)，所以考虑过使用-files#filelink,具体用法参考字典文件分发的那篇文章，但是使用的时候，并没有达到达到预期效果，打开方式不对？<br>后来的做法是先用Properties对象解析外部的绝对路径的配置问价，将拿到的配置放到一直在框架中的上下文对象Context中的Configuration中，这样只要在client端提交任务的地方，传值给它，那么无论在框架运行的什么阶段都可以读到外部配置文件中的配置项。</p>
+</blockquote>
+<h3 id="HA的开启"><a href="#HA的开启" class="headerlink" title="HA的开启"></a>HA的开启</h3><blockquote>
+<p>在本地的测试过程中，因为本地没有开启NM的HA，所以只需要配置如下内容就可以完成程序和集群的对接：</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fs.defaultFS=hdfs://hostname:8020</div></pre></td></tr></table></figure>
+<blockquote>
+<p>当然如果没有配置，也可以做本地文件的测试。</p>
+<p>要对接开启了NM的HA的集群除了以上的配置还需要配置如下的内容:</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">fs.nameservices=nameservice</div><div class="line"><span class="meta">#</span><span class="bash">指定nameservice服务下有几个namenode</span></div><div class="line">fs.ha.namenodes.nameservice=namenode33,namenode134</div><div class="line"><span class="meta">#</span><span class="bash">指定各个namenode节点的访问链接</span></div><div class="line">fs.namenode.rpc-address.nameservice.namenode33=node-01.upsmart.com:8020</div><div class="line">fs.namenode.rpc-address.nameservice.namenode134=node-02.upsmart.com:8020</div><div class="line">fs.client.failover.proxy.provider.nameservice=org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</div></pre></td></tr></table></figure>
+<h3 id="habse-依赖问题"><a href="#habse-依赖问题" class="headerlink" title="habse 依赖问题"></a>habse 依赖问题</h3><blockquote>
+<p>在导入数据到hbase的过程中在一集群导入没有问题，原本以为已经可以收工，但是后来在开启的HA的另一集群测试，出现了少包的问题，这部分可能跟集群安装依赖包的寡众有关系，但是保不齐那个集群就少包了，所以你要做的是把所有的能用到的包都打到jar包里，但是打包的时候又遇到如下的问题：<br>在打包的过程中有个包一直打不进去后来 </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn -X clean install &gt;log</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hbase<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hbase-hadoop-compat<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0-cdh5.4.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>定位到如下的ERROR</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">'dependencies.dependency.version'</span> <span class="keyword">for</span> commons-logging:commons-logging:jar is missing. @</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!-- General dependencies --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-math<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>原本以为去掉这些依赖就可以万事大吉，但是并没有奏效，后来使用了最彻底的办法依照大版本相同应该改动不大的原则换了版本到1.1.10,然后打包后问题解决。<br>以下方法并没有解决问题：</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.hadoop<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hadoop-mapreduce-client-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>我的理解是解析pom的时候和打包去除某些依赖是不同的解析顺序</p>
+</blockquote>
 
       
     </div>
@@ -330,13 +355,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/ITWO/2017/11/02/hadoop-二次排序join的实现/">hadoop  streaming 二次排序join的实现</a></p>
+        <p><span>本文标题:</span><a href="/ITWO/2018/07/06/hbase-load-问题总结/">hbase/es load 问题总结</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
-        <p><span>发布时间:</span>2017-11-02, 20:46:25</p>
-        <p><span>最后更新:</span>2018-04-16, 11:16:26</p>
+        <p><span>发布时间:</span>2018-07-06, 09:48:49</p>
+        <p><span>最后更新:</span>2018-07-06, 11:22:45</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/ITWO/2017/11/02/hadoop-二次排序join的实现/" title="hadoop  streaming 二次排序join的实现">https://www.tangyuxiaoyao.club/ITWO/2017/11/02/hadoop-二次排序join的实现/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2017/11/02/hadoop-二次排序join的实现/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/ITWO/2018/07/06/hbase-load-问题总结/" title="hbase/es load 问题总结">https://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -349,15 +374,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/ITWO/2017/11/17/spark-本地模式处理文件时报错/">
-                    spark 本地模式处理文件时报错
+                <a href="/ITWO/2018/07/06/mapredcue 温习/">
+                    mapreduce 温故
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-解决办法/">
-                    spring jpa no property column found for type 解决办法
+                <a href="/ITWO/2018/06/08/比较两个文件内容的不同/">
+                    比较两个文件内容的不同
                 </a>
             </div>
         
@@ -369,7 +394,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求背景"><span class="toc-number">1.</span> <span class="toc-text">需求背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模拟实现逻辑"><span class="toc-number">2.</span> <span class="toc-text">模拟实现逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置文件如下"><span class="toc-number">3.</span> <span class="toc-text">配置文件如下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参数普及"><span class="toc-number">4.</span> <span class="toc-text">参数普及</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#疑惑"><span class="toc-number">5.</span> <span class="toc-text">疑惑</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求背景"><span class="toc-number">1.</span> <span class="toc-text">需求背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现思路"><span class="toc-number">2.</span> <span class="toc-text">实现思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HBase部分"><span class="toc-number">2.1.</span> <span class="toc-text">HBase部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES部分"><span class="toc-number">2.2.</span> <span class="toc-text">ES部分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题总结"><span class="toc-number">3.</span> <span class="toc-text">问题总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#配置文件"><span class="toc-number">3.1.</span> <span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HA的开启"><span class="toc-number">3.2.</span> <span class="toc-text">HA的开启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#habse-依赖问题"><span class="toc-number">3.3.</span> <span class="toc-text">habse 依赖问题</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -405,7 +430,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"hadoop  streaming 二次排序join的实现　| ITWO　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"hbase/es load 问题总结　| ITWO　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -425,7 +450,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/ITWO/2017/11/17/spark-本地模式处理文件时报错/" title="上一篇: spark 本地模式处理文件时报错">
+            <a href="/ITWO/2018/07/06/mapredcue 温习/" title="上一篇: mapreduce 温故">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -433,7 +458,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-解决办法/" title="下一篇: spring jpa no property column found for type 解决办法">
+            <a href="/ITWO/2018/06/08/比较两个文件内容的不同/" title="下一篇: 比较两个文件内容的不同">
                 <i class="fa fa-angle-right"></i>
             </a>
         
