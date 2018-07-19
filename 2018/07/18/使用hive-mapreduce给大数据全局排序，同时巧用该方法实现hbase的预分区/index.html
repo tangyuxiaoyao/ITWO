@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="ITWO">
 <meta property="og:description" content="问题描述 完成排序，打行号，然后根据分位数找到分界点。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-19T07:18:18.907Z">
+<meta property="og:updated_time" content="2018-07-19T08:22:12.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用hive&#x2F;mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区">
 <meta name="twitter:description" content="问题描述 完成排序，打行号，然后根据分位数找到分界点。">
@@ -325,7 +325,7 @@
 <h3 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h3><blockquote>
 <p>思路：使用分位数函数来定位切割点，然后转置→行转列，与之前的行号join拿到最终的分界点。当然最初你要根据tsv 的大小、snappy压缩比、以及region的大小（根据hfile以及其个数确定）来确定要分成几个region,本文暂定为100个分区来做演示。</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var="1/100"</div><div class="line">for i in &#123;2..99&#125;</div><div class="line">do</div><div class="line">        var="$var,$i/100"</div><div class="line">done</div><div class="line">echo $var</div><div class="line"></div><div class="line"></div><div class="line">hive -S -e "use koulb;create table t_card_info_res as select k.key from \</div><div class="line">(select explode(percentile_approx(rn,array($&#123;var&#125;),1000000))as keyRange from t_card_info_row) r join t_card_info_row k on r.keyRange=k.rn;" </div><div class="line"></div><div class="line">hive -S -e "select * from t_card_info_res"&gt;res</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var="1/100"</div><div class="line">for i in &#123;2..99&#125;</div><div class="line">do</div><div class="line">        var="$var,$i/100"</div><div class="line">done</div><div class="line">echo $var</div><div class="line"></div><div class="line">hive -S -e "use koulb;create table koulb.t_card_info_res as select k.key from \</div><div class="line">(select explode(percentile_approx(rn,array($&#123;var&#125;),2168727))as keyRange \</div><div class="line">from koulb.t_card_info_row) r join koulb.t_card_info_row k on floor(r.keyRange)=k.rn;" </div><div class="line"></div><div class="line">hive -S -e "select * from koulb.t_card_info_res"&gt;res</div></pre></td></tr></table></figure>
 <h3 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">create 'card_quota_test_koulb', &#123;NAME =&gt; 'n', VERSIONS =&gt; 1, COMPRESSION =&gt; 'SNAPPY'&#125;,  &#123;SPLITS_FILE =&gt; 'res'&#125;</div></pre></td></tr></table></figure>
 <h2 id="mapreduce部分"><a href="#mapreduce部分" class="headerlink" title="mapreduce部分"></a>mapreduce部分</h2><p>==未完待续==</p>
 
@@ -339,7 +339,7 @@
         <p><span>本文标题:</span><a href="/ITWO/2018/07/18/使用hive-mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区/">使用hive/mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
         <p><span>发布时间:</span>2018-07-18, 09:50:44</p>
-        <p><span>最后更新:</span>2018-07-19, 15:18:18</p>
+        <p><span>最后更新:</span>2018-07-19, 16:22:12</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ITWO/2018/07/18/使用hive-mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区/" title="使用hive/mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区">https://www.tangyuxiaoyao.club/ITWO/2018/07/18/使用hive-mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区/</a>
             <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/07/18/使用hive-mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
