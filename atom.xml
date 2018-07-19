@@ -34,11 +34,11 @@
     </summary>
     
     
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
       <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
     
       <category term="hive" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hive/"/>
+    
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
       <category term="row_number" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/row-number/"/>
     
@@ -189,9 +189,9 @@
     </summary>
     
     
-      <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
-    
       <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+    
+      <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
     
       <category term="cacheFile" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/cacheFile/"/>
     
@@ -399,11 +399,11 @@
     
       <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
     
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
     
       <category term="streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/streaming/"/>
     
-      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
       <category term="numpy" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/numpy/"/>
     
