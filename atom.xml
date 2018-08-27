@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-07-23T06:36:03.322Z</updated>
+  <updated>2018-08-27T09:10:40.239Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,86 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java 调用spark-submit填坑</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/08/24/java-%E8%B0%83%E7%94%A8spark-submit%E5%A1%AB%E5%9D%91/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/08/24/java-调用spark-submit填坑/</id>
+    <published>2018-08-24T08:50:31.000Z</published>
+    <updated>2018-08-27T09:10:40.239Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><blockquote><p>在开发过程中遇到了如下的问题:<br>使用shell调用spark-submit提交程序时,不到一分钟跑完所有的流程.<br>但是使用java调用shell进而调用spark-submit就会卡在parttion比较多的步骤,此问题我纠结了四天的时间.<br>可是可的确是弥补了很多知识上的短板.<br>排查过程如下:</p></blockquote><a id="more"></a><h2 id="排查过程"><a href="#排查过程" class="headerlink" title="排查过程"></a>排查过程</h2><h3 id="集群问题"><a href="#集群问题" class="headerlink" title="集群问题"></a>集群问题</h3><blockquote><p>首先怀疑的是集群问题,搜索度娘和谷哥有很多人告知是因为内存不够或者是分配给的内核不够,但是此类问题在过滤后台的日志来看是不存在的,</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">426.2 MB of 1 GB physical memory used; 2.2 GB of 2.1 GB virtual memory used</div></pre></td></tr></table></figure><h3 id="代码问题"><a href="#代码问题" class="headerlink" title="代码问题"></a>代码问题</h3><blockquote><p>后来怀疑是代码问题，因为使用python去调用该程序也是没问题的．<br>代码如下:</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">runShell</span><span class="params">(String command)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">    String result = <span class="string">""</span>;</div><div class="line">    Process process = Runtime.getRuntime().exec(command);</div><div class="line">    <span class="comment">// 获取shell返回流</span></div><div class="line">    BufferedInputStream bufferedInputStream = <span class="keyword">new</span> BufferedInputStream(process.getInputStream());</div><div class="line">    <span class="comment">// 字符流转换字节流</span></div><div class="line">    BufferedReader bufferedReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(bufferedInputStream));</div><div class="line"></div><div class="line">    String line;</div><div class="line">    <span class="keyword">while</span> ((line = bufferedReader.readLine()) != <span class="keyword">null</span>)</div><div class="line">        result = line;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        process.waitFor();</div><div class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        <span class="comment">// 关闭输入流</span></div><div class="line">        bufferedInputStream.close();</div><div class="line">        bufferedReader.close();</div><div class="line">        process.destroy();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure><blockquote><p>首先来解释一下 waitFor() 方法的意义， waitFor() 表示当前 Process 所在的子线程处于等待状态，如有必要，一直要等到由该 Process 对象表示的进程已经终止，官网说如果我们在调用此方法时，如果不注意的话，很容易出现主线程阻塞， Process 也挂起的情况。这就是我遇到的问题.解决办法是，在调用 waitFor() 的时候， Process 需要向主线程汇报运行状况，所以要注意清空缓存区，即 InputStream 和 ErrorStream ，注意这里 InputStream 和 ErrorStream 都需要清空。<br>但是上面的方式只是解决了标准输入流的读取，并且打印最后一行，并没有处理标准错误流，后来经过如下代码的测试，spark-submit提交的日志竟然打印在标准错误流中，所以也就解释了之前为什么会卡在partiion比较多的地方,因为该部分日志较多,达到了缓存区的上限,所以流程不能继续.<br>错误的表象:</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">Container marked as failed: container_1535013730755_0026_01_000007 on host: rocket04.kylin.com. Exit status: <span class="number">1</span>. Diagnostics: Exception from container-launch.</div><div class="line">Container id: container_1535013730755_0026_01_000007</div><div class="line">Exit code: <span class="number">1</span></div><div class="line">Stack trace: ExitCodeException exitCode=<span class="number">1</span>: </div><div class="line">at org.apache.hadoop.util.Shell.runCommand(Shell.java:<span class="number">601</span>)</div><div class="line">at org.apache.hadoop.util.Shell.run(Shell.java:<span class="number">504</span>)</div><div class="line">at org.apache.hadoop.util.Shell$ShellCommandExecutor.execute(Shell.java:<span class="number">786</span>)</div><div class="line">at org.apache.hadoop.yarn.server.nodemanager.DefaultContainerExecutor.launchContainer(DefaultContainerExecutor.java:<span class="number">213</span>)</div><div class="line">at org.apache.hadoop.yarn.server.nodemanager.containermanager.launcher.ContainerLaunch.call(ContainerLaunch.java:<span class="number">302</span>)</div><div class="line">at org.apache.hadoop.yarn.server.nodemanager.containermanager.launcher.ContainerLaunch.call(ContainerLaunch.java:<span class="number">82</span>)</div><div class="line">at java.util.concurrent.FutureTask.run(FutureTask.java:<span class="number">262</span>)</div><div class="line">at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1145</span>)</div><div class="line">at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">615</span>)</div><div class="line">at java.lang.Thread.run(Thread.java:<span class="number">745</span>)</div></pre></td></tr></table></figure><blockquote><p>调研的现象如下:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ERR&gt;<span class="number">18</span>/<span class="number">08</span>/<span class="number">27</span> <span class="number">16</span>:<span class="number">12</span>:<span class="number">59</span> INFO cluster.YarnScheduler: Removed TaskSet <span class="number">4.0</span>, whose tasks have all completed, from pool </div><div class="line">ERR&gt;<span class="number">18</span>/<span class="number">08</span>/<span class="number">27</span> <span class="number">16</span>:<span class="number">12</span>:<span class="number">59</span> INFO scheduler.DAGScheduler: ResultStage <span class="number">4</span> (saveAsTextFile at ReportNatureIncubationCustom.scala:<span class="number">265</span>) finished in <span class="number">0.635</span> s</div><div class="line">ERR&gt;<span class="number">18</span>/<span class="number">08</span>/<span class="number">27</span> <span class="number">16</span>:<span class="number">12</span>:<span class="number">59</span> INFO scheduler.DAGScheduler: Job <span class="number">2</span> finished: saveAsTextFile at ReportNatureIncubationCustom.scala:<span class="number">265</span>, took <span class="number">3.497685</span> s</div><div class="line">ERR&gt;<span class="number">18</span>/<span class="number">08</span>/<span class="number">27</span> <span class="number">16</span>:<span class="number">13</span>:<span class="number">01</span> INFO spark.SparkContext: <span class="function">Invoking <span class="title">stop</span><span class="params">()</span> from shutdown hook</span></div></pre></td></tr></table></figure></p><p>测试代码:</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShellCall</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            System.out.println(<span class="string">"cmd start"</span>);</div><div class="line">            Process p = Runtime.getRuntime().exec(<span class="string">"python /home/users/koulb/tourism/shell/run.py"</span>);  <span class="comment">//调用Linux的相关命令</span></div><div class="line">            <span class="keyword">new</span> RunThread(p.getInputStream(), <span class="string">"INFO"</span>).start();</div><div class="line">            <span class="keyword">new</span> RunThread(p.getErrorStream(), <span class="string">"ERR"</span>).start();</div><div class="line">            <span class="keyword">int</span> value = p.waitFor();</div><div class="line">            <span class="keyword">if</span> (value == <span class="number">0</span>)</div><div class="line">                System.out.println(<span class="string">"complete"</span>);</div><div class="line">            <span class="keyword">else</span></div><div class="line">                System.out.println(<span class="string">"failuer"</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RunThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line">        InputStream is;</div><div class="line">        String printType;</div><div class="line"></div><div class="line">        RunThread(InputStream is, String printType) &#123;</div><div class="line">            <span class="keyword">this</span>.is = is;</div><div class="line">            <span class="keyword">this</span>.printType = printType;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                InputStreamReader isr = <span class="keyword">new</span> InputStreamReader(is);</div><div class="line">                BufferedReader br = <span class="keyword">new</span> BufferedReader(isr);</div><div class="line">                String line = <span class="keyword">null</span>;</div><div class="line">                <span class="keyword">while</span> ((line = br.readLine()) != <span class="keyword">null</span>)</div><div class="line">                    System.out.println(printType + <span class="string">"&gt;"</span> + line);</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException ioe) &#123;</div><div class="line">                ioe.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">｝</div></pre></td></tr></table></figure><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="不改java代码"><a href="#不改java代码" class="headerlink" title="不改java代码"></a>不改java代码</h3><blockquote><p>该解决方案为把spark-submit的日志重定向到一个独立文件中,就不会发生与java交互的Input/Error,方案如下:</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">master yarn-client $deployPath/tourism-data-1.0.jar $&#123;reportId&#125; &gt; spark_cumstom_$&#123;reportId&#125;.log 2&gt;&amp;1</div></pre></td></tr></table></figure><h3 id="改动java代码"><a href="#改动java代码" class="headerlink" title="改动java代码"></a>改动java代码</h3><blockquote><p>这部分实则就是改动下之前的测试代码,将标准输入和标准错误放到不同的线程中,然后分发日志到logback中.</p></blockquote><h3 id="比较与总结"><a href="#比较与总结" class="headerlink" title="比较与总结"></a>比较与总结</h3><blockquote><p>第一种方法相比较与第二种方法而言,对于后期排查问题而言,可以更加直观,可以在shell文件的同级目录下找到所有的执行log,便于排查问题.<br>第二种则需要在系统级别的log中找到需要的信息,比较繁琐,如果数据较大,同时并发度很大,则嵌入的日志很大.但是相比较来说第二种,比较传统,也更接近java 的系统调用的使用习惯.当然也可返回shell调用成功的最后一行的flag,但是不方便排查问题.<br>综上:最终选择了第一种方案.</p></blockquote><h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><h3 id="快捷排查"><a href="#快捷排查" class="headerlink" title="快捷排查"></a>快捷排查</h3><blockquote><p>怎么通过自带的UI来定位错误信息已经日志信息，已经各个节点上的日志信息预览？</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yarn application list</div></pre></td></tr></table></figure><blockquote><p>通过以上的命令进而通过我们设定的应用名称从而定位到Tracking-URL，在保证你本地已配置好数据集群的ip和host配置关系以后，通过该地址可以找到以下界面:</p></blockquote><p><img src="/ITWO/assets/spark-task-ui.png" alt="spark ui "></p><blockquote><p>从下图定位到executor</p></blockquote><p><img src="/ITWO/assets/executors.png" alt="executors"></p><blockquote><p>下图为详细信息</p></blockquote><p><img src="/ITWO/assets/error-log.png" alt="executors"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;问题背景&quot;&gt;&lt;a href=&quot;#问题背景&quot; class=&quot;headerlink&quot; title=&quot;问题背景&quot;&gt;&lt;/a&gt;问题背景&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在开发过程中遇到了如下的问题:&lt;br&gt;使用shell调用spark-submit提交程序时,不到一分钟跑完所有的流程.&lt;br&gt;但是使用java调用shell进而调用spark-submit就会卡在parttion比较多的步骤,此问题我纠结了四天的时间.&lt;br&gt;可是可的确是弥补了很多知识上的短板.&lt;br&gt;排查过程如下:&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/java/"/>
+    
+      <category term="spark" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/spark/"/>
+    
+      <category term="submit" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/submit/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>cron 使用范例</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/08/13/cron-%E4%BD%BF%E7%94%A8%E8%8C%83%E4%BE%8B/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/08/13/cron-使用范例/</id>
+    <published>2018-08-13T07:38:40.000Z</published>
+    <updated>2018-08-16T12:34:57.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>使用范例如下：</p></blockquote><a id="more"></a><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">一个cron表达式有至少6个（也可能7个）有空格分隔的时间元素。</div><div class="line">按顺序依次为 </div><div class="line">秒（0~59） </div><div class="line">分钟（0~59）</div><div class="line">小时（0~23）</div><div class="line">天（月）（0~31，但是你需要考虑你月的天数）</div><div class="line">月（0~11）</div><div class="line">天（星期）（1~7 1=SUN 或 SUN，MON，TUE，WED，THU，FRI，SAT）</div><div class="line">7.年份（1970－2099）</div><div class="line">其中每个元素可以是一个值(如6),一个连续区间(9-12),一个间隔时间(8-18/4)(/表示每隔4小时),一个列表(1,3,5),通配符。由于"月份中的日期"和"星期中的日期"这两个元素互斥的,必须要对其中一个设置?.</div><div class="line">0 0 10,14,16 * * ? 每天上午10点，下午2点，4点</div><div class="line">0 0/30 9-17 * * ?   朝九晚五工作时间内每半小时</div><div class="line">0 0 12 ? * WED 表示每个星期三中午12点 </div><div class="line">"0 0 12 * * ?" 每天中午12点触发 </div><div class="line">"0 15 10 ? * *" 每天上午10:15触发 </div><div class="line">"0 15 10 * * ?" 每天上午10:15触发 </div><div class="line">"0 15 10 * * ? *" 每天上午10:15触发 </div><div class="line">"0 15 10 * * ? 2005" 2005年的每天上午10:15触发 </div><div class="line">"0 * 14 * * ?" 在每天下午2点到下午2:59期间的每1分钟触发 </div><div class="line">"0 0/5 14 * * ?" 在每天下午2点到下午2:55期间的每5分钟触发 </div><div class="line">"0 0/5 14,18 * * ?" 在每天下午2点到2:55期间和下午6点到6:55期间的每5分钟触发 </div><div class="line">"0 0-5 14 * * ?" 在每天下午2点到下午2:05期间的每1分钟触发 </div><div class="line">"0 10,44 14 ? 3 WED" 每年三月的星期三的下午2:10和2:44触发 </div><div class="line">"0 15 10 ? * MON-FRI" 周一至周五的上午10:15触发 </div><div class="line">"0 15 10 15 * ?" 每月15日上午10:15触发 </div><div class="line">"0 15 10 L * ?" 每月最后一日的上午10:15触发 </div><div class="line">"0 15 10 ? * 6L" 每月的最后一个星期五上午10:15触发 </div><div class="line">"0 15 10 ? * 6L 2002-2005" 2002年至2005年的每月的最后一个星期五上午10:15触发 </div><div class="line">"0 15 10 ? * 6#3" 每月的第三个星期五上午10:15触发</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;使用范例如下：&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="spring,cron" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/spring-cron/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>spark 聚合进化</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/07/27/spark-%E8%81%9A%E5%90%88%E8%BF%9B%E5%8C%96/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/07/27/spark-聚合进化/</id>
+    <published>2018-07-27T09:33:00.000Z</published>
+    <updated>2018-08-24T08:18:05.952Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h2><blockquote><p>通过分析流水，然后统计商户维度的以下字段：</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">* 1-交易金额</div><div class="line">* 2-交易笔数,3-交易人数</div><div class="line">* 4-笔单价,5-客单价,6-上午笔数占比</div><div class="line">* 7-午间笔数占比,8-下午笔数占比,9-晚间笔数占比,10-深夜笔数占比</div><div class="line">* （注：上午 00:00-9:59；午间 10:00-12:59；下午 13:00-16:59；晚间 17:00-20:59；深夜 21:00-23:59）</div></pre></td></tr></table></figure><blockquote><p>未完待续</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;需求描述&quot;&gt;&lt;a href=&quot;#需求描述&quot; class=&quot;headerlink&quot; title=&quot;需求描述&quot;&gt;&lt;/a&gt;需求描述&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;通过分析流水，然后统计商户维度的以下字段：&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;figure c
+      
+    
+    </summary>
+    
+    
+      <category term="spark" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/spark/"/>
+    
+      <category term="agg" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/agg/"/>
+    
+      <category term="sql" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/sql/"/>
+    
+      <category term="pivot" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/pivot/"/>
+    
+  </entry>
   
   <entry>
     <title>mapreduce 温故</title>
@@ -57,11 +137,11 @@
     </summary>
     
     
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+    
       <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
     
       <category term="hive" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hive/"/>
-    
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
       <category term="row_number" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/row-number/"/>
     
@@ -189,9 +269,9 @@
     </summary>
     
     
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
       <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
+    
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
       <category term="cacheFile" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/cacheFile/"/>
     
@@ -399,11 +479,11 @@
     
       <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
     
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+    
       <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
     
       <category term="streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/streaming/"/>
-    
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
       <category term="numpy" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/numpy/"/>
     
@@ -452,77 +532,6 @@
       <category term="mongo" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mongo/"/>
     
       <category term="mysql" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>清洗流水之去除字段中多余的分隔符</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/30/%E6%B8%85%E6%B4%97%E6%B5%81%E6%B0%B4%E4%B9%8B%E5%8E%BB%E9%99%A4%E5%AD%97%E6%AE%B5%E4%B8%AD%E5%A4%9A%E4%BD%99%E7%9A%84%E5%88%86%E9%9A%94%E7%AC%A6/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/30/清洗流水之去除字段中多余的分隔符/</id>
-    <published>2018-03-30T06:48:57.000Z</published>
-    <updated>2018-04-24T08:05:46.797Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h2><blockquote><p>正常的公司流水是47个字段，在做ETL的时候发现里面用分隔符去切割流水处理发现有超过47长度的，毋庸置疑肯定是其中有个别字段中含有分隔符，后来定位到是商户地址中含有分隔符而且不规则会出现多个，现在需要做的是将商户名称中的分隔符替换为空，然后重新拼装成我们需要的流水输出。<br><a id="more"></a></p></blockquote><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>直接贴代码</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeDirtyData</span><span class="params">(sep=<span class="string">","</span>)</span>:</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">details = line.strip().split(sep,<span class="number">39</span>)</div><div class="line">bad_col = details[<span class="number">39</span>].split(sep)[:<span class="number">-7</span>]</div><div class="line"><span class="keyword">if</span>(len(bad_col)&gt;<span class="number">1</span>):</div><div class="line">fix_col = <span class="string">""</span>.join(bad_col)</div><div class="line"><span class="keyword">print</span> <span class="string">"%s,%s,%s"</span> % (sep.join(details[:<span class="number">39</span>]),fix_col,sep.join(details[<span class="number">39</span>].split(sep)[<span class="number">-7</span>:]))</div><div class="line"><span class="keyword">else</span>:</div><div class="line"><span class="keyword">print</span>  line.strip()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">removeDirtyData()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">main()</div></pre></td></tr></table></figure><h2 id="细节分析"><a href="#细节分析" class="headerlink" title="细节分析"></a>细节分析</h2><ol><li>先定位到需要的截取字段之前的位置切割，然后把后面的部分单独处理。</li><li>后面部分的数据使用[:-num]的方式，拿到脏数据中的异常字段数组</li><li>通过join的特性用空替换掉里面的分隔符</li><li>分三部分把清洗好的流水拼接起来。</li><li>当然正常的数据不用处理正常输出。</li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;需求描述&quot;&gt;&lt;a href=&quot;#需求描述&quot; class=&quot;headerlink&quot; title=&quot;需求描述&quot;&gt;&lt;/a&gt;需求描述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;正常的公司流水是47个字段，在做ETL的时候发现里面用分隔符去切割流水处理发现有超过47长度的，毋庸置疑肯定是其中有个别字段中含有分隔符，后来定位到是商户地址中含有分隔符而且不规则会出现多个，现在需要做的是将商户名称中的分隔符替换为空，然后重新拼装成我们需要的流水输出。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
-      <category term="join" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/join/"/>
-    
-      <category term="split" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/split/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>巧用hbase shell 批量提取数据</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/28/%E5%B7%A7%E7%94%A8hbase-shell-%E6%89%B9%E9%87%8F%E6%8F%90%E5%8F%96%E6%95%B0%E6%8D%AE/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/</id>
-    <published>2018-03-28T06:47:09.000Z</published>
-    <updated>2018-03-28T07:44:56.571Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h2><blockquote><p>有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。<br><a id="more"></a></p><h2 id="技术分析实现"><a href="#技术分析实现" class="headerlink" title="技术分析实现"></a>技术分析实现</h2></blockquote><h3 id="hive"><a href="#hive" class="headerlink" title="hive"></a>hive</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">external</span> <span class="keyword">table</span> hive_hbase_test(<span class="keyword">key</span> <span class="built_in">int</span>,<span class="keyword">value</span> <span class="keyword">string</span>)</div><div class="line"><span class="keyword">stored</span> <span class="keyword">by</span> <span class="string">'org.apache.hadoop.hive.hbase.HBaseStorageHandler'</span> <span class="keyword">with</span> serdeproperties(<span class="string">"hbase.columns.mapping"</span>=<span class="string">":key,cf1:val"</span>) tblproperties(<span class="string">"hbase.table.name"</span>=<span class="string">"hive_hbase_test"</span>);</div></pre></td></tr></table></figure><blockquote><p>在现有hbase数据的基础上，我们建立一张外表打通hive和hbase数据的映射关系，然后使用我们熟悉的sqljoin然后 通过 hive -e 导出到本地收工。</p></blockquote><h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><blockquote><p>此种方法没有试过，只是存在与理论中,可以参考此篇文章，优势:可以使用hbase连接池（因为是通过停thift协议通信，tcp通信）。<br><a href="https://my.oschina.net/wolfoxliu/blog/856175" target="_blank" rel="external">Hbase实战教程之happybase</a></p></blockquote><h3 id="hbase，shell-，python"><a href="#hbase，shell-，python" class="headerlink" title="hbase，shell ，python"></a>hbase，shell ，python</h3><blockquote><p>次篇幅的重点介绍的也是这种方法。</p></blockquote><ol><li>利用shell生成要提取的hbase shell语句<blockquote><p>利用shell 拼接字符的方式把所有的查询语句生成到一个文件中，当然如果需要查询的key较多你也可以多生成到几个文件中，此处不再赘述，进而使用hbase shell 语句文件得到解析到结果。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">FILENAME=$1</div><div class="line">cat $FILENAME | while read LINE</div><div class="line">do</div><div class="line">echo "exists '$LINE'" &gt;&gt;temp_get</div><div class="line">echo "get 'card_md5','$LINE'" &gt;&gt;temp_get</div><div class="line">done</div><div class="line">hbase shell temp_get &gt;UDcredit-20180124-1_card_res.csv</div><div class="line"></div><div class="line">if test $? -eq 0</div><div class="line">then</div><div class="line">exit</div><div class="line">fi</div></pre></td></tr></table></figure></blockquote></li></ol><blockquote><p>要点:因为hbase shell查询出的结果中不会有key，所以这里我们需要暂存下key到文件中，并且肯定是要伴随着结果的输出，这样便于我们处理。所以shell逻辑如上。</p></blockquote><ol><li>利用Python处理结果文件为我们要的kv形式</li></ol><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line">md5_aes=&#123;&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">detail = line.strip()</div><div class="line"><span class="keyword">if</span>(<span class="string">'Table'</span> <span class="keyword">in</span> detail):</div><div class="line">lines = detail.split(<span class="string">" "</span>)</div><div class="line">md5card = lines[<span class="number">1</span>]</div><div class="line">md5_aes[md5card]=<span class="string">''</span></div><div class="line"><span class="keyword">if</span>(<span class="string">"value"</span> <span class="keyword">in</span> detail):</div><div class="line">lines = detail.split(<span class="string">"value="</span>)</div><div class="line">sm3card = lines1</div><div class="line">md5_aes[md5card]=sm3card</div><div class="line"></div><div class="line"><span class="keyword">for</span> key <span class="keyword">in</span> md5_aes.keys():</div><div class="line"><span class="keyword">print</span> key+<span class="string">","</span>+md5_aes[key]</div></pre></td></tr></table></figure><blockquote><p>利用当前行的特殊关键字来分割当前行数据，然后利用字典，拼接kv输出得到我们要的结果。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;需求描述&quot;&gt;&lt;a href=&quot;#需求描述&quot; class=&quot;headerlink&quot; title=&quot;需求描述&quot;&gt;&lt;/a&gt;需求描述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
-    
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
-      <category term="hbase" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hbase/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>nohup &amp; &gt; 使用解释</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/03/14/nohup-%E4%BD%BF%E7%94%A8%E8%A7%A3%E9%87%8A/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/03/14/nohup-使用解释/</id>
-    <published>2018-03-14T01:54:12.000Z</published>
-    <updated>2018-04-16T03:19:39.333Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>我们在运行服务或者其他程序的时候经常这样启动进程。<a id="more"></a></p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup ls &gt;out.log 2&gt;&amp;1 &amp;</div></pre></td></tr></table></figure><h2 id="细节分析"><a href="#细节分析" class="headerlink" title="细节分析"></a>细节分析</h2><blockquote><p>&amp; 可以免疫SIGINT（sign of interuput），也就是说他可以用于程序后台运行，但是关闭当前shell session就会退出该程序。<br>nohup 的运用是为了免疫SIGHUP信号，可以避免挂起，将程序的输出重定向到nohup.out中，也就是说免疫回话级别的关闭，但是不免疫SIGINT信号，也就是我们所用的Ctrl+C。<br>综上所属我们需要做的就是结合两者的优点，可以这样使用从而真正意义上实现程序后台运行，而且免疫session关闭而导致程序退出。<br>2&gt;&amp;1 的运用是为了将标准出错重定向到标准输出。<br>nohup ls &gt;out.log 2&gt;&amp;1 &amp; 连接起来的意思就是后台挂起ls命令，并且将标准输出和标准出错都作为输出重定向到out.log中，我们可以使用tail -f out.log监控程序的运行过程。<br>tip:当当前session还为关闭，我们可以使用Jobs命令来查看当前会话下面有多少挂起的程序，如果想停止自己启动的程序，可以使用fg %jobnumber的方式，将该任务放到前台执行然后使用Ctrl+C命令终止它的执行。但是如果当前session已经失去，我们就只能通过ps -ef 找到提交的任务然后通过kill来结束程序。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;我们在运行服务或者其他程序的时候经常这样启动进程。
-    
-    </summary>
-    
-    
-      <category term="nohup" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/nohup/"/>
     
   </entry>
   
