@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="ITWO">
 <meta property="og:description" content="业务背景 java和scala 分别怎么给可变参数传值?">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-07T10:11:08.465Z">
+<meta property="og:updated_time" content="2018-09-07T10:12:36.626Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java&#x2F;scala 怎么给可变参数传值">
 <meta name="twitter:description" content="业务背景 java和scala 分别怎么给可变参数传值?">
@@ -316,7 +316,7 @@
 <h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><ul>
 <li>java</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line">String[] args = <span class="string">"1,2,3"</span>.split(<span class="string">","</span>, -<span class="number">1</span>)</div><div class="line">testString(args);</div><div class="line">   <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testString</span><span class="params">(String... args)</span> </span>&#123;</div><div class="line">       <span class="keyword">for</span> (String arg : args) &#123;</div><div class="line">           System.out.println(arg);</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">String[] args = <span class="string">"1,2,3"</span>.split(<span class="string">","</span>, -<span class="number">1</span>)</div><div class="line">testString(args);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testString</span><span class="params">(String... args)</span> </span>&#123;</div><div class="line">      <span class="keyword">for</span> (String arg : args) &#123;</div><div class="line">          System.out.println(arg);</div><div class="line">      &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
 <ul>
 <li>scala</li>
 </ul>
@@ -332,7 +332,7 @@
         <p><span>本文标题:</span><a href="/ITWO/2018/09/07/java-scala-怎么给可变参数传值/">java/scala 怎么给可变参数传值</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
         <p><span>发布时间:</span>2018-09-07, 18:06:55</p>
-        <p><span>最后更新:</span>2018-09-07, 18:11:08</p>
+        <p><span>最后更新:</span>2018-09-07, 18:12:36</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ITWO/2018/09/07/java-scala-怎么给可变参数传值/" title="java/scala 怎么给可变参数传值">https://www.tangyuxiaoyao.club/ITWO/2018/09/07/java-scala-怎么给可变参数传值/</a>
             <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/09/07/java-scala-怎么给可变参数传值/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
