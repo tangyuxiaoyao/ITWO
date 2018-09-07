@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-09-07T07:58:23.780Z</updated>
+  <updated>2018-09-07T10:11:08.465Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java/scala 怎么给可变参数传值</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/09/07/java-scala-%E6%80%8E%E4%B9%88%E7%BB%99%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E4%BC%A0%E5%80%BC/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/09/07/java-scala-怎么给可变参数传值/</id>
+    <published>2018-09-07T10:06:55.000Z</published>
+    <updated>2018-09-07T10:11:08.465Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="业务背景"><a href="#业务背景" class="headerlink" title="业务背景"></a>业务背景</h2><blockquote><p>java和scala 分别怎么给可变参数传值?</p></blockquote><a id="more"></a><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><ul><li>java</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line">String[] args = <span class="string">"1,2,3"</span>.split(<span class="string">","</span>, -<span class="number">1</span>)</div><div class="line">testString(args);</div><div class="line">   <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testString</span><span class="params">(String... args)</span> </span>&#123;</div><div class="line">       <span class="keyword">for</span> (String arg : args) &#123;</div><div class="line">           System.out.println(arg);</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure><ul><li>scala</li></ul><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</div><div class="line"></div><div class="line">  <span class="keyword">val</span> test = <span class="string">"1,2,3,4"</span>.split(<span class="string">","</span>)</div><div class="line"></div><div class="line">  testArgs(test: _*)</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">testArgs</span></span>(paths: <span class="type">String</span>*) = &#123;</div><div class="line">  paths.foreach(println(_))</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;业务背景&quot;&gt;&lt;a href=&quot;#业务背景&quot; class=&quot;headerlink&quot; title=&quot;业务背景&quot;&gt;&lt;/a&gt;业务背景&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;java和scala 分别怎么给可变参数传值?&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/java/"/>
+    
+      <category term="scala" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/scala/"/>
+    
+      <category term="string*" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/string/"/>
+    
+      <category term="string..." scheme="https://www.tangyuxiaoyao.club/ITWO/tags/string/"/>
+    
+  </entry>
   
   <entry>
     <title>使用elasticSearch 实现商户名称的模糊匹配</title>
@@ -165,11 +193,11 @@
     </summary>
     
     
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+    
       <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
     
       <category term="hive" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hive/"/>
-    
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
       <category term="row_number" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/row-number/"/>
     
@@ -507,36 +535,13 @@
     
       <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
     
-      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
-    
       <category term="streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/streaming/"/>
     
       <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
+      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
+    
       <category term="numpy" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/numpy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>shell 遍历多级目录取文件的第一行</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/08/shell-%E9%81%8D%E5%8E%86%E5%A4%9A%E7%BA%A7%E7%9B%AE%E5%BD%95%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E7%AC%AC%E4%B8%80%E8%A1%8C/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/08/shell-遍历多级目录取文件的第一行/</id>
-    <published>2018-04-08T11:45:10.000Z</published>
-    <updated>2018-04-16T02:44:03.373Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>数据取样，从当前目录下去遍历多级目录拿到每个文件的第一行数据输出到一个文件中。<br><a id="more"></a></p></blockquote><h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote><p>当听到该需求时，注意点有两点</p></blockquote><ol><li>多级目录</li><li>取文件的第一行</li></ol><blockquote><p>for循环去递归遍历</p></blockquote><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>viewFile.sh<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></div><div class="line">function getdir()&#123;</div><div class="line">    for element in `ls $1`</div><div class="line">    do  </div><div class="line">        dir_or_file=$1"/"$element</div><div class="line">        if [ -d $dir_or_file ]</div><div class="line">        then </div><div class="line">            getdir $dir_or_file</div><div class="line">        else</div><div class="line">           head -1 $dir_or_file</div><div class="line">        fi  </div><div class="line">    done</div><div class="line">&#125;</div><div class="line">root_dir="/home/test/multiFolder"</div><div class="line">getdir $root_dir</div></pre></td></tr></table></figure></p><p>代码如上请笑纳。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;需求背景&quot;&gt;&lt;a href=&quot;#需求背景&quot; class=&quot;headerlink&quot; title=&quot;需求背景&quot;&gt;&lt;/a&gt;需求背景&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;数据取样，从当前目录下去遍历多级目录拿到每个文件的第一行数据输出到一个文件中。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
-    
-      <category term="file" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
     
   </entry>
   
