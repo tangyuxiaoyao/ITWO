@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-08-27T09:31:25.311Z</updated>
+  <updated>2018-09-07T07:58:23.780Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用elasticSearch 实现商户名称的模糊匹配</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/09/07/%E4%BD%BF%E7%94%A8elasticSearch-%E5%AE%9E%E7%8E%B0%E5%95%86%E6%88%B7%E5%90%8D%E7%A7%B0%E7%9A%84%E6%A8%A1%E7%B3%8A%E5%8C%B9%E9%85%8D/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/09/07/使用elasticSearch-实现商户名称的模糊匹配/</id>
+    <published>2018-09-07T07:33:04.000Z</published>
+    <updated>2018-09-07T07:58:23.780Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>总公司那边不允许输出流水中的刷卡地址,所以应对的方案是允许客户输入商户的关键字然后模糊匹配刷卡地址中是否存在</p></blockquote><a id="more"></a><h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><blockquote><p>先从数据量着手选择技术,mysql 通过like来匹配肯定不能满足如此大的数据量,存量数据量来看已经有六千万之多,所以mysql技术不行,而且mysql仅仅是解决了包含的匹配关系,对于关键词和查询词组的相关度支持有限,另一方面考虑到数据的复用行,另一项目中数据已经存于es中.</p></blockquote><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>开始之初,选择的是已经做好IK 分词的刷卡地址,但是无论使用wildcardQuery还是fuzzyQuery亦或prefixQuery热词还好,但是出现了冷门词语(是否包含与既定的分词包中),就会出现某个汉字多排名就考前的弊病,而且默认返回十条,这样就限制了包含模糊查询的二次匹配,次路不通.<br>后来鉴于上文提及的已做好分词命中不固定的原因,选择增加一个字段数据导入的时候不做分词(keyword)</p></blockquote><ul><li>知识点<blockquote><p>5.x以上已经没有string类型。如果需要分词的话使用text，不需要分词使用keyword。但是生成索引的时候你会看到后面还有一个关键词:index,默认为true,如果设置为false,该字段将不能被索引,keyword是整个文档被索引,text根据指定的分词器被索引(不指定的话默认的分词器是standard),<br>那如果同时使用了keyword和index:false,该字段只能是作为查询项来返回,用法如下:</p></blockquote></li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">MatchQueryBuilder termQueryBuilder = QueryBuilders.</div><div class="line">matchQuery(<span class="string">"content"</span>, <span class="string">"中国渔船"</span>).analyzer(<span class="string">"ik_max_word"</span>);</div><div class="line">String indexes = <span class="string">"CP5178,CP5177,CP5176"</span>;</div><div class="line">String[] includesIndexes = indexes.split(<span class="string">","</span>);</div><div class="line">String[] excludesIndexes = <span class="keyword">new</span> String[]&#123;&#125;;</div><div class="line">SearchResponse searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(termQueryBuilder)</div><div class="line">.setFetchSource(includesIndexes, excludesIndexes).execute().actionGet();</div></pre></td></tr></table></figure><blockquote><p>综上所述我们需要得到的最终技术实现</p></blockquote><ol><li>使用keyword配合wildcardQuery实现模糊匹配的查找(like “%key%”)</li><li>使用分词器实现长关键词的二次匹配,搜索的关键词越长,关联度越高.</li></ol><ul><li>上代码</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">String mid = <span class="string">"A4816456E30D07B17C23B8D16FC26CCEC0E7EBE10A7554732A25753EBE533569"</span>;</div><div class="line"> String searchKey = <span class="string">"南通新时代电器科技有限公司"</span>;</div><div class="line"></div><div class="line"> MatchQueryBuilder merId = QueryBuilders.matchQuery(<span class="string">"mid"</span>, mid);</div><div class="line"></div><div class="line"></div><div class="line"> BoolQueryBuilder midMust = QueryBuilders.boolQuery().must(merId);</div><div class="line"></div><div class="line"></div><div class="line"> SearchResponse searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(midMust).execute().actionGet();</div><div class="line"></div><div class="line"> SearchHit[] hits = searchResponse.getHits().getHits();</div><div class="line"> String msg = <span class="string">"未找到"</span>;</div><div class="line"></div><div class="line"> <span class="keyword">if</span> (<span class="number">0</span> &lt; hits.length) &#123;</div><div class="line">     WildcardQueryBuilder mchntName = QueryBuilders.wildcardQuery(<span class="string">"name"</span>, <span class="string">"*"</span> + searchKey + <span class="string">"*"</span>);</div><div class="line">     QueryBuilders.prefixQuery()</div><div class="line">     BoolQueryBuilder mchntNameMust = QueryBuilders.boolQuery().must(merId).must(mchntName);</div><div class="line">     searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(mchntNameMust).execute().actionGet();</div><div class="line">     hits = searchResponse.getHits().getHits();</div><div class="line">     <span class="keyword">if</span> (<span class="number">0</span> &lt; hits.length) &#123;</div><div class="line">         <span class="keyword">for</span> (SearchHit searchHit : hits) &#123;</div><div class="line">             System.out.println(searchHit.getSourceAsMap().get(<span class="string">"name"</span>));</div><div class="line">         &#125;</div><div class="line">         msg = <span class="string">"匹配成功"</span>;</div><div class="line">     &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">4</span> &lt; searchKey.length()) &#123;</div><div class="line">         MatchQueryBuilder nameQuery = QueryBuilders.</div><div class="line">                 matchQuery(<span class="string">"name_term"</span>, searchKey).analyzer(<span class="string">"ik_max_word"</span>);</div><div class="line">         BoolQueryBuilder nameMust = QueryBuilders.boolQuery().must(merId).must(nameQuery);</div><div class="line">         searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(nameMust).execute().actionGet();</div><div class="line">         hits = searchResponse.getHits().getHits();</div><div class="line">         <span class="keyword">if</span> (<span class="number">0</span> &lt; hits.length) &#123;</div><div class="line">             <span class="keyword">for</span> (SearchHit searchHit : hits) &#123;</div><div class="line">                 System.out.println(searchHit.getSourceAsMap().get(<span class="string">"name_term"</span>));</div><div class="line">             &#125;</div><div class="line">             msg = <span class="string">"匹配成功"</span>;</div><div class="line">         &#125;</div><div class="line"></div><div class="line">     &#125;</div><div class="line"> &#125; <span class="keyword">else</span> &#123;</div><div class="line">     System.out.println(<span class="string">"未匹配到商户名"</span>);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> System.out.println(msg);</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;需求背景&quot;&gt;&lt;a href=&quot;#需求背景&quot; class=&quot;headerlink&quot; title=&quot;需求背景&quot;&gt;&lt;/a&gt;需求背景&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;总公司那边不允许输出流水中的刷卡地址,所以应对的方案是允许客户输入商户的关键字然后模糊匹配刷卡地址中是否存在&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="es" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/es/"/>
+    
+      <category term="elasticSearch" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/elasticSearch/"/>
+    
+      <category term="term" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/term/"/>
+    
+      <category term="ik" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/ik/"/>
+    
+  </entry>
   
   <entry>
     <title>java 调用spark-submit填坑</title>
@@ -313,9 +341,9 @@
     <link href="https://www.tangyuxiaoyao.club/ITWO/2018/05/04/linux-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/"/>
     <id>https://www.tangyuxiaoyao.club/ITWO/2018/05/04/linux-实用技巧总结/</id>
     <published>2018-05-04T02:32:29.000Z</published>
-    <updated>2018-05-14T01:54:10.693Z</updated>
+    <updated>2018-09-07T05:34:04.799Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>总结以往在使用linux时,用到的一点小技巧或者命令集合</p></blockquote><a id="more"></a><h2 id="批量图片格式文件转换成一个pdf"><a href="#批量图片格式文件转换成一个pdf" class="headerlink" title="批量图片格式文件转换成一个pdf"></a>批量图片格式文件转换成一个pdf</h2><blockquote><p>convert *.jpg output.pdf<br>ps:就是这么任性</p></blockquote><h2 id="awk-按照某个key分发文件的妙用"><a href="#awk-按照某个key分发文件的妙用" class="headerlink" title="awk 按照某个key分发文件的妙用"></a>awk 按照某个key分发文件的妙用</h2><h3 id="需求背景："><a href="#需求背景：" class="headerlink" title="需求背景："></a>需求背景：</h3><blockquote><p>本来的需求是提取一个月的数据，但是出来以后产品又要拆分为每天的量<br><!--more--></p></blockquote><h3 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h3><blockquote><p>本来打算使用python foreach去解决，但是想到以前用过awk处理过类似的问题，乍一看日期后面还有时分秒，必然又用到了substr，妙的是awk也支持，脚本如下：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $3  &gt;substr($2,1,10)".csv"&#125;'</span> sy*.txt;</div></pre></td></tr></table></figure><blockquote><p>完美的解决了我的问题，第二列是时间(带有时分秒,日期格式为2017-06-13的样式)，第三列为个人标示，唯一标示一条记录，当然你也可以使用$0，完成真正意义上的拆分文件。</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $0 &gt;substr($2,1,10)".csv"&#125;'</span>  sy*.txt;</div></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>总结以往在使用linux时,用到的一点小技巧或者命令集合</p></blockquote><a id="more"></a><h2 id="批量图片格式文件转换成一个pdf"><a href="#批量图片格式文件转换成一个pdf" class="headerlink" title="批量图片格式文件转换成一个pdf"></a>批量图片格式文件转换成一个pdf</h2><blockquote><p>convert *.jpg output.pdf<br>ps:就是这么任性</p></blockquote><h2 id="awk-按照某个key分发文件的妙用"><a href="#awk-按照某个key分发文件的妙用" class="headerlink" title="awk 按照某个key分发文件的妙用"></a>awk 按照某个key分发文件的妙用</h2><h3 id="需求背景："><a href="#需求背景：" class="headerlink" title="需求背景："></a>需求背景：</h3><blockquote><p>本来的需求是提取一个月的数据，但是出来以后产品又要拆分为每天的量<br><!--more--></p></blockquote><h3 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h3><blockquote><p>本来打算使用python foreach去解决，但是想到以前用过awk处理过类似的问题，乍一看日期后面还有时分秒，必然又用到了substr，妙的是awk也支持，脚本如下：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $3  &gt;substr($2,1,10)".csv"&#125;'</span> sy*.txt;</div></pre></td></tr></table></figure><blockquote><p>完美的解决了我的问题，第二列是时间(带有时分秒,日期格式为2017-06-13的样式)，第三列为个人标示，唯一标示一条记录，当然你也可以使用$0，完成真正意义上的拆分文件。</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $0 &gt;substr($2,1,10)".csv"&#125;'</span>  sy*.txt;</div></pre></td></tr></table></figure><h2 id="awk-批量更改某列的值"><a href="#awk-批量更改某列的值" class="headerlink" title="awk 批量更改某列的值"></a>awk 批量更改某列的值</h2><blockquote><p>需要更改某个文件中的某列值,用python的话很好实现,伪脚本如下</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">    details = line.strip().split(sep)</div><div class="line">details[n] = <span class="string">"new data"</span></div><div class="line"><span class="keyword">print</span> sep.join(details)</div></pre></td></tr></table></figure><blockquote><p>awk 的实现方式如下:</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk  'BEGIN&#123;FS=OFS=","&#125; $2="ccc"; print $0&#125;' aa</div></pre></td></tr></table></figure><blockquote><p>如上的代码中需要同时制定输入和输出的分隔符,如果输出分隔符不指定的话,会导致print $0的时候默认的分隔符为空格.</p></blockquote>]]></content>
     
     <summary type="html">
     
@@ -509,29 +537,6 @@
       <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
     
       <category term="file" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>mysql 和mongo 导入数据总结</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/04/mysql-%E5%92%8Cmongo-%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BB%93/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/04/mysql-和mongo-导入数据总结/</id>
-    <published>2018-04-04T07:17:22.000Z</published>
-    <updated>2018-04-16T02:43:57.221Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝迁移。<br><a id="more"></a></p><h2 id="实现分析"><a href="#实现分析" class="headerlink" title="实现分析"></a>实现分析</h2><p>因为系统落地之前都会放到队列里面等待消费，然后落库，所以新系统保证服务正常以后，域名解析到新环境，然后流程环节知道队列，等待老版环境队列消费完了而且ngnix中无用户请求记录进来（因为域名解析会有几分钟的时间），我们开始提取增量的数据，mysql记录的是表记录的最大id，mongo记录也是最大的集合objectId，然后批量导出。</p></blockquote><h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">导出</span></div><div class="line">mysql -uupsmart -p dbname -e 'select * from t where id&gt;max(id)' &gt;new_data.tsv</div><div class="line"><span class="meta">#</span><span class="bash">导入</span></div><div class="line">mysqlimport [options] db_name textfile1 ...</div></pre></td></tr></table></figure><blockquote><p>tip①:max(id)为dump之前记录的最大id。<br>tip②:mysqllimport导入的时候一定要指定-local，当然这部分属于options，或者写的是绝对路径否则会报错，默认找的是和mysqlimport命令同一路径下面的文件<br>tip③:dbname紧贴要导入的文件，而且textfile1的前缀名即为表名（.之前的那货）</p></blockquote><h3 id="mongo"><a href="#mongo" class="headerlink" title="mongo"></a>mongo</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">导出</span></div><div class="line">mongoexport -d dbanme -c collname --type=json -o new_data.csv --query='&#123;"_id":"&#123;"$gt":ObjectId("max(id)")&#125;"&#125;' </div><div class="line"><span class="meta">#</span><span class="bash">导入</span></div><div class="line">mongoimport  -d dbanme -c collname  --type=json --file new_data.csv</div></pre></td></tr></table></figure><blockquote><p>tip:本来打算是导出的时候指定csv格式然后导出，但是使用mongexport制定–type=csv的时候不能导出全部的字段，后来选择了默认的json格式导出。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;需求背景&quot;&gt;&lt;a href=&quot;#需求背景&quot; class=&quot;headerlink&quot; title=&quot;需求背景&quot;&gt;&lt;/a&gt;需求背景&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝迁移。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="mongo" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mongo/"/>
-    
-      <category term="mysql" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mysql/"/>
     
   </entry>
   
