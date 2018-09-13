@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-09-07T10:12:36.626Z</updated>
+  <updated>2018-09-13T03:15:08.397Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java mr lzo 支持</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/09/13/java-mr-lzo-%E6%94%AF%E6%8C%81/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/09/13/java-mr-lzo-支持/</id>
+    <published>2018-09-13T03:08:56.000Z</published>
+    <updated>2018-09-13T03:15:08.397Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>lzo格式有很大的压缩比,相对于Hdfs文件而言有很大优势,支持分片,默认是不支持splitable的，需要为其添加索引文件，才能支持多个map并行对lzo文件进行处理.先阶段来说为了节约存储空间,lzo格式的文件存储随处可见,所以在mapreduce中怎么读取和存储lzo文件就很有必要了解下.</p></blockquote><a id="more"></a><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>如果希望mr输出的是lzo格式的文件，添加下面的语句</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">FileOutputFormat.setCompressOutput(job, <span class="keyword">true</span>);</div><div class="line">FileOutputFormat.setOutputCompressorClass(job, LzopCodec.class);</div><div class="line"><span class="keyword">int</span> result = job.waitForCompletion(<span class="keyword">true</span>) ? <span class="number">0</span> : <span class="number">1</span>;</div><div class="line"><span class="comment">//上面的语句执行完成后，会生成最后的输出文件，需要在此基础上添加lzo的索引</span></div><div class="line">LzoIndexer lzoIndexer = <span class="keyword">new</span> LzoIndexer(conf);</div><div class="line">lzoIndexer.index(<span class="keyword">new</span> Path(args[<span class="number">1</span>]));</div></pre></td></tr></table></figure><blockquote><p>如果已经存在lzo文件，但没有添加索引，可以采用下面的方法，在输入路径的文件上上添加lzo索引<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hadoop jar $HADOOP_HOME/lib/hadoop-lzo-0.4.17.jar com.hadoop.compression.lzo.LzoIndexer hdf://inputpath</div></pre></td></tr></table></figure></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;lzo格式有很大的压缩比,相对于Hdfs文件而言有很大优势,支持分片,默认是不支持splitable的，需要为其添加索引文件，才能支持多个map并行对lzo文件进行处理.先阶段来说为了节约存储空间,lzo格式的文件存储随处可见,所以在mapreduce中怎么读取和存储lzo文件就很有必要了解下.&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
+    
+      <category term="java" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/java/"/>
+    
+      <category term="lzo" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/lzo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>scala match 使用遇到的问题</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/09/13/scala-match-%E4%BD%BF%E7%94%A8%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/09/13/scala-match-使用遇到的问题/</id>
+    <published>2018-09-13T02:45:29.000Z</published>
+    <updated>2018-09-13T02:55:53.749Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote><p>在使用scala时,有用多个开关去控制不同的使用逻辑,遇到如下的问题.</p></blockquote><a id="more"></a><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> dimensionCode = args(<span class="number">2</span>).toInt</div><div class="line">dimensionCode <span class="keyword">match</span> &#123;</div><div class="line"> <span class="keyword">case</span> <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getCode =&gt; &#123;</div><div class="line">   println(<span class="string">"正在生成报告的维度为"</span>, <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getDimensions)</div><div class="line">   <span class="comment">//  D0(0, "行业大类,行业小类")</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure><ul><li>报错</li></ul><blockquote><p> 如上的用法会出现以下的错误：</p></blockquote><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="type">Error</span>:(<span class="number">38</span>, <span class="number">33</span>) stable identifier required, but <span class="type">D0</span>.getCode found.</div><div class="line">    <span class="keyword">case</span> <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getCode =&gt; &#123;</div></pre></td></tr></table></figure><blockquote><p>必须要使用常量</p></blockquote><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><blockquote><p> 改动成如下的表达式就可以通过：</p></blockquote><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dimensionCode.toString.toInt <span class="keyword">match</span> &#123;</div><div class="line">  <span class="keyword">case</span> dimensionCode <span class="keyword">if</span> <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getCode == dimensionCode =&gt; &#123;</div><div class="line">    println(<span class="string">"正在生成报告的维度为:"</span>, <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getDimensions)</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;使用背景&quot;&gt;&lt;a href=&quot;#使用背景&quot; class=&quot;headerlink&quot; title=&quot;使用背景&quot;&gt;&lt;/a&gt;使用背景&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在使用scala时,有用多个开关去控制不同的使用逻辑,遇到如下的问题.&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="scala" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/scala/"/>
+    
+      <category term="match" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/match/"/>
+    
+  </entry>
   
   <entry>
     <title>java/scala 怎么给可变参数传值</title>
@@ -488,60 +538,6 @@
       <category term="utc" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/utc/"/>
     
       <category term="dateutil" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/dateutil/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo yilla 和github 结合搭建个人博客</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/16/hexo%20yilia%20github%20%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/16/hexo yilia github 搭建个人博客/</id>
-    <published>2018-04-16T03:17:28.107Z</published>
-    <updated>2018-04-16T03:17:28.083Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="为什么考虑这样的搭配方式"><a href="#为什么考虑这样的搭配方式" class="headerlink" title="为什么考虑这样的搭配方式?"></a>为什么考虑这样的搭配方式?</h1><h2 id="构建需求"><a href="#构建需求" class="headerlink" title="构建需求"></a>构建需求</h2><blockquote><p>现阶段有很多的技术网站都带有给想要展示自己的一些技术入门以及技术研究的平台,也就常见的技术博客.<br>  但是大多都不满足于个性化定制,偶然间接触到markdown,当然简书等这样的平台也支持markdown,但是出于个人的独占情节,还是更倾向于搭建一个独立的自己可控的blog.<br><a id="more"></a></p><h2 id="技术实现-快速搭建"><a href="#技术实现-快速搭建" class="headerlink" title="技术实现(快速搭建)"></a>技术实现(快速搭建)</h2><p>考虑到如果从零开始,买空间,选域名,构建主体框架,渲染静态页面,一套走下来,未免本末倒置,博客注重的应该是文章的可读性以及质量,当然ui需要一定的可观瞻性.幸运的是遇到了hexo,给人一种转角遇到爱的小确幸.<br>      ps:Hexo is a fast, simple &amp; powerful blog framework powered by Node.js.<br>      从官网的解释可以看出,我们需要安装Node.js,当然要和gitbub结合,你需要申请一个github账号,申请账号的步骤,此处就不再累述.<br>      笔者使用的系统是ubantu 16.04</p><p>传送门:<a href="https://github.com/join" target="_blank" rel="external">github账号申请</a></p></blockquote><h3 id="现在演示安装Node-js"><a href="#现在演示安装Node-js" class="headerlink" title="现在演示安装Node.js."></a>现在演示安装Node.js.</h3><blockquote><p>在 Github 上获取 Node.js 源码：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo git <span class="built_in">clone</span> https://github.com/nodejs/node.git</div></pre></td></tr></table></figure><p> 1.修改目录权限：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ sudo chmod -R 755 node</div><div class="line">$ <span class="built_in">cd</span> node</div><div class="line">$ node -v</div></pre></td></tr></table></figure></p><p> 2.使用 ./configure 创建编译文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo ./configure</div></pre></td></tr></table></figure></p><p> 3.这一步，可能时间有点长，耐心等待<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo make</div></pre></td></tr></table></figure></p><p> 4.最后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo make</div></pre></td></tr></table></figure></p><blockquote><p>install 查看版本</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ node -v</div></pre></td></tr></table></figure><blockquote><p>v0.10.25 如果node不是最新的，node有一个模块叫n，是专门用来管理node.js的版本的。使用npm（NPM是随同nodejs一起安装的包管理工具）安装n模块</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo npm install -g n</div></pre></td></tr></table></figure><blockquote><p>然后，升级node.js到最新稳定版</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo n stable</div></pre></td></tr></table></figure><blockquote><p>旧版本的 npm，也可以很容易地通过 npm 命令来升级，命令如下：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo npm install npm -g</div></pre></td></tr></table></figure><h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><blockquote><p>执行以下的命令:</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div><div class="line">$ hexo init blog 此处会新建一个新的目录存储hexo的一些初始化的文件.</div><div class="line">$ <span class="built_in">cd</span> blog</div><div class="line">$ npm install</div><div class="line">$ hexo server 此处会生成一个新的本地预览 访问http://localhost:4000 就可以访问本地的默认主题.</div></pre></td></tr></table></figure><h3 id="新建github仓库"><a href="#新建github仓库" class="headerlink" title="新建github仓库"></a>新建github仓库</h3><blockquote><p>新建一个仓库,然后选择public权限(写博客不就是为了别人看,进而监督自己进步么,所以public),指定git分支,使用默认的master分支即可,因为这个仓库就你一个看门的,这里面也是你的.然后记住自己的clone地址.<br>ps:记得保存.</p></blockquote><h3 id="将gitbub仓库和hexo主题绑定"><a href="#将gitbub仓库和hexo主题绑定" class="headerlink" title="将gitbub仓库和hexo主题绑定"></a>将gitbub仓库和hexo主题绑定</h3><blockquote><p>编辑_config.yml:</p></blockquote><figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">type</span>: git</div><div class="line"><span class="attribute">repo</span>: <span class="attribute">https</span>:<span class="comment">//github.com/tangyuxiaoyao/ITWO.git</span></div><div class="line"><span class="attribute">branch</span>: master</div></pre></td></tr></table></figure><blockquote><p>repo配置的地址为上文已经提及过的项目仓库clone地址.<br>而且这里有看到仓库后面带有子资源路径所以参考配置文件中的注释,需要将root对应的配置改为仓库的名称资源路径.</p></blockquote><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># URL</div><div class="line">## If your site <span class="keyword">is</span> <span class="keyword">put</span> in <span class="keyword">a</span> subdirectory, <span class="keyword">set</span> url <span class="keyword">as</span> <span class="string">'http://yoursite.com/child'</span> <span class="built_in">and</span> root <span class="keyword">as</span> <span class="string">'/child/'</span></div><div class="line">roo<span class="variable">t:</span> /ITWO/</div></pre></td></tr></table></figure><h3 id="发布主题到github仓库"><a href="#发布主题到github仓库" class="headerlink" title="发布主题到github仓库"></a>发布主题到github仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div><div class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure><ol><li>安装hexo发布模块deploy</li><li>清除缓存</li><li>生成静态页面</li><li>发布到github(每次改完以后也是这么稳妥发布)<h3 id="生成新的文章"><a href="#生成新的文章" class="headerlink" title="生成新的文章"></a>生成新的文章</h3></li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> <span class="built_in">source</span>/_posts/</div><div class="line">$ hexo new <span class="string">"shell在指定行插入文本"</span></div></pre></td></tr></table></figure><blockquote><p>然后就会生成一个为该名称的md文件,根据md语法编辑内容,完成以后发布即可.<br>ps:可以用hexo clean &amp;&amp; hexo g &amp;&amp; hexo s在本地生成预览效果,避免发布到github上的效果不尽人意.</p></blockquote><p><img src="/ITWO/assets/jscy.jpg" alt="古人笑比庭中树,一日秋风一日疏"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;为什么考虑这样的搭配方式&quot;&gt;&lt;a href=&quot;#为什么考虑这样的搭配方式&quot; class=&quot;headerlink&quot; title=&quot;为什么考虑这样的搭配方式?&quot;&gt;&lt;/a&gt;为什么考虑这样的搭配方式?&lt;/h1&gt;&lt;h2 id=&quot;构建需求&quot;&gt;&lt;a href=&quot;#构建需求&quot; class=&quot;headerlink&quot; title=&quot;构建需求&quot;&gt;&lt;/a&gt;构建需求&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;现阶段有很多的技术网站都带有给想要展示自己的一些技术入门以及技术研究的平台,也就常见的技术博客.&lt;br&gt;  但是大多都不满足于个性化定制,偶然间接触到markdown,当然简书等这样的平台也支持markdown,但是出于个人的独占情节,还是更倾向于搭建一个独立的自己可控的blog.&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="hexo" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hexo/"/>
-    
-      <category term="yilla" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/yilla/"/>
-    
-      <category term="github" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/github/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何在hadoop streaming mapreduce中 使用python第三方包</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/11/%E5%A6%82%E4%BD%95%E5%9C%A8hadoop-streaming-mapreduce%E4%B8%AD-%E4%BD%BF%E7%94%A8python%E7%AC%AC%E4%B8%89%E6%96%B9%E5%8C%85/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/11/如何在hadoop-streaming-mapreduce中-使用python第三方包/</id>
-    <published>2018-04-11T09:26:09.000Z</published>
-    <updated>2018-04-16T02:43:46.578Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>当我们需要在大数据平台使用python第三方包的时候，第一印象是在集群的每台集群都安装该第三方Python包，但是这样需要集群重启，很明显此方案扑街。<br><a id="more"></a></p><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>我们使用hadoop streaming提供你的压缩文件分发命令来使用我们的第三方Python包。</p></blockquote><h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><blockquote><p>我们先了解下该命令：</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-archivesOptionalSpecify comma-separated archives to be unarchived on the compute machines</div></pre></td></tr></table></figure><blockquote><p>字面意思是上传多个以逗号分割的压缩包到集群然后会分发解压到各个计算节点。</p></blockquote><h3 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h3><blockquote><p>打包集成python和第三方python包。</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 需要使用第三方库如bs4,numpy等时，需要用到虚拟环境virtualenv</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> virtualenv的使用</span></div><div class="line"><span class="meta">#</span><span class="bash"> 安装</span></div><div class="line"></div><div class="line">pip install virtualenv</div><div class="line"><span class="meta">#</span><span class="bash"> 新建虚拟环境</span></div><div class="line"></div><div class="line">virtualenv kxvp</div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> 使得虚拟环境的路径为相对路径</span></div><div class="line"></div><div class="line">virtualenv --relocatable kxvp</div><div class="line"><span class="meta">#</span><span class="bash"> 激活虚拟环境</span></div><div class="line"></div><div class="line">source kxvp/bin/activate</div><div class="line"><span class="meta">#</span><span class="bash"> 如果想退出，可以使用下面的命令</span></div><div class="line"></div><div class="line">deactivate</div><div class="line"><span class="meta">#</span><span class="bash"> 激活后直接安装各种需要的包</span></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> pip install XXX</span></div><div class="line"><span class="meta">#</span><span class="bash"> 压缩环境包</span></div><div class="line"></div><div class="line">tar -czf kxvp.tar.gz kxvp</div></pre></td></tr></table></figure><blockquote><p>上传到集群客户端</p></blockquote><h3 id="编写测试脚本"><a href="#编写测试脚本" class="headerlink" title="编写测试脚本"></a>编写测试脚本</h3><blockquote><p>test.sh</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></div><div class="line"></div><div class="line">hadoop fs -rmr $&#123;2&#125;</div><div class="line"></div><div class="line">hadoop jar /opt/cloudera/parcels/CDH-5.4.0-1.cdh5.4.0.p0.27/jars/hadoop-streaming-2.6.0-cdh5.4.0.jar \</div><div class="line">        -input $&#123;1&#125;\</div><div class="line">        -output $&#123;2&#125; \</div><div class="line">        -file map.py \</div><div class="line">        -mapper "kx/kxvp/bin/python map.py" \</div><div class="line">-cacheArchive '/user/upsmart/koulb/kxvp.tar.gz#kx'\</div><div class="line">        -jobconf mapred.reduce.tasks=0 \</div><div class="line">        -jobconf mapred.job.name="cache_archive_test"</div></pre></td></tr></table></figure><blockquote><p>map.py</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(separator = <span class="string">','</span>)</span>:</span></div><div class="line"><span class="keyword">print</span> np.__version__</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure><blockquote><p>tip:Python的执行路径注意要加上#后面的前缀</p></blockquote><h3 id="结果验证"><a href="#结果验证" class="headerlink" title="结果验证"></a>结果验证</h3><blockquote><p>看下集群客户端的numpy版本</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">upsmart@cluster-8:~/test_tmp$ python</div><div class="line">Python 2.7.6 (default, Oct 26 2016, 20:30:19) </div><div class="line">[GCC 4.8.4] on linux2</div><div class="line">Type "help", "copyright", "credits" or "license" for more information.</div><div class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; import numpy</span></div><div class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; <span class="built_in">print</span> numpy.__version__</span></div><div class="line">1.8.2</div></pre></td></tr></table></figure><blockquote><p>看下mapreduce输出的结果</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">upsmart@cluster-8:~/test_tmp$ hadoop fs -getmerge koulb/test/p* rs</div><div class="line">upsmart@cluster-8:~/test_tmp$ more rs</div><div class="line">1.14.2</div></pre></td></tr></table></figure><blockquote><p>不一样验证通过.</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;当我们需要在大数据平台使用python第三方包的时候，第一印象是在集群的每台集群都安装该第三方Python包，但是这样需要集群重启，很明显此方案扑街。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
-    
-      <category term="mapreduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/mapreduce/"/>
-    
-      <category term="streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/streaming/"/>
-    
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
-      <category term="numpy" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/numpy/"/>
     
   </entry>
   

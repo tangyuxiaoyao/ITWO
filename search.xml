@@ -3,6 +3,42 @@
   
     
     <entry>
+      <title>java mr lzo 支持</title>
+      <link href="/ITWO/2018/09/13/java-mr-lzo-%E6%94%AF%E6%8C%81/"/>
+      <url>/ITWO/2018/09/13/java-mr-lzo-%E6%94%AF%E6%8C%81/</url>
+      <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>lzo格式有很大的压缩比,相对于Hdfs文件而言有很大优势,支持分片,默认是不支持splitable的，需要为其添加索引文件，才能支持多个map并行对lzo文件进行处理.先阶段来说为了节约存储空间,lzo格式的文件存储随处可见,所以在mapreduce中怎么读取和存储lzo文件就很有必要了解下.</p></blockquote><a id="more"></a><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>如果希望mr输出的是lzo格式的文件，添加下面的语句</p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">FileOutputFormat.setCompressOutput(job, <span class="keyword">true</span>);</div><div class="line">FileOutputFormat.setOutputCompressorClass(job, LzopCodec.class);</div><div class="line"><span class="keyword">int</span> result = job.waitForCompletion(<span class="keyword">true</span>) ? <span class="number">0</span> : <span class="number">1</span>;</div><div class="line"><span class="comment">//上面的语句执行完成后，会生成最后的输出文件，需要在此基础上添加lzo的索引</span></div><div class="line">LzoIndexer lzoIndexer = <span class="keyword">new</span> LzoIndexer(conf);</div><div class="line">lzoIndexer.index(<span class="keyword">new</span> Path(args[<span class="number">1</span>]));</div></pre></td></tr></table></figure><blockquote><p>如果已经存在lzo文件，但没有添加索引，可以采用下面的方法，在输入路径的文件上上添加lzo索引<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hadoop jar $HADOOP_HOME/lib/hadoop-lzo-0.4.17.jar com.hadoop.compression.lzo.LzoIndexer hdf://inputpath</div></pre></td></tr></table></figure></p></blockquote>]]></content>
+      
+      
+        <tags>
+            
+            <tag> mapreduce </tag>
+            
+            <tag> java </tag>
+            
+            <tag> lzo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>scala match 使用遇到的问题</title>
+      <link href="/ITWO/2018/09/13/scala-match-%E4%BD%BF%E7%94%A8%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+      <url>/ITWO/2018/09/13/scala-match-%E4%BD%BF%E7%94%A8%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote><p>在使用scala时,有用多个开关去控制不同的使用逻辑,遇到如下的问题.</p></blockquote><a id="more"></a><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> dimensionCode = args(<span class="number">2</span>).toInt</div><div class="line">dimensionCode <span class="keyword">match</span> &#123;</div><div class="line"> <span class="keyword">case</span> <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getCode =&gt; &#123;</div><div class="line">   println(<span class="string">"正在生成报告的维度为"</span>, <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getDimensions)</div><div class="line">   <span class="comment">//  D0(0, "行业大类,行业小类")</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure><ul><li>报错</li></ul><blockquote><p> 如上的用法会出现以下的错误：</p></blockquote><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="type">Error</span>:(<span class="number">38</span>, <span class="number">33</span>) stable identifier required, but <span class="type">D0</span>.getCode found.</div><div class="line">    <span class="keyword">case</span> <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getCode =&gt; &#123;</div></pre></td></tr></table></figure><blockquote><p>必须要使用常量</p></blockquote><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><blockquote><p> 改动成如下的表达式就可以通过：</p></blockquote><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dimensionCode.toString.toInt <span class="keyword">match</span> &#123;</div><div class="line">  <span class="keyword">case</span> dimensionCode <span class="keyword">if</span> <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getCode == dimensionCode =&gt; &#123;</div><div class="line">    println(<span class="string">"正在生成报告的维度为:"</span>, <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getDimensions)</div></pre></td></tr></table></figure>]]></content>
+      
+      
+        <tags>
+            
+            <tag> scala </tag>
+            
+            <tag> match </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>java/scala 怎么给可变参数传值</title>
       <link href="/ITWO/2018/09/07/java-scala-%E6%80%8E%E4%B9%88%E7%BB%99%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E4%BC%A0%E5%80%BC/"/>
       <url>/ITWO/2018/09/07/java-scala-%E6%80%8E%E4%B9%88%E7%BB%99%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%E4%BC%A0%E5%80%BC/</url>
@@ -553,9 +589,9 @@
             
             <tag> file </tag>
             
-            <tag> scala </tag>
-            
             <tag> spark </tag>
+            
+            <tag> scala </tag>
             
             <tag> awk </tag>
             
@@ -1148,9 +1184,9 @@
       
         <tags>
             
-            <tag> spark </tag>
-            
             <tag> lzo </tag>
+            
+            <tag> spark </tag>
             
         </tags>
       
@@ -1201,9 +1237,9 @@
       
         <tags>
             
-            <tag> scala </tag>
-            
             <tag> spark </tag>
+            
+            <tag> scala </tag>
             
             <tag> map </tag>
             
@@ -1243,9 +1279,9 @@
             
             <tag> spark </tag>
             
-            <tag> not </tag>
-            
             <tag> match </tag>
+            
+            <tag> not </tag>
             
         </tags>
       

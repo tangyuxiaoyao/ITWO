@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="背景需求: 一些应用程序（例如很多.sh程序）如果想在Ubuntu中添加到Dash home中进行快速的启动.">
-<meta name="keywords" content="shell,ubantu,dash">
+<meta name="description" content="使用背景 在使用scala时,有用多个开关去控制不同的使用逻辑,遇到如下的问题.">
+<meta name="keywords" content="scala,match">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何在ubantu中设置任务栏和菜单中的快速启动和搜索">
-<meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/index.html">
+<meta property="og:title" content="scala match 使用遇到的问题">
+<meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2018/09/13/scala-match-使用遇到的问题/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="背景需求: 一些应用程序（例如很多.sh程序）如果想在Ubuntu中添加到Dash home中进行快速的启动.">
+<meta property="og:description" content="使用背景 在使用scala时,有用多个开关去控制不同的使用逻辑,遇到如下的问题.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:25:38.045Z">
+<meta property="og:updated_time" content="2018-09-13T02:55:53.749Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何在ubantu中设置任务栏和菜单中的快速启动和搜索">
-<meta name="twitter:description" content="背景需求: 一些应用程序（例如很多.sh程序）如果想在Ubuntu中添加到Dash home中进行快速的启动.">
+<meta name="twitter:title" content="scala match 使用遇到的问题">
+<meta name="twitter:description" content="使用背景 在使用scala时,有用多个开关去控制不同的使用逻辑,遇到如下的问题.">
 
 <link rel="apple-touch-icon" href= "/ITWO//apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>如何在ubantu中设置任务栏和菜单中的快速启动和搜索 | ITWO</title>
+<title>scala match 使用遇到的问题 | ITWO</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -269,11 +269,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-如何在ubantu中设置任务栏和菜单中的快速启动和搜索" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-scala-match-使用遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/" class="article-date">
-      <time datetime="2017-09-19T06:19:49.000Z" itemprop="datePublished">2017-09-19</time>
+      <a href="/ITWO/2018/09/13/scala-match-使用遇到的问题/" class="article-date">
+      <time datetime="2018-09-13T02:45:29.000Z" itemprop="datePublished">2018-09-13</time>
 </a>
 
 
@@ -288,7 +288,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      如何在ubantu中设置任务栏和菜单中的快速启动和搜索
+      scala match 使用遇到的问题
     </h1>
   
 
@@ -299,7 +299,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/dash/">dash</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/ubantu/">ubantu</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/match/">match</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/scala/">scala</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -309,23 +309,25 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="背景需求"><a href="#背景需求" class="headerlink" title="背景需求:"></a>背景需求:</h2><blockquote>
-<p>一些应用程序（例如很多.sh程序）如果想在Ubuntu中添加到Dash home中进行快速的启动.<a id="more"></a></p>
+        <h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote>
+<p>在使用scala时,有用多个开关去控制不同的使用逻辑,遇到如下的问题.</p>
 </blockquote>
-<h2 id="场景分析"><a href="#场景分析" class="headerlink" title="场景分析:"></a>场景分析:</h2><blockquote>
-<p>需要找到/usr/share/applications这个目录，其中存放的全部是dash中的启动器，将你需要的程序xxx添加其中即可。</p>
-</blockquote>
-<h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现:"></a>技术实现:</h2><blockquote>
-<p>具体操作步骤为：</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /usr/share/applications sudo gedit xxx.desktop</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> dimensionCode = args(<span class="number">2</span>).toInt</div><div class="line">dimensionCode <span class="keyword">match</span> &#123;</div><div class="line"> <span class="keyword">case</span> <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getCode =&gt; &#123;</div><div class="line">   println(<span class="string">"正在生成报告的维度为"</span>, <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getDimensions)</div><div class="line">   <span class="comment">//  D0(0, "行业大类,行业小类")</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>报错</li>
+</ul>
 <blockquote>
-<p>打开需要编辑的文本内容为：</p>
+<p> 如上的用法会出现以下的错误：</p>
 </blockquote>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="section">[Desktop Entry]</span> </div><div class="line"><span class="attr">Version</span>=<span class="number">1.0</span> </div><div class="line"><span class="attr">Name</span>=robomongo</div><div class="line"><span class="attr">GenericName</span>=robomongo</div><div class="line"><span class="attr">Keywords</span>=mongo;robo;robomongo (此配置是在程序搜索时，可以使用罗列的关键字)</div><div class="line"><span class="attr">Exec</span>=/home/username/xxx.sh（这个是启动程序需要执行的文件路径名） </div><div class="line"><span class="attr">Terminal</span>=<span class="literal">false</span> </div><div class="line"><span class="attr">Icon</span>=/home/username/xxx.png（这个是图标，这个一般程序里面不带，可以去官网找logo） </div><div class="line"><span class="attr">Type</span>=Application </div><div class="line"><span class="attr">Categories</span>=Development</div></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="type">Error</span>:(<span class="number">38</span>, <span class="number">33</span>) stable identifier required, but <span class="type">D0</span>.getCode found.</div><div class="line">    <span class="keyword">case</span> <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getCode =&gt; &#123;</div></pre></td></tr></table></figure>
 <blockquote>
-<p>这样就可以在dash中看到xxx的启动器图标了，也可以直接将其添加锁定到launcher</p>
+<p>必须要使用常量</p>
 </blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><blockquote>
+<p> 改动成如下的表达式就可以通过：</p>
+</blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dimensionCode.toString.toInt <span class="keyword">match</span> &#123;</div><div class="line">  <span class="keyword">case</span> dimensionCode <span class="keyword">if</span> <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getCode == dimensionCode =&gt; &#123;</div><div class="line">    println(<span class="string">"正在生成报告的维度为:"</span>, <span class="type">AnalysisDimension</span>.<span class="type">D0</span>.getDimensions)</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -334,13 +336,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/">如何在ubantu中设置任务栏和菜单中的快速启动和搜索</a></p>
+        <p><span>本文标题:</span><a href="/ITWO/2018/09/13/scala-match-使用遇到的问题/">scala match 使用遇到的问题</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
-        <p><span>发布时间:</span>2017-09-19, 14:19:49</p>
-        <p><span>最后更新:</span>2018-04-16, 11:25:38</p>
+        <p><span>发布时间:</span>2018-09-13, 10:45:29</p>
+        <p><span>最后更新:</span>2018-09-13, 10:55:53</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/" title="如何在ubantu中设置任务栏和菜单中的快速启动和搜索">https://www.tangyuxiaoyao.club/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/ITWO/2018/09/13/scala-match-使用遇到的问题/" title="scala match 使用遇到的问题">https://www.tangyuxiaoyao.club/ITWO/2018/09/13/scala-match-使用遇到的问题/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/09/13/scala-match-使用遇到的问题/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -353,15 +355,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/ITWO/2017/09/19/spark-scala中map和flatmap的区别/">
-                    spark scala中map和flatmap的区别
+                <a href="/ITWO/2018/09/13/java-mr-lzo-支持/">
+                    java mr lzo 支持
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/ITWO/2017/09/19/spark-项目启动的时候报出如下错误/">
-                    spark 项目启动的时候报出如下错误
+                <a href="/ITWO/2018/09/07/java-scala-怎么给可变参数传值/">
+                    java/scala 怎么给可变参数传值
                 </a>
             </div>
         
@@ -373,7 +375,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景需求"><span class="toc-number">1.</span> <span class="toc-text">背景需求:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#场景分析"><span class="toc-number">2.</span> <span class="toc-text">场景分析:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技术实现"><span class="toc-number">3.</span> <span class="toc-text">技术实现:</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用背景"><span class="toc-number">1.</span> <span class="toc-text">使用背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题描述"><span class="toc-number">2.</span> <span class="toc-text">问题描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a></li></ol>
         
     </div>
     <style>
@@ -409,7 +411,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"如何在ubantu中设置任务栏和菜单中的快速启动和搜索　| ITWO　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"scala match 使用遇到的问题　| ITWO　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -429,7 +431,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/ITWO/2017/09/19/spark-scala中map和flatmap的区别/" title="上一篇: spark scala中map和flatmap的区别">
+            <a href="/ITWO/2018/09/13/java-mr-lzo-支持/" title="上一篇: java mr lzo 支持">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -437,7 +439,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/ITWO/2017/09/19/spark-项目启动的时候报出如下错误/" title="下一篇: spark 项目启动的时候报出如下错误">
+            <a href="/ITWO/2018/09/07/java-scala-怎么给可变参数传值/" title="下一篇: java/scala 怎么给可变参数传值">
                 <i class="fa fa-angle-right"></i>
             </a>
         

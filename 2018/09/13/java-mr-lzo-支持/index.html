@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="背景需求: 一些应用程序（例如很多.sh程序）如果想在Ubuntu中添加到Dash home中进行快速的启动.">
-<meta name="keywords" content="shell,ubantu,dash">
+<meta name="description" content="背景描述 lzo格式有很大的压缩比,相对于Hdfs文件而言有很大优势,支持分片,默认是不支持splitable的，需要为其添加索引文件，才能支持多个map并行对lzo文件进行处理.先阶段来说为了节约存储空间,lzo格式的文件存储随处可见,所以在mapreduce中怎么读取和存储lzo文件就很有必要了解下.">
+<meta name="keywords" content="mapreduce,java,lzo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何在ubantu中设置任务栏和菜单中的快速启动和搜索">
-<meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/index.html">
+<meta property="og:title" content="java mr lzo 支持">
+<meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2018/09/13/java-mr-lzo-支持/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="背景需求: 一些应用程序（例如很多.sh程序）如果想在Ubuntu中添加到Dash home中进行快速的启动.">
+<meta property="og:description" content="背景描述 lzo格式有很大的压缩比,相对于Hdfs文件而言有很大优势,支持分片,默认是不支持splitable的，需要为其添加索引文件，才能支持多个map并行对lzo文件进行处理.先阶段来说为了节约存储空间,lzo格式的文件存储随处可见,所以在mapreduce中怎么读取和存储lzo文件就很有必要了解下.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:25:38.045Z">
+<meta property="og:updated_time" content="2018-09-13T03:15:08.397Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何在ubantu中设置任务栏和菜单中的快速启动和搜索">
-<meta name="twitter:description" content="背景需求: 一些应用程序（例如很多.sh程序）如果想在Ubuntu中添加到Dash home中进行快速的启动.">
+<meta name="twitter:title" content="java mr lzo 支持">
+<meta name="twitter:description" content="背景描述 lzo格式有很大的压缩比,相对于Hdfs文件而言有很大优势,支持分片,默认是不支持splitable的，需要为其添加索引文件，才能支持多个map并行对lzo文件进行处理.先阶段来说为了节约存储空间,lzo格式的文件存储随处可见,所以在mapreduce中怎么读取和存储lzo文件就很有必要了解下.">
 
 <link rel="apple-touch-icon" href= "/ITWO//apple-touch-icon.png">
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>如何在ubantu中设置任务栏和菜单中的快速启动和搜索 | ITWO</title>
+<title>java mr lzo 支持 | ITWO</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -269,11 +269,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-如何在ubantu中设置任务栏和菜单中的快速启动和搜索" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-java-mr-lzo-支持" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/" class="article-date">
-      <time datetime="2017-09-19T06:19:49.000Z" itemprop="datePublished">2017-09-19</time>
+      <a href="/ITWO/2018/09/13/java-mr-lzo-支持/" class="article-date">
+      <time datetime="2018-09-13T03:08:56.000Z" itemprop="datePublished">2018-09-13</time>
 </a>
 
 
@@ -288,7 +288,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      如何在ubantu中设置任务栏和菜单中的快速启动和搜索
+      java mr lzo 支持
     </h1>
   
 
@@ -299,7 +299,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/dash/">dash</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/shell/">shell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/ubantu/">ubantu</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/lzo/">lzo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/mapreduce/">mapreduce</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -309,22 +309,16 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="背景需求"><a href="#背景需求" class="headerlink" title="背景需求:"></a>背景需求:</h2><blockquote>
-<p>一些应用程序（例如很多.sh程序）如果想在Ubuntu中添加到Dash home中进行快速的启动.<a id="more"></a></p>
+        <h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote>
+<p>lzo格式有很大的压缩比,相对于Hdfs文件而言有很大优势,支持分片,默认是不支持splitable的，需要为其添加索引文件，才能支持多个map并行对lzo文件进行处理.先阶段来说为了节约存储空间,lzo格式的文件存储随处可见,所以在mapreduce中怎么读取和存储lzo文件就很有必要了解下.</p>
 </blockquote>
-<h2 id="场景分析"><a href="#场景分析" class="headerlink" title="场景分析:"></a>场景分析:</h2><blockquote>
-<p>需要找到/usr/share/applications这个目录，其中存放的全部是dash中的启动器，将你需要的程序xxx添加其中即可。</p>
+<a id="more"></a>
+<h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote>
+<p>如果希望mr输出的是lzo格式的文件，添加下面的语句</p>
 </blockquote>
-<h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现:"></a>技术实现:</h2><blockquote>
-<p>具体操作步骤为：</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /usr/share/applications sudo gedit xxx.desktop</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">FileOutputFormat.setCompressOutput(job, <span class="keyword">true</span>);</div><div class="line">FileOutputFormat.setOutputCompressorClass(job, LzopCodec.class);</div><div class="line"><span class="keyword">int</span> result = job.waitForCompletion(<span class="keyword">true</span>) ? <span class="number">0</span> : <span class="number">1</span>;</div><div class="line"><span class="comment">//上面的语句执行完成后，会生成最后的输出文件，需要在此基础上添加lzo的索引</span></div><div class="line">LzoIndexer lzoIndexer = <span class="keyword">new</span> LzoIndexer(conf);</div><div class="line">lzoIndexer.index(<span class="keyword">new</span> Path(args[<span class="number">1</span>]));</div></pre></td></tr></table></figure>
 <blockquote>
-<p>打开需要编辑的文本内容为：</p>
-</blockquote>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="section">[Desktop Entry]</span> </div><div class="line"><span class="attr">Version</span>=<span class="number">1.0</span> </div><div class="line"><span class="attr">Name</span>=robomongo</div><div class="line"><span class="attr">GenericName</span>=robomongo</div><div class="line"><span class="attr">Keywords</span>=mongo;robo;robomongo (此配置是在程序搜索时，可以使用罗列的关键字)</div><div class="line"><span class="attr">Exec</span>=/home/username/xxx.sh（这个是启动程序需要执行的文件路径名） </div><div class="line"><span class="attr">Terminal</span>=<span class="literal">false</span> </div><div class="line"><span class="attr">Icon</span>=/home/username/xxx.png（这个是图标，这个一般程序里面不带，可以去官网找logo） </div><div class="line"><span class="attr">Type</span>=Application </div><div class="line"><span class="attr">Categories</span>=Development</div></pre></td></tr></table></figure>
-<blockquote>
-<p>这样就可以在dash中看到xxx的启动器图标了，也可以直接将其添加锁定到launcher</p>
+<p>如果已经存在lzo文件，但没有添加索引，可以采用下面的方法，在输入路径的文件上上添加lzo索引<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hadoop jar $HADOOP_HOME/lib/hadoop-lzo-0.4.17.jar com.hadoop.compression.lzo.LzoIndexer hdf://inputpath</div></pre></td></tr></table></figure></p>
 </blockquote>
 
       
@@ -334,13 +328,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/">如何在ubantu中设置任务栏和菜单中的快速启动和搜索</a></p>
+        <p><span>本文标题:</span><a href="/ITWO/2018/09/13/java-mr-lzo-支持/">java mr lzo 支持</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
-        <p><span>发布时间:</span>2017-09-19, 14:19:49</p>
-        <p><span>最后更新:</span>2018-04-16, 11:25:38</p>
+        <p><span>发布时间:</span>2018-09-13, 11:08:56</p>
+        <p><span>最后更新:</span>2018-09-13, 11:15:08</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/" title="如何在ubantu中设置任务栏和菜单中的快速启动和搜索">https://www.tangyuxiaoyao.club/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/ITWO/2018/09/13/java-mr-lzo-支持/" title="java mr lzo 支持">https://www.tangyuxiaoyao.club/ITWO/2018/09/13/java-mr-lzo-支持/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/09/13/java-mr-lzo-支持/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -352,16 +346,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/ITWO/2017/09/19/spark-scala中map和flatmap的区别/">
-                    spark scala中map和flatmap的区别
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/ITWO/2017/09/19/spark-项目启动的时候报出如下错误/">
-                    spark 项目启动的时候报出如下错误
+                <a href="/ITWO/2018/09/13/scala-match-使用遇到的问题/">
+                    scala match 使用遇到的问题
                 </a>
             </div>
         
@@ -373,7 +361,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景需求"><span class="toc-number">1.</span> <span class="toc-text">背景需求:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#场景分析"><span class="toc-number">2.</span> <span class="toc-text">场景分析:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技术实现"><span class="toc-number">3.</span> <span class="toc-text">技术实现:</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景描述"><span class="toc-number">1.</span> <span class="toc-text">背景描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技术实现"><span class="toc-number">2.</span> <span class="toc-text">技术实现</span></a></li></ol>
         
     </div>
     <style>
@@ -409,7 +397,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"如何在ubantu中设置任务栏和菜单中的快速启动和搜索　| ITWO　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"java mr lzo 支持　| ITWO　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -429,15 +417,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/ITWO/2017/09/19/spark-scala中map和flatmap的区别/" title="上一篇: spark scala中map和flatmap的区别">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/ITWO/2017/09/19/spark-项目启动的时候报出如下错误/" title="下一篇: spark 项目启动的时候报出如下错误">
+            <a href="/ITWO/2018/09/13/scala-match-使用遇到的问题/" title="下一篇: scala match 使用遇到的问题">
                 <i class="fa fa-angle-right"></i>
             </a>
         
