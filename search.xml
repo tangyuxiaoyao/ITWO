@@ -3,6 +3,25 @@
   
     
     <entry>
+      <title>ssh 免密码登录以及多种用途共存</title>
+      <link href="/ITWO/2018/10/12/ssh-%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E4%BB%A5%E5%8F%8A%E5%A4%9A%E7%A7%8D%E7%94%A8%E9%80%94%E5%85%B1%E5%AD%98/"/>
+      <url>/ITWO/2018/10/12/ssh-%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E4%BB%A5%E5%8F%8A%E5%A4%9A%E7%A7%8D%E7%94%A8%E9%80%94%E5%85%B1%E5%AD%98/</url>
+      <content type="html"><![CDATA[<h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote><p>在日常使用ssh时,我们有以下几种使用场景</p></blockquote><ol><li>ssh 远程登录远端的机器</li><li>scp 与其他的主机 上传或者下载数据</li><li>ssh 生成邮箱的公钥用于免密拉取git的项目</li></ol><a id="more"></a><h2 id="实现和原理分析"><a href="#实现和原理分析" class="headerlink" title="实现和原理分析"></a>实现和原理分析</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">（1）在HOSTA机器上产生公钥和私钥</div><div class="line">   ssh-keygen -t rsa</div><div class="line">   </div><div class="line">（2）需要将HOSTA机器的公钥复制给HOSTB机器</div><div class="line">  ssh-copy-id -i .ssh/id_rsa.pub root@HOSTB</div></pre></td></tr></table></figure><ul><li>图解</li></ul><p><img src="/ITWO/assets/ssh-rsa.png" alt="详细交互过程"></p><h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><blockquote><p>既然ssh生成的公钥可以用来这么多用途,那么怎样让用于免密码登录/拷贝的公钥和用来拉取git项目的公钥共存呢?</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> man ssh-add</span></div><div class="line">NAME</div><div class="line">     ssh-add — adds private key identities to the authentication agent</div><div class="line">     ssh-add adds private key identities to the authentication agent, ssh-agent(1).  When run</div><div class="line">     without arguments, it adds the files ~/.ssh/id_rsa, ~/.ssh/id_dsa, ~/.ssh/id_ecdsa,</div><div class="line">     ~/.ssh/id_ed25519 and ~/.ssh/identity.  After loading a private key, ssh-add will try to load</div><div class="line">     corresponding certificate information from the filename obtained by appending -cert.pub to</div><div class="line">     the name of the private key file.  Alternative file names can be given on the command line.</div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> 从以上的解释可以看出通过该命令可以解决此问题</span></div><div class="line">ssh-add ~/.ssh/*_rsa</div></pre></td></tr></table></figure><ul><li>ssh-add操作<br><img src="/ITWO/assets/ssh-add.png" alt="ssh-add 操作过程"></li></ul><ul><li>过程测试<br><img src="/ITWO/assets/ssh-git.png" alt="ssh-add 操作过程"></li></ul><blockquote><p>ps: 用作一种用途时,生成id_rsa和id_rsa.pub之后记得重命名,然后使用ssh-add添加该密钥.</p></blockquote>]]></content>
+      
+      
+        <tags>
+            
+            <tag> git </tag>
+            
+            <tag> ssh </tag>
+            
+            <tag> scp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>ubantu unzip或手动解压文件乱码</title>
       <link href="/ITWO/2018/10/08/ubantu-unzip%E6%88%96%E6%89%8B%E5%8A%A8%E8%A7%A3%E5%8E%8B%E6%96%87%E4%BB%B6%E4%B9%B1%E7%A0%81/"/>
       <url>/ITWO/2018/10/08/ubantu-unzip%E6%88%96%E6%89%8B%E5%8A%A8%E8%A7%A3%E5%8E%8B%E6%96%87%E4%BB%B6%E4%B9%B1%E7%A0%81/</url>
@@ -277,9 +296,9 @@
       
         <tags>
             
-            <tag> python </tag>
-            
             <tag> hadoop streaming </tag>
+            
+            <tag> python </tag>
             
             <tag> cacheFile </tag>
             
@@ -608,9 +627,9 @@
             
             <tag> file </tag>
             
-            <tag> scala </tag>
-            
             <tag> spark </tag>
+            
+            <tag> scala </tag>
             
             <tag> awk </tag>
             
@@ -1203,9 +1222,9 @@
       
         <tags>
             
-            <tag> lzo </tag>
-            
             <tag> spark </tag>
+            
+            <tag> lzo </tag>
             
         </tags>
       
@@ -1256,9 +1275,9 @@
       
         <tags>
             
-            <tag> scala </tag>
-            
             <tag> spark </tag>
+            
+            <tag> scala </tag>
             
             <tag> map </tag>
             

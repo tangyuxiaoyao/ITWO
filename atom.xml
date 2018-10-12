@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-10-12T08:37:53.856Z</updated>
+  <updated>2018-10-12T09:44:12.658Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ssh 免密码登录以及多种用途共存</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/10/12/ssh-%E5%85%8D%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E4%BB%A5%E5%8F%8A%E5%A4%9A%E7%A7%8D%E7%94%A8%E9%80%94%E5%85%B1%E5%AD%98/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/10/12/ssh-免密码登录以及多种用途共存/</id>
+    <published>2018-10-12T08:51:58.000Z</published>
+    <updated>2018-10-12T09:44:12.658Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote><p>在日常使用ssh时,我们有以下几种使用场景</p></blockquote><ol><li>ssh 远程登录远端的机器</li><li>scp 与其他的主机 上传或者下载数据</li><li>ssh 生成邮箱的公钥用于免密拉取git的项目</li></ol><a id="more"></a><h2 id="实现和原理分析"><a href="#实现和原理分析" class="headerlink" title="实现和原理分析"></a>实现和原理分析</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">（1）在HOSTA机器上产生公钥和私钥</div><div class="line">   ssh-keygen -t rsa</div><div class="line">   </div><div class="line">（2）需要将HOSTA机器的公钥复制给HOSTB机器</div><div class="line">  ssh-copy-id -i .ssh/id_rsa.pub root@HOSTB</div></pre></td></tr></table></figure><ul><li>图解</li></ul><p><img src="/ITWO/assets/ssh-rsa.png" alt="详细交互过程"></p><h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><blockquote><p>既然ssh生成的公钥可以用来这么多用途,那么怎样让用于免密码登录/拷贝的公钥和用来拉取git项目的公钥共存呢?</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> man ssh-add</span></div><div class="line">NAME</div><div class="line">     ssh-add — adds private key identities to the authentication agent</div><div class="line">     ssh-add adds private key identities to the authentication agent, ssh-agent(1).  When run</div><div class="line">     without arguments, it adds the files ~/.ssh/id_rsa, ~/.ssh/id_dsa, ~/.ssh/id_ecdsa,</div><div class="line">     ~/.ssh/id_ed25519 and ~/.ssh/identity.  After loading a private key, ssh-add will try to load</div><div class="line">     corresponding certificate information from the filename obtained by appending -cert.pub to</div><div class="line">     the name of the private key file.  Alternative file names can be given on the command line.</div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash"> 从以上的解释可以看出通过该命令可以解决此问题</span></div><div class="line">ssh-add ~/.ssh/*_rsa</div></pre></td></tr></table></figure><ul><li>ssh-add操作<br><img src="/ITWO/assets/ssh-add.png" alt="ssh-add 操作过程"></li></ul><ul><li>过程测试<br><img src="/ITWO/assets/ssh-git.png" alt="ssh-add 操作过程"></li></ul><blockquote><p>ps: 用作一种用途时,生成id_rsa和id_rsa.pub之后记得重命名,然后使用ssh-add添加该密钥.</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;使用背景&quot;&gt;&lt;a href=&quot;#使用背景&quot; class=&quot;headerlink&quot; title=&quot;使用背景&quot;&gt;&lt;/a&gt;使用背景&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;在日常使用ssh时,我们有以下几种使用场景&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;ssh 远程登录远端的机器&lt;/li&gt;
+&lt;li&gt;scp 与其他的主机 上传或者下载数据&lt;/li&gt;
+&lt;li&gt;ssh 生成邮箱的公钥用于免密拉取git的项目&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+    
+      <category term="git" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/git/"/>
+    
+      <category term="ssh" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/ssh/"/>
+    
+      <category term="scp" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/scp/"/>
+    
+  </entry>
   
   <entry>
     <title>ubantu unzip或手动解压文件乱码</title>
@@ -401,9 +432,9 @@
     </summary>
     
     
-      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
-    
       <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
+    
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
     
       <category term="cacheFile" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/cacheFile/"/>
     
@@ -513,31 +544,6 @@
       <category term="spring" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/spring/"/>
     
       <category term="registerShutdownHook" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/registerShutdownHook/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hadoop HDFS 数据自动平衡</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/27/%20Hadoop%20HDFS%20%E6%95%B0%E6%8D%AE%E8%87%AA%E5%8A%A8%E5%B9%B3%E8%A1%A1/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/27/ Hadoop HDFS 数据自动平衡/</id>
-    <published>2018-04-27T05:53:42.269Z</published>
-    <updated>2018-04-27T05:53:42.269Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Hadoop-HDFS-数据自动平衡脚本使用方法"><a href="#Hadoop-HDFS-数据自动平衡脚本使用方法" class="headerlink" title="Hadoop HDFS 数据自动平衡脚本使用方法"></a>Hadoop HDFS 数据自动平衡脚本使用方法</h2><blockquote><p>在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Hadoop_home/bin/start-balancer.sh –threshold`<br><a id="more"></a></p></blockquote><h2 id="影响Balancer的几个参数："><a href="#影响Balancer的几个参数：" class="headerlink" title="影响Balancer的几个参数："></a>影响Balancer的几个参数：</h2><p>-threshold</p><blockquote><p>默认设置：10，参数取值范围：0-100<br>参数含义：判断集群是否平衡的阈值。理论上，该参数设置的越小，整个集群就越平衡<br>dfs.balance.bandwidthPerSec<br>默认设置：1048576（1M/S）<br>参数含义：Balancer运行时允许占用的带宽<br>示例如下：</p></blockquote><p>#启动数据均衡，默认阈值为 10%<br>$Hadoop_home/bin/start-balancer.sh</p><p>#启动数据均衡，阈值 5%<br>bin/start-balancer.sh –threshold 5</p><p>#停止数据均衡<br>$Hadoop_home/bin/stop-balancer.sh<br>在hdfs-site.xml文件中可以设置数据均衡占用的网络带宽限制</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.balance.bandwidthPerSec<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1048576<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span> Specifies the maximum bandwidth that each datanode can utilize for the balancing purpose in term of the number of bytes per second. <span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Hadoop-HDFS-数据自动平衡脚本使用方法&quot;&gt;&lt;a href=&quot;#Hadoop-HDFS-数据自动平衡脚本使用方法&quot; class=&quot;headerlink&quot; title=&quot;Hadoop HDFS 数据自动平衡脚本使用方法&quot;&gt;&lt;/a&gt;Hadoop HDFS 数据自动平衡脚本使用方法&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Hadoop_home/bin/start-balancer.sh –threshold`&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="hadoop" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop/"/>
-    
-      <category term="hdfs" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hdfs/"/>
-    
-      <category term="balancer" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/balancer/"/>
     
   </entry>
   
