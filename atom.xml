@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-10-12T09:44:12.658Z</updated>
+  <updated>2018-10-24T05:28:50.578Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>linux 下怎么使用命令制作U盘启动盘</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/10/24/linux-%E4%B8%8B%E6%80%8E%E4%B9%88%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E5%88%B6%E4%BD%9CU%E7%9B%98%E5%90%AF%E5%8A%A8%E7%9B%98/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/</id>
+    <published>2018-10-24T05:27:07.000Z</published>
+    <updated>2018-10-24T05:28:50.578Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote><p>ubantu自带的工具没有相应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.</p></blockquote><a id="more"></a><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">unmout the mount pan</span></div><div class="line">sudo umount /dev/sdb</div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">format u pan</span></div><div class="line">sudo mkfs.vfat /dev/sdb –I</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">make u pan to a pan <span class="built_in">which</span> can play as a bootpan</span></div><div class="line">sudo dd if=~/iso/deepin-15.7-amd64.iso of=/dev/sdb</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;使用背景&quot;&gt;&lt;a href=&quot;#使用背景&quot; class=&quot;headerlink&quot; title=&quot;使用背景&quot;&gt;&lt;/a&gt;使用背景&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;ubantu自带的工具没有相应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>ssh 免密码登录以及多种用途共存</title>
@@ -41,9 +61,9 @@
     
       <category term="git" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/git/"/>
     
-      <category term="ssh" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/ssh/"/>
-    
       <category term="scp" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/scp/"/>
+    
+      <category term="ssh" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/ssh/"/>
     
   </entry>
   
@@ -432,9 +452,9 @@
     </summary>
     
     
-      <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
-    
       <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+    
+      <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
     
       <category term="cacheFile" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/cacheFile/"/>
     
@@ -520,30 +540,6 @@
       <category term="part" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/part/"/>
     
       <category term="reduce" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/reduce/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>spring 优雅地关闭程序</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/04/27/spring-%E4%BC%98%E9%9B%85%E5%9C%B0%E5%85%B3%E9%97%AD%E7%A8%8B%E5%BA%8F/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/04/27/spring-优雅地关闭程序/</id>
-    <published>2018-04-27T09:11:06.000Z</published>
-    <updated>2018-05-14T01:55:27.826Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><blockquote><p>如何优雅地退出spring容器环境?</p></blockquote><a id="more"></a><h2 id="细节描述"><a href="#细节描述" class="headerlink" title="细节描述"></a>细节描述</h2><h3 id="Spring关闭钩子"><a href="#Spring关闭钩子" class="headerlink" title="Spring关闭钩子"></a>Spring关闭钩子</h3><blockquote><p>Spring在AbstractApplicationContext里维护了一个shutdownHook属性，用来关闭Spring上下文。但这个钩子不是默认生效的，需要手动调用&gt;ApplicationContext.registerShutdownHook()来开启，在自行维护ApplicationContext（而不是托管给tomcat之类的容器时），注意尽量使用&gt;ApplicationContext.registerShutdownHook()或者手动调用ApplicationContext.close()来关闭Spring上下文，否则应用退出时可能会残留资源。</p></blockquote><h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><blockquote><p>Runtime.getRuntime().addShutdownHook的方法的意思就是在jvm中增加一个关闭的钩子，当jvm关闭的时候，会执行系统中已设置的所有通过addShutdownHook添加的钩子，当系统执行完这些钩子后，jvm才会关闭。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;如何优雅地退出spring容器环境?&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-    
-      <category term="spring" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/spring/"/>
-    
-      <category term="registerShutdownHook" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/registerShutdownHook/"/>
     
   </entry>
   
