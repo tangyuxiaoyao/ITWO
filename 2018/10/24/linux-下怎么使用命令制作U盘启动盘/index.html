@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="使用背景 ubantu自带的工具没有相应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.">
+<meta name="description" content="使用背景 ubantu自带的工具没有响应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux 下怎么使用命令制作U盘启动盘">
 <meta property="og:url" content="https://www.tangyuxiaoyao.club/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="使用背景 ubantu自带的工具没有相应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.">
+<meta property="og:description" content="使用背景 ubantu自带的工具没有响应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-24T05:28:50.578Z">
+<meta property="og:updated_time" content="2018-10-25T01:41:31.855Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux 下怎么使用命令制作U盘启动盘">
-<meta name="twitter:description" content="使用背景 ubantu自带的工具没有相应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.">
+<meta name="twitter:description" content="使用背景 ubantu自带的工具没有响应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.">
 
 <link rel="apple-touch-icon" href= "/ITWO//apple-touch-icon.png">
 
@@ -305,7 +305,7 @@
       
           
         <h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote>
-<p>ubantu自带的工具没有相应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.</p>
+<p>ubantu自带的工具没有响应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">unmout the mount pan</span></div><div class="line">sudo umount /dev/sdb</div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">format u pan</span></div><div class="line">sudo mkfs.vfat /dev/sdb –I</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">make u pan to a pan <span class="built_in">which</span> can play as a bootpan</span></div><div class="line">sudo dd if=~/iso/deepin-15.7-amd64.iso of=/dev/sdb</div></pre></td></tr></table></figure>
@@ -320,7 +320,7 @@
         <p><span>本文标题:</span><a href="/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/">linux 下怎么使用命令制作U盘启动盘</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
         <p><span>发布时间:</span>2018-10-24, 13:27:07</p>
-        <p><span>最后更新:</span>2018-10-24, 13:28:50</p>
+        <p><span>最后更新:</span>2018-10-25, 09:41:31</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/" title="linux 下怎么使用命令制作U盘启动盘">https://www.tangyuxiaoyao.club/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/</a>
             <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
