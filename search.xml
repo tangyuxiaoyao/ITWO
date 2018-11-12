@@ -6,7 +6,7 @@
       <title>python中-1的妙用</title>
       <link href="/ITWO/2018/11/12/python%E4%B8%AD-1%E7%9A%84%E5%A6%99%E7%94%A8/"/>
       <url>/ITWO/2018/11/12/python%E4%B8%AD-1%E7%9A%84%E5%A6%99%E7%94%A8/</url>
-      <content type="html"><![CDATA[<h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote><p>在浏览HadoopStreaming官网时，有看到如下的用法也可以实现截取一行的数据。</p></blockquote><a id="more"></a><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">generateLongCountToken</span><span class="params">(id)</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">"LongValueSum:"</span> + id + <span class="string">"\t"</span> + <span class="string">"1"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(argv)</span>:</span></div><div class="line">    line = sys.stdin.readline();</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">while</span> line:</div><div class="line">            line = line[:<span class="number">-1</span>];</div><div class="line">            fields = line.split(<span class="string">"\t"</span>);</div><div class="line">            <span class="keyword">print</span> generateLongCountToken(fields[<span class="number">0</span>]);</div><div class="line">            line = sys.stdin.readline();</div><div class="line">    <span class="keyword">except</span> <span class="string">"end of file"</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">     main(sys.argv)</div></pre></td></tr></table></figure><h2 id="调研过程"><a href="#调研过程" class="headerlink" title="调研过程"></a>调研过程</h2><blockquote><p>很好奇这样的用法作用与字符串会有什么效果，就有了如下的调研。</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line"><span class="keyword">print</span> line</div><div class="line"><span class="keyword">print</span> line[:<span class="number">-1</span>]</div><div class="line"><span class="keyword">print</span> line.strip()</div><div class="line"></div><div class="line">a = <span class="string">'   '</span></div><div class="line"><span class="keyword">print</span> len(a)</div><div class="line"><span class="keyword">print</span> len(a[:<span class="number">-1</span>])</div><div class="line"><span class="keyword">print</span> len(a.strip())</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">main()</div></pre></td></tr></table></figure><ul><li>输出如下：</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1,2,3,4</div><div class="line"></div><div class="line">1,2,3,4</div><div class="line">1,2,3,4</div><div class="line">123,3213,542,6</div><div class="line"></div><div class="line">123,3213,542,6</div><div class="line">123,3213,542,6</div><div class="line">3</div><div class="line">2</div><div class="line">0</div></pre></td></tr></table></figure><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote><p>从上可以得出如下的结论：</p></blockquote><ol><li>-1可以去除数据行后面的换行符或者最后的空格或者tab等单个字符</li><li>但是不可以去除多个空格或者多个无用字符</li><li>此类的场景还是推荐使用strip()来保证万无一失,当然在获得完整的一行的数据的场景,该用法完全够用。</li></ol>]]></content>
+      <content type="html"><![CDATA[<h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote><p>在浏览HadoopStreaming官网时，有看到如下的用法也可以实现截取一行的数据。</p></blockquote><a id="more"></a><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> sys;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">generateLongCountToken</span><span class="params">(id)</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">"LongValueSum:"</span> + id + <span class="string">"\t"</span> + <span class="string">"1"</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(argv)</span>:</span></div><div class="line">    line = sys.stdin.readline();</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">while</span> line:</div><div class="line">            line = line[:<span class="number">-1</span>];</div><div class="line">            fields = line.split(<span class="string">"\t"</span>);</div><div class="line">            <span class="keyword">print</span> generateLongCountToken(fields[<span class="number">0</span>]);</div><div class="line">            line = sys.stdin.readline();</div><div class="line">    <span class="keyword">except</span> <span class="string">"end of file"</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">None</span></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">     main(sys.argv)</div></pre></td></tr></table></figure><h2 id="调研过程"><a href="#调研过程" class="headerlink" title="调研过程"></a>调研过程</h2><blockquote><p>很好奇这样的用法作用与字符串会有什么效果，就有了如下的调研。</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line"><span class="keyword">print</span> line</div><div class="line"><span class="keyword">print</span> line[:<span class="number">-1</span>]</div><div class="line"><span class="keyword">print</span> line.strip()</div><div class="line"></div><div class="line">a = <span class="string">'   '</span></div><div class="line"><span class="keyword">print</span> len(a)</div><div class="line"><span class="keyword">print</span> len(a[:<span class="number">-1</span>])</div><div class="line"><span class="keyword">print</span> len(a.strip())</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">main()</div></pre></td></tr></table></figure><ul><li>输出如下：</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1,2,3,4</div><div class="line"></div><div class="line">1,2,3,4</div><div class="line">1,2,3,4</div><div class="line">3</div><div class="line">2</div><div class="line">0</div></pre></td></tr></table></figure><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote><p>从上可以得出如下的结论：</p></blockquote><ol><li>-1可以去除数据行后面的换行符或者最后的空格或者tab等单个字符</li><li>但是不可以去除多个空格或者多个无用字符</li><li>此类的场景还是推荐使用strip()来保证万无一失,当然在获得完整的一行的数据的场景,该用法完全够用。</li></ol>]]></content>
       
       
         <tags>
@@ -37,11 +37,11 @@
       
         <tags>
             
-            <tag> scp </tag>
+            <tag> git </tag>
             
             <tag> ssh </tag>
             
-            <tag> git </tag>
+            <tag> scp </tag>
             
         </tags>
       
@@ -322,9 +322,9 @@
       
         <tags>
             
-            <tag> hadoop streaming </tag>
-            
             <tag> python </tag>
+            
+            <tag> hadoop streaming </tag>
             
             <tag> cacheFile </tag>
             
@@ -653,11 +653,11 @@
             
             <tag> file </tag>
             
-            <tag> scala </tag>
-            
             <tag> spark </tag>
             
             <tag> awk </tag>
+            
+            <tag> scala </tag>
             
             <tag> suffix </tag>
             
@@ -1301,9 +1301,9 @@
       
         <tags>
             
-            <tag> scala </tag>
-            
             <tag> spark </tag>
+            
+            <tag> scala </tag>
             
             <tag> map </tag>
             
