@@ -39,9 +39,9 @@
             
             <tag> git </tag>
             
-            <tag> ssh </tag>
-            
             <tag> scp </tag>
+            
+            <tag> ssh </tag>
             
         </tags>
       
@@ -653,11 +653,11 @@
             
             <tag> file </tag>
             
-            <tag> spark </tag>
+            <tag> scala </tag>
             
             <tag> awk </tag>
             
-            <tag> scala </tag>
+            <tag> spark </tag>
             
             <tag> suffix </tag>
             
@@ -1301,9 +1301,9 @@
       
         <tags>
             
-            <tag> spark </tag>
-            
             <tag> scala </tag>
+            
+            <tag> spark </tag>
             
             <tag> map </tag>
             
