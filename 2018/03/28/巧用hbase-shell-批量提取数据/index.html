@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="ITWO">
 <meta property="og:description" content="需求描述 有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。第三种策略">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-17T02:16:03.442Z">
+<meta property="og:updated_time" content="2018-11-23T06:58:39.234Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hbase 批量 提取数据">
 <meta name="twitter:description" content="需求描述 有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。第三种策略">
@@ -316,9 +316,18 @@
 <blockquote>
 <p>在现有hbase数据的基础上，我们建立一张外表打通hive和hbase数据的映射关系，然后使用我们熟悉的sqljoin然后 通过 hive -e 导出到本地收工。</p>
 </blockquote>
+<ul>
+<li>在操作的时候出现了以下的问题这里标注下：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">org.apache.hadoop.hbase.client.RetriesExhaustedException: Can<span class="string">'t get the locations</span></div><div class="line"><span class="string">        at org.apache.hadoop.hbase.client.RpcRetryingCallerWithReadReplicas.getRegionLocations(RpcRetryingCallerWithReadReplicas.java:312)</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>从表象来看是客户端去连接zk拉取region元信息的时候没有找到，所以给出的解决方案是：<br>指定下zk集群</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hive -hiveconf hbase.zookeeper.quorum=slave1,slave2,master</div><div class="line">beeline jdbc:hive2://localhost:10000 -n user -p password</div></pre></td></tr></table></figure>
 <h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><blockquote>
 <p>此种方法没有试过，只是存在与理论中,可以参考此篇文章，优势:可以使用hbase连接池（因为是通过停thift协议通信，tcp通信）。<br><a href="https://my.oschina.net/wolfoxliu/blog/856175" target="_blank" rel="external">Hbase实战教程之happybase</a></p>
 </blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*-coding:utf-8-*-</span></div><div class="line"><span class="comment"># !/usr/bin/env python</span></div><div class="line"><span class="keyword">import</span> happybase</div><div class="line"></div><div class="line"><span class="comment"># 初始化链接hbase的连接池</span></div><div class="line">pool = happybase.ConnectionPool(size=<span class="number">3</span>, host=<span class="string">'192.168.88.57'</span>)</div><div class="line"><span class="comment"># 获取连接</span></div><div class="line"><span class="keyword">with</span> pool.connection() <span class="keyword">as</span> connection:</div><div class="line">    <span class="comment"># 建立hbase表的操作客户端</span></div><div class="line">    table = happybase.Table(<span class="string">"xid_card"</span>, connection)</div><div class="line">    <span class="comment"># 查询该表的多个rowkey的所有数据</span></div><div class="line">    rows_dict = dict(table.rows([<span class="string">'AAABAQAAABo+XKvQN57RpLZcfCr/1TC1QOPfi1nx8FSR11qmOA4xfDDqSp0='</span>,</div><div class="line">                                 <span class="string">'AAABAQAAABoK4GyYmbTXOmwNOsGnoYLIHKkGACIizeICK0M52768gSrbQKM='</span>]))</div><div class="line">    <span class="comment"># 解析某个rowkey对应的值中的某个列族中的某一列值</span></div><div class="line">    <span class="keyword">print</span> rows_dict[<span class="string">'AAABAQAAABo+XKvQN57RpLZcfCr/1TC1QOPfi1nx8FSR11qmOA4xfDDqSp0='</span>][<span class="string">'n:card'</span>]</div></pre></td></tr></table></figure>
 <h3 id="hbase，shell-，python"><a href="#hbase，shell-，python" class="headerlink" title="hbase，shell ，python"></a>hbase，shell ，python</h3><blockquote>
 <p>次篇幅的重点介绍的也是这种方法。</p>
 </blockquote>
@@ -364,7 +373,7 @@
         <p><span>本文标题:</span><a href="/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/">hbase 批量 提取数据</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
         <p><span>发布时间:</span>2018-03-28, 14:47:09</p>
-        <p><span>最后更新:</span>2018-10-17, 10:16:03</p>
+        <p><span>最后更新:</span>2018-11-23, 14:58:39</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/" title="hbase 批量 提取数据">https://www.tangyuxiaoyao.club/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/</a>
             <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
