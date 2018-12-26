@@ -39,9 +39,9 @@
             
             <tag> git </tag>
             
-            <tag> ssh </tag>
-            
             <tag> scp </tag>
+            
+            <tag> ssh </tag>
             
         </tags>
       
@@ -225,11 +225,11 @@
       
         <tags>
             
-            <tag> python </tag>
-            
             <tag> mapreduce </tag>
             
             <tag> hive </tag>
+            
+            <tag> python </tag>
             
             <tag> row_number </tag>
             
@@ -322,9 +322,9 @@
       
         <tags>
             
-            <tag> python </tag>
-            
             <tag> hadoop streaming </tag>
+            
+            <tag> python </tag>
             
             <tag> cacheFile </tag>
             
@@ -480,11 +480,11 @@
             
             <tag> hadoop </tag>
             
+            <tag> mapreduce </tag>
+            
             <tag> streaming </tag>
             
             <tag> python </tag>
-            
-            <tag> mapreduce </tag>
             
             <tag> numpy </tag>
             
@@ -934,9 +934,9 @@
             
             <tag> hadoop </tag>
             
-            <tag> streaming </tag>
-            
             <tag> mapreduce </tag>
+            
+            <tag> streaming </tag>
             
             <tag> hive </tag>
             
