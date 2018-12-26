@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="ITWO">
 <meta property="og:description" content="需求背景 总公司那边不允许输出流水中的刷卡地址,所以应对的方案是允许客户输入商户的关键字然后模糊匹配刷卡地址中是否存在">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-07T07:58:23.780Z">
+<meta property="og:updated_time" content="2018-12-26T02:33:27.954Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用elasticSearch 实现商户名称的模糊匹配">
 <meta name="twitter:description" content="需求背景 总公司那边不允许输出流水中的刷卡地址,所以应对的方案是允许客户输入商户的关键字然后模糊匹配刷卡地址中是否存在">
@@ -321,7 +321,7 @@
 </blockquote>
 <ul>
 <li>知识点<blockquote>
-<p>5.x以上已经没有string类型。如果需要分词的话使用text，不需要分词使用keyword。但是生成索引的时候你会看到后面还有一个关键词:index,默认为true,如果设置为false,该字段将不能被索引,keyword是整个文档被索引,text根据指定的分词器被索引(不指定的话默认的分词器是standard),<br>那如果同时使用了keyword和index:false,该字段只能是作为查询项来返回,用法如下:</p>
+<p>5.x以上已经没有string类型。如果需要分词的话使用text，不需要分词使用keyword。但是生成索引的时候你会看到后面还有一个关键词:index,默认为true,如果设置为false,该字段将不能被索引,keyword是整个文档被索引,text根据指定的分词器被索引(不指定的话默认的分词器是standard),<br>keyword,index:true=&gt;doc被每个term切词并与doc建立索引，index:false，doc不被切词，测试你要做的就是<br>要么使用keyword,index:true的字段模糊匹配或者使用text类型的字段的全文检索匹配，然后这些不被切词（查询项（二次查找（schame）））和被切词的字段作为查询项返回.<br>那如果同时使用了keyword和index:false,该字段只能是作为查询项来返回,用法如下:</p>
 </blockquote>
 </li>
 </ul>
@@ -348,7 +348,7 @@
         <p><span>本文标题:</span><a href="/ITWO/2018/09/07/使用elasticSearch-实现商户名称的模糊匹配/">使用elasticSearch 实现商户名称的模糊匹配</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
         <p><span>发布时间:</span>2018-09-07, 15:33:04</p>
-        <p><span>最后更新:</span>2018-09-07, 15:58:23</p>
+        <p><span>最后更新:</span>2018-12-26, 10:33:27</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ITWO/2018/09/07/使用elasticSearch-实现商户名称的模糊匹配/" title="使用elasticSearch 实现商户名称的模糊匹配">https://www.tangyuxiaoyao.club/ITWO/2018/09/07/使用elasticSearch-实现商户名称的模糊匹配/</a>
             <span class="copy-path" data-clipboard-text="原文: https://www.tangyuxiaoyao.club/ITWO/2018/09/07/使用elasticSearch-实现商户名称的模糊匹配/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
