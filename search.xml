@@ -39,9 +39,9 @@
             
             <tag> git </tag>
             
-            <tag> scp </tag>
-            
             <tag> ssh </tag>
+            
+            <tag> scp </tag>
             
         </tags>
       
@@ -127,7 +127,7 @@
       <title>使用elasticSearch 实现商户名称的模糊匹配</title>
       <link href="/ITWO/2018/09/07/%E4%BD%BF%E7%94%A8elasticSearch-%E5%AE%9E%E7%8E%B0%E5%95%86%E6%88%B7%E5%90%8D%E7%A7%B0%E7%9A%84%E6%A8%A1%E7%B3%8A%E5%8C%B9%E9%85%8D/"/>
       <url>/ITWO/2018/09/07/%E4%BD%BF%E7%94%A8elasticSearch-%E5%AE%9E%E7%8E%B0%E5%95%86%E6%88%B7%E5%90%8D%E7%A7%B0%E7%9A%84%E6%A8%A1%E7%B3%8A%E5%8C%B9%E9%85%8D/</url>
-      <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>总公司那边不允许输出流水中的刷卡地址,所以应对的方案是允许客户输入商户的关键字然后模糊匹配刷卡地址中是否存在</p></blockquote><a id="more"></a><h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><blockquote><p>先从数据量着手选择技术,mysql 通过like来匹配肯定不能满足如此大的数据量,存量数据量来看已经有六千万之多,所以mysql技术不行,而且mysql仅仅是解决了包含的匹配关系,对于关键词和查询词组的相关度支持有限,另一方面考虑到数据的复用行,另一项目中数据已经存于es中.</p></blockquote><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>开始之初,选择的是已经做好IK 分词的刷卡地址,但是无论使用wildcardQuery还是fuzzyQuery亦或prefixQuery热词还好,但是出现了冷门词语(是否包含与既定的分词包中),就会出现某个汉字多排名就考前的弊病,而且默认返回十条,这样就限制了包含模糊查询的二次匹配,次路不通.<br>后来鉴于上文提及的已做好分词命中不固定的原因,选择增加一个字段数据导入的时候不做分词(keyword)</p></blockquote><ul><li>知识点<blockquote><p>5.x以上已经没有string类型。如果需要分词的话使用text，不需要分词使用keyword。但是生成索引的时候你会看到后面还有一个关键词:index,默认为true,如果设置为false,该字段将不能被索引,keyword是整个文档被索引,text根据指定的分词器被索引(不指定的话默认的分词器是standard),<br>keyword,index:true=&gt;doc被每个term切词并与doc建立索引，index:false，doc不被切词，测试你要做的就是<br>要么使用keyword,index:true的字段模糊匹配或者使用text类型的字段的全文检索匹配，然后这些不被切词（查询项（二次查找（schame）））和被切词的字段作为查询项返回.<br>那如果同时使用了keyword和index:false,该字段只能是作为查询项来返回,用法如下:</p></blockquote></li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">MatchQueryBuilder termQueryBuilder = QueryBuilders.</div><div class="line">matchQuery(<span class="string">"content"</span>, <span class="string">"中国渔船"</span>).analyzer(<span class="string">"ik_max_word"</span>);</div><div class="line">String indexes = <span class="string">"CP5178,CP5177,CP5176"</span>;</div><div class="line">String[] includesIndexes = indexes.split(<span class="string">","</span>);</div><div class="line">String[] excludesIndexes = <span class="keyword">new</span> String[]&#123;&#125;;</div><div class="line">SearchResponse searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(termQueryBuilder)</div><div class="line">.setFetchSource(includesIndexes, excludesIndexes).execute().actionGet();</div></pre></td></tr></table></figure><blockquote><p>综上所述我们需要得到的最终技术实现</p></blockquote><ol><li>使用keyword配合wildcardQuery实现模糊匹配的查找(like “%key%”)</li><li>使用分词器实现长关键词的二次匹配,搜索的关键词越长,关联度越高.</li></ol><ul><li>上代码</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">String mid = <span class="string">"A4816456E30D07B17C23B8D16FC26CCEC0E7EBE10A7554732A25753EBE533569"</span>;</div><div class="line"> String searchKey = <span class="string">"南通新时代电器科技有限公司"</span>;</div><div class="line"></div><div class="line"> MatchQueryBuilder merId = QueryBuilders.matchQuery(<span class="string">"mid"</span>, mid);</div><div class="line"></div><div class="line"></div><div class="line"> BoolQueryBuilder midMust = QueryBuilders.boolQuery().must(merId);</div><div class="line"></div><div class="line"></div><div class="line"> SearchResponse searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(midMust).execute().actionGet();</div><div class="line"></div><div class="line"> SearchHit[] hits = searchResponse.getHits().getHits();</div><div class="line"> String msg = <span class="string">"未找到"</span>;</div><div class="line"></div><div class="line"> <span class="keyword">if</span> (<span class="number">0</span> &lt; hits.length) &#123;</div><div class="line">     WildcardQueryBuilder mchntName = QueryBuilders.wildcardQuery(<span class="string">"name"</span>, <span class="string">"*"</span> + searchKey + <span class="string">"*"</span>);</div><div class="line">     QueryBuilders.prefixQuery()</div><div class="line">     BoolQueryBuilder mchntNameMust = QueryBuilders.boolQuery().must(merId).must(mchntName);</div><div class="line">     searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(mchntNameMust).execute().actionGet();</div><div class="line">     hits = searchResponse.getHits().getHits();</div><div class="line">     <span class="keyword">if</span> (<span class="number">0</span> &lt; hits.length) &#123;</div><div class="line">         <span class="keyword">for</span> (SearchHit searchHit : hits) &#123;</div><div class="line">             System.out.println(searchHit.getSourceAsMap().get(<span class="string">"name"</span>));</div><div class="line">         &#125;</div><div class="line">         msg = <span class="string">"匹配成功"</span>;</div><div class="line">     &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">4</span> &lt; searchKey.length()) &#123;</div><div class="line">         MatchQueryBuilder nameQuery = QueryBuilders.</div><div class="line">                 matchQuery(<span class="string">"name_term"</span>, searchKey).analyzer(<span class="string">"ik_max_word"</span>);</div><div class="line">         BoolQueryBuilder nameMust = QueryBuilders.boolQuery().must(merId).must(nameQuery);</div><div class="line">         searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(nameMust).execute().actionGet();</div><div class="line">         hits = searchResponse.getHits().getHits();</div><div class="line">         <span class="keyword">if</span> (<span class="number">0</span> &lt; hits.length) &#123;</div><div class="line">             <span class="keyword">for</span> (SearchHit searchHit : hits) &#123;</div><div class="line">                 System.out.println(searchHit.getSourceAsMap().get(<span class="string">"name_term"</span>));</div><div class="line">             &#125;</div><div class="line">             msg = <span class="string">"匹配成功"</span>;</div><div class="line">         &#125;</div><div class="line"></div><div class="line">     &#125;</div><div class="line"> &#125; <span class="keyword">else</span> &#123;</div><div class="line">     System.out.println(<span class="string">"未匹配到商户名"</span>);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> System.out.println(msg);</div></pre></td></tr></table></figure>]]></content>
+      <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>总公司那边不允许输出流水中的刷卡地址,所以应对的方案是允许客户输入商户的关键字然后模糊匹配刷卡地址中是否存在</p></blockquote><a id="more"></a><h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><blockquote><p>先从数据量着手选择技术,mysql 通过like来匹配肯定不能满足如此大的数据量,存量数据量来看已经有六千万之多,所以mysql技术不行,而且mysql仅仅是解决了包含的匹配关系,对于关键词和查询词组的相关度支持有限,另一方面考虑到数据的复用行,另一项目中数据已经存于es中.</p></blockquote><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><blockquote><p>开始之初,选择的是已经做好IK 分词的刷卡地址,但是无论使用wildcardQuery还是fuzzyQuery亦或prefixQuery热词还好,但是出现了冷门词语(是否包含与既定的分词包中),就会出现某个汉字多排名就考前的弊病,而且默认返回十条,这样就限制了包含模糊查询的二次匹配,次路不通.<br>后来鉴于上文提及的已做好分词命中不固定的原因,选择增加一个字段数据导入的时候不做分词(keyword)</p></blockquote><ul><li>知识点<blockquote><p>5.x以上已经没有string类型。如果需要分词的话使用text，不需要分词使用keyword。但是生成索引的时候你会看到后面还有一个关键词:index,默认为true,如果设置为false,该字段将不能被索引,keyword是整个文档被索引,text根据指定的分词器被索引(不指定的话默认的分词器是standard),<br>keyword,index:true=&gt;doc被每个term切词并与doc建立索引，可以用于模糊匹配， keyword,index:fals则doc不被切词，所以你要做的就是要么使用keyword,index:true的字段模糊匹配或者使用text类型的字段的全文检索匹配过滤，然后这些不被切词（查询项（二次查找（schame）））和被切词的字段作为查询项返回.<br>使用了keyword和index:false,该字段只能是作为查询项来返回,用法如下:</p></blockquote></li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">MatchQueryBuilder termQueryBuilder = QueryBuilders.</div><div class="line">matchQuery(<span class="string">"content"</span>, <span class="string">"中国渔船"</span>).analyzer(<span class="string">"ik_max_word"</span>);</div><div class="line">String indexes = <span class="string">"CP5178,CP5177,CP5176"</span>;</div><div class="line">String[] includesIndexes = indexes.split(<span class="string">","</span>);</div><div class="line">String[] excludesIndexes = <span class="keyword">new</span> String[]&#123;&#125;;</div><div class="line">SearchResponse searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(termQueryBuilder)</div><div class="line">.setFetchSource(includesIndexes, excludesIndexes).execute().actionGet();</div></pre></td></tr></table></figure><blockquote><p>综上所述我们需要得到的最终技术实现</p></blockquote><ol><li>使用keyword,index:true配合wildcardQuery实现模糊匹配的查找(like “%key%”)</li><li>使用text字段配合分词器实现长关键词的二次匹配,搜索的关键词越长,关联度越高.</li></ol><ul><li>上代码</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">String mid = <span class="string">"A4816456E30D07B17C23B8D16FC26CCEC0E7EBE10A7554732A25753EBE533569"</span>;</div><div class="line"> String searchKey = <span class="string">"南通新时代电器科技有限公司"</span>;</div><div class="line"></div><div class="line"> MatchQueryBuilder merId = QueryBuilders.matchQuery(<span class="string">"mid"</span>, mid);</div><div class="line"></div><div class="line"></div><div class="line"> BoolQueryBuilder midMust = QueryBuilders.boolQuery().must(merId);</div><div class="line"></div><div class="line"></div><div class="line"> SearchResponse searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(midMust).execute().actionGet();</div><div class="line"></div><div class="line"> SearchHit[] hits = searchResponse.getHits().getHits();</div><div class="line"> String msg = <span class="string">"未找到"</span>;</div><div class="line"></div><div class="line"> <span class="keyword">if</span> (<span class="number">0</span> &lt; hits.length) &#123;</div><div class="line">     WildcardQueryBuilder mchntName = QueryBuilders.wildcardQuery(<span class="string">"name"</span>, <span class="string">"*"</span> + searchKey + <span class="string">"*"</span>);</div><div class="line">     QueryBuilders.prefixQuery()</div><div class="line">     BoolQueryBuilder mchntNameMust = QueryBuilders.boolQuery().must(merId).must(mchntName);</div><div class="line">     searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(mchntNameMust).execute().actionGet();</div><div class="line">     hits = searchResponse.getHits().getHits();</div><div class="line">     <span class="keyword">if</span> (<span class="number">0</span> &lt; hits.length) &#123;</div><div class="line">         <span class="keyword">for</span> (SearchHit searchHit : hits) &#123;</div><div class="line">             System.out.println(searchHit.getSourceAsMap().get(<span class="string">"name"</span>));</div><div class="line">         &#125;</div><div class="line">         msg = <span class="string">"匹配成功"</span>;</div><div class="line">     &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="number">4</span> &lt; searchKey.length()) &#123;</div><div class="line">         MatchQueryBuilder nameQuery = QueryBuilders.</div><div class="line">                 matchQuery(<span class="string">"name_term"</span>, searchKey).analyzer(<span class="string">"ik_max_word"</span>);</div><div class="line">         BoolQueryBuilder nameMust = QueryBuilders.boolQuery().must(merId).must(nameQuery);</div><div class="line">         searchResponse = client.prepareSearch(INDEX).setTypes(TYPE).setQuery(nameMust).execute().actionGet();</div><div class="line">         hits = searchResponse.getHits().getHits();</div><div class="line">         <span class="keyword">if</span> (<span class="number">0</span> &lt; hits.length) &#123;</div><div class="line">             <span class="keyword">for</span> (SearchHit searchHit : hits) &#123;</div><div class="line">                 System.out.println(searchHit.getSourceAsMap().get(<span class="string">"name_term"</span>));</div><div class="line">             &#125;</div><div class="line">             msg = <span class="string">"匹配成功"</span>;</div><div class="line">         &#125;</div><div class="line"></div><div class="line">     &#125;</div><div class="line"> &#125; <span class="keyword">else</span> &#123;</div><div class="line">     System.out.println(<span class="string">"未匹配到商户名"</span>);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> System.out.println(msg);</div></pre></td></tr></table></figure>]]></content>
       
       
         <tags>
@@ -225,11 +225,11 @@
       
         <tags>
             
+            <tag> python </tag>
+            
             <tag> mapreduce </tag>
             
             <tag> hive </tag>
-            
-            <tag> python </tag>
             
             <tag> row_number </tag>
             
@@ -322,9 +322,9 @@
       
         <tags>
             
-            <tag> hadoop streaming </tag>
-            
             <tag> python </tag>
+            
+            <tag> hadoop streaming </tag>
             
             <tag> cacheFile </tag>
             
@@ -480,11 +480,11 @@
             
             <tag> hadoop </tag>
             
-            <tag> mapreduce </tag>
-            
             <tag> streaming </tag>
             
             <tag> python </tag>
+            
+            <tag> mapreduce </tag>
             
             <tag> numpy </tag>
             
@@ -645,13 +645,13 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> hadoop </tag>
             
-            <tag> file </tag>
-            
             <tag> hdfs </tag>
+            
+            <tag> shell </tag>
+            
+            <tag> file </tag>
             
             <tag> scala </tag>
             
@@ -934,9 +934,9 @@
             
             <tag> hadoop </tag>
             
-            <tag> mapreduce </tag>
-            
             <tag> streaming </tag>
+            
+            <tag> mapreduce </tag>
             
             <tag> hive </tag>
             
