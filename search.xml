@@ -341,9 +341,9 @@
       
         <tags>
             
-            <tag> hadoop streaming </tag>
-            
             <tag> python </tag>
+            
+            <tag> hadoop streaming </tag>
             
             <tag> cacheFile </tag>
             
