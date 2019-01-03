@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="唐钰逍遥" />
+
+
+
+<meta name="description" content="需求背景: 公司接口国庆期间调用量比较大，领导想要统计下今年和去年国庆期间接口每天的调用量和当天接口的调用的平均耗时．">
+<meta name="keywords" content="python,count,date,sum,aggr,mean,panda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python- 实现聚合（单机版和mapreduce版本）">
+<meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/10/10/python-实现聚合（单机版和mapreduce版本）/index.html">
+<meta property="og:site_name" content="ITWO">
+<meta property="og:description" content="需求背景: 公司接口国庆期间调用量比较大，领导想要统计下今年和去年国庆期间接口每天的调用量和当天接口的调用的平均耗时．">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.tangyuxiaoyao.club/ITWO/assets/timedela.png">
+<meta property="og:updated_time" content="2018-09-13T12:36:41.481Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python- 实现聚合（单机版和mapreduce版本）">
+<meta name="twitter:description" content="需求背景: 公司接口国庆期间调用量比较大，领导想要统计下今年和去年国庆期间接口每天的调用量和当天接口的调用的平均耗时．">
+<meta name="twitter:image" content="http://www.tangyuxiaoyao.club/ITWO/assets/timedela.png">
+
+<link rel="apple-touch-icon" href= "/ITWO//apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="ITWO" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/ITWO//ITWO/assets/Coding.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/ITWO/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>python- 实现聚合（单机版和mapreduce版本） | ITWO</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = /ITWO/; </script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/ITWO/" class="profilepic">
+            <img src="/ITWO/assets/webwxgeticon.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/ITWO/">唐钰逍遥</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">毋庸多言,只管前行.</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="flase" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/ITWO/">主页</a></li>
+                        
+                            <li><a href="/ITWO/archives/">所有文章</a></li>
+                        
+                            <li><a href="/ITWO/tags/">标签云</a></li>
+                        
+                            <li><a href="/ITWO/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:593030994@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/ITWO/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/DataFrame/">DataFrame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/DataSet/">DataSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/NoClassDefFound/">NoClassDefFound</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/NullPointerException/">NullPointerException</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/RDD/">RDD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/agg/">agg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/aggr/">aggr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/apache/">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/awk/">awk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/aws/">aws</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/balancer/">balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/boot/">boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/bulkload/">bulkload</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/cacheFile/">cacheFile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/cat/">cat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/chrome/">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/chromium/">chromium</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/column/">column</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/comm/">comm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/commit/">commit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/convert/">convert</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/count/">count</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/crontab/">crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/dash/">dash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/date/">date</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/dateutil/">dateutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/db/">db</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/dbKoda/">dbKoda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/dict/">dict</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/elasticSearch/">elasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/error/">error</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/es/">es</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/explode/">explode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/file/">file</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/files/">files</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/flatmap/">flatmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/gradle/">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/groupby/">groupby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop/">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-streaming/">hadoop streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hbase/">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hdfs/">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hive/">hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/https/">https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/idea/">idea</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/idfa/">idfa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ik/">ik</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/imei/">imei</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/join/">join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/jpa/">jpa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/layui/">layui</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/local/">local</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/log/">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/lzo/">lzo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mapreduce/">mapreduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/match/">match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/maven/">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mean/">mean</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mobile/">mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mongo/">mongo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/no/">no</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/nohup/">nohup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/not/">not</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/not-in/">not in</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/numpy/">numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/panda/">panda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/part/">part</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/percentile/">percentile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/pivot/">pivot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/priority/">priority</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/queue/">queue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/reduce/">reduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/regex-replace/">regex_replace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/registerShutdownHook/">registerShutdownHook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/remove/">remove</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/row-number/">row_number</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/s3/">s3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/scala/">scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/scp/">scp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/sed/">sed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/selenium/">selenium</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shuffer/">shuffer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark/">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/split/">split</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spring-cron/">spring,cron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ssl/">ssl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/streaming/">streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/string/">string*</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/string/">string...</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/strip/">strip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/sublime/">sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/submit/">submit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/such/">such</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/suffix/">suffix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/sum/">sum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/tab/">tab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/term/">term</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/trim/">trim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ubantu/">ubantu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/unzip/">unzip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/utc/">utc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/utf-8/">utf-8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/where/">where</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/xargs/">xargs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/yarn/">yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/yilla/">yilla</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/乱码/">乱码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/制表符/">制表符</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/打不开/">打不开</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/排序/">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/矩阵/">矩阵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/移除/">移除</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/空格/">空格</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">毋庸多言，只管前行。</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">唐钰逍遥</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/ITWO/" class="profilepic">
+                <img src="/ITWO/assets/webwxgeticon.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/ITWO/" title="回到主页">唐钰逍遥</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">毋庸多言,只管前行.</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/ITWO/">主页</a></li>
+                
+                    <li><a href="/ITWO/archives/">所有文章</a></li>
+                
+                    <li><a href="/ITWO/tags/">标签云</a></li>
+                
+                    <li><a href="/ITWO/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:593030994@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/ITWO/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-python-实现聚合（单机版和mapreduce版本）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/ITWO/2017/10/10/python-实现聚合（单机版和mapreduce版本）/" class="article-date">
+      <time datetime="2017-10-10T07:56:56.000Z" itemprop="datePublished">2017-10-10</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python- 实现聚合（单机版和mapreduce版本）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/aggr/">aggr</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/count/">count</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/date/">date</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/mean/">mean</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/panda/">panda</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/ITWO/tags/sum/">sum</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景:"></a>需求背景:</h2><blockquote>
+<p>公司接口国庆期间调用量比较大，领导想要统计下今年和去年国庆期间接口每天的调用量和当天接口的调用的平均耗时．</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><blockquote>
+<p>技术选型：选择了python<br>同时从需求中可以了解到涉及到时间差的运算，联想到以前用过python中的datetime模块中的timedelta（时间三角洲）．</p>
+</blockquote>
+<h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><h3 id="方法一-使用panda-series解决-此解决方案由同事提供"><a href="#方法一-使用panda-series解决-此解决方案由同事提供" class="headerlink" title="方法一: 使用panda series解决(此解决方案由同事提供)"></a>方法一: 使用panda series解决(此解决方案由同事提供)</h3><blockquote>
+<p>代码如下：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="string">"""</span></div><div class="line"><span class="string"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="string">"""</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> datetime</div><div class="line">data=pd.read_csv(<span class="string">'1610.csv'</span>)</div><div class="line">data[<span class="string">'requestTime'</span>]=data[<span class="string">'requestTime'</span>].map(<span class="keyword">lambda</span> x:x.replace(<span class="string">'T'</span>,<span class="string">' '</span>))</div><div class="line">data[<span class="string">'responseTime'</span>]=data[<span class="string">'responseTime'</span>].map(<span class="keyword">lambda</span> x:x.replace(<span class="string">'T'</span>,<span class="string">' '</span>))</div><div class="line">data[<span class="string">'requestTime'</span>]=data[<span class="string">'requestTime'</span>].map(<span class="keyword">lambda</span> x:x.replace(<span class="string">'Z'</span>,<span class="string">''</span>))</div><div class="line">data[<span class="string">'responseTime'</span>]=data[<span class="string">'responseTime'</span>].map(<span class="keyword">lambda</span> x:x.replace(<span class="string">'Z'</span>,<span class="string">''</span>))</div><div class="line">data[<span class="string">'requestTime'</span>]=data[<span class="string">'requestTime'</span>].map(<span class="keyword">lambda</span> x:x.replace(<span class="string">'.'</span>,<span class="string">' '</span>))</div><div class="line">data[<span class="string">'responseTime'</span>]=data[<span class="string">'responseTime'</span>].map(<span class="keyword">lambda</span> x:x.replace(<span class="string">'.'</span>,<span class="string">' '</span>))</div><div class="line"></div><div class="line">data[<span class="string">'delta'</span>]=pd.Series(map(<span class="keyword">lambda</span> x,y:(datetime.datetime.strptime(x,<span class="string">'%Y-%m-%d %H:%M:%S %f'</span>)-datetime.datetime.strptime(y,<span class="string">'%Y-%m-%d %H:%M:%S %f'</span>)).total_seconds()*<span class="number">1000</span>,data[<span class="string">'responseTime'</span>],data[<span class="string">'requestTime'</span>]))</div><div class="line">data[<span class="string">'date_day'</span>]=pd.Series(map(<span class="keyword">lambda</span> x:x[:<span class="number">10</span>],data[<span class="string">'requestTime'</span>]))</div><div class="line">data_out=data.groupby([<span class="string">'uri'</span>,<span class="string">'date_day'</span>]).delta.agg([<span class="string">'mean'</span>,<span class="string">'count'</span>,<span class="string">'sum'</span>]).reset_index()</div><div class="line">data_out.to_csv(<span class="string">'16.csv'</span>,index=<span class="keyword">False</span>)</div></pre></td></tr></table></figure>
+<p>###方法二： 纯map解决</p>
+<blockquote>
+<p>这个是由两个时间的差值返回的,两个date或datetime对象相减时可以返回一个timedelta对象。<br>查看timedelta源码可以找到其中返回的有以下几个方法，如下图：</p>
+</blockquote>
+<p><img src="/ITWO/assets/timedela.png" alt="timedela中用到的方法"></p>
+<blockquote>
+<p>可以看出来，有很多有用的方法，可以求出两个时间的天数差，秒差，微秒差．<br>接口耗时我们需要的肯定是定位到毫秒即可，所以我们的解决方案是拿到微秒差然后除以1000转换为毫秒．</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare_time</span><span class="params">(sourceTime,reqtime)</span>:</span></div><div class="line">	sourceTime = datetime.strptime(sourceTime.replace(<span class="string">'T'</span>,<span class="string">' '</span>).replace(<span class="string">"Z"</span>,<span class="string">''</span>),<span class="string">"%Y-%m-%d %H:%M:%S.%f"</span>)</div><div class="line">	reqtime = datetime.strptime(reqtime.replace(<span class="string">'T'</span>,<span class="string">' '</span>).replace(<span class="string">"Z"</span>,<span class="string">''</span>),<span class="string">"%Y-%m-%d %H:%M:%S.%f"</span>)</div><div class="line">	<span class="comment">#retval = (reqtime-sourceTime).microseconds/1000</span></div><div class="line">	<span class="keyword">return</span> retval</div></pre></td></tr></table></figure>
+<blockquote>
+<p>此处这么用只算到了微秒值，但是可能存在超过一秒的调用耗时，所以我们需要使用以下的方法来实现计算毫秒差值,此方法是python 2.7以后提供的，注意使用环境。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare_time</span><span class="params">(sourceTime,reqtime)</span>:</span></div><div class="line">	sourceTime = datetime.strptime(sourceTime.replace(<span class="string">'T'</span>,<span class="string">' '</span>).replace(<span class="string">"Z"</span>,<span class="string">''</span>),<span class="string">"%Y-%m-%d %H:%M:%S.%f"</span>)</div><div class="line">	reqtime = datetime.strptime(reqtime.replace(<span class="string">'T'</span>,<span class="string">' '</span>).replace(<span class="string">"Z"</span>,<span class="string">''</span>),<span class="string">"%Y-%m-%d %H:%M:%S.%f"</span>)</div><div class="line">	<span class="comment">#retval = (reqtime-sourceTime).microseconds/1000</span></div><div class="line">	retval = (reqtime-sourceTime).total_seconds()*<span class="number">1000</span></div><div class="line">	<span class="keyword">return</span> retval</div></pre></td></tr></table></figure>
+<blockquote>
+<p>数据demo:/quota/usernature,2017-09-24T00:00:12.504Z,2017-09-24T00:00:12.628Z<br>继续分析:既然需要分析某天某个接口唯独的指标，则我们可以将uri和日期作为key，从demo中我们可以做到使用T作为分割符分割数据一次，就可以拿到我们想要的key，然后我们使用逗号分割，计算第二项和第三项的差值（取毫秒值）做为value，同时我们考虑到同一天同一个uri的调用量很多，所以肯定是vs,我们需要定义一个list存放多个时间差值，所以中间输出值为key,vs,eg:/quota/usernature,2017-09-24,[100,200,300…..]<br>然后需要做的是，遍历所有的key，当然为了方便查看，我们需要先将key排序，然后顺序查看，然后统计vs的长度，即为我们需要的该接口当天的调用量，使用list的sum函数统计总的耗时然后除以调用量就是我们需要的平均耗时。<br>全部代码实现如下：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*-coding:utf-8-*-  </span></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare_time</span><span class="params">(sourceTime,reqtime)</span>:</span></div><div class="line">	sourceTime = datetime.strptime(sourceTime.replace(<span class="string">'T'</span>,<span class="string">' '</span>).replace(<span class="string">"Z"</span>,<span class="string">''</span>),<span class="string">"%Y-%m-%d %H:%M:%S.%f"</span>)</div><div class="line">	reqtime = datetime.strptime(reqtime.replace(<span class="string">'T'</span>,<span class="string">' '</span>).replace(<span class="string">"Z"</span>,<span class="string">''</span>),<span class="string">"%Y-%m-%d %H:%M:%S.%f"</span>)</div><div class="line">	retval = (reqtime-sourceTime).microseconds/<span class="number">1000</span></div><div class="line">	<span class="keyword">return</span> retval</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(sep=<span class="string">","</span>)</span>:</span></div><div class="line">	kv = &#123;&#125;</div><div class="line">	vs = []</div><div class="line">	<span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">		detail = line.strip().split(sep)</div><div class="line">		restime = detail[<span class="number">1</span>]</div><div class="line">		reqtime = detail[<span class="number">2</span>]</div><div class="line">		value = compare_time(restime,reqtime)</div><div class="line">		key = line.strip().split(<span class="string">"T"</span>,<span class="number">1</span>)[<span class="number">0</span>].strip()</div><div class="line">		<span class="keyword">if</span>(key <span class="keyword">not</span> <span class="keyword">in</span> kv.keys()):</div><div class="line">			vs=[]</div><div class="line">			vs.append(value)</div><div class="line">			kv[key] = vs</div><div class="line">		<span class="keyword">else</span>:</div><div class="line">			vs.append(value)</div><div class="line">			kv[key] = vs</div><div class="line">	keys = sorted(kv.keys())</div><div class="line">	<span class="keyword">for</span> key <span class="keyword">in</span> keys:</div><div class="line">		cnt = len(kv[key])</div><div class="line">		avgCnt = sum(kv[key])/cnt</div><div class="line">		<span class="keyword">print</span> <span class="string">"%s\t%d\t%f"</span> % (key,cnt,avgCnt)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">	main()</div></pre></td></tr></table></figure>
+<p>此方法数据量大了有点问题，统计的有问题，还在磨合中，下面给出参考如下链接写出的mapreduce两个版本的脚本。<br><a href="http://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/" target="_blank" rel="external">http://www.michael-noll.com/tutorials/writing-an-hadoop-mapreduce-program-in-python/</a></p>
+<h3 id="mapreduce版"><a href="#mapreduce版" class="headerlink" title="mapreduce版"></a>mapreduce版</h3><h4 id="方法一-使用mapreduce的特性"><a href="#方法一-使用mapreduce的特性" class="headerlink" title="方法一:使用mapreduce的特性"></a>方法一:使用mapreduce的特性</h4><blockquote>
+<p>排序完使用，比较下一条和上一条的数据的key，累计调用耗时，以及次数最终的到结果。<br>map.py:</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*-coding:utf-8-*-  </span></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">compare_time</span><span class="params">(sourceTime,reqtime)</span>:</span></div><div class="line">	sourceTime = datetime.strptime(sourceTime.replace(<span class="string">'T'</span>,<span class="string">' '</span>).replace(<span class="string">"Z"</span>,<span class="string">''</span>),<span class="string">"%Y-%m-%d %H:%M:%S.%f"</span>)</div><div class="line">	reqtime = datetime.strptime(reqtime.replace(<span class="string">'T'</span>,<span class="string">' '</span>).replace(<span class="string">"Z"</span>,<span class="string">''</span>),<span class="string">"%Y-%m-%d %H:%M:%S.%f"</span>)</div><div class="line">	retval = (reqtime-sourceTime).total_seconds()*<span class="number">1000</span></div><div class="line">	<span class="keyword">return</span> retval</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(sep=<span class="string">","</span>)</span>:</span></div><div class="line">	kv = &#123;&#125;</div><div class="line">	<span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">		detail = line.strip().split(sep)</div><div class="line">		restime = detail[<span class="number">1</span>]</div><div class="line">		reqtime = detail[<span class="number">2</span>]</div><div class="line">		value = compare_time(restime,reqtime)</div><div class="line">		key = line.strip().split(<span class="string">"T"</span>,<span class="number">1</span>)[<span class="number">0</span>]</div><div class="line">		<span class="keyword">print</span> key+<span class="string">'\t'</span>+str(value)</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">	main()</div></pre></td></tr></table></figure>
+<blockquote>
+<p>red.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python  </span></div><div class="line"><span class="comment"># -*-coding:utf-8-*-   </span></div><div class="line"><span class="keyword">import</span> sys  </div><div class="line">  </div><div class="line">current_key = <span class="keyword">None</span>  </div><div class="line">total_take = <span class="number">0</span>  </div><div class="line">key = <span class="keyword">None</span></div><div class="line">times = <span class="number">0</span>  </div><div class="line">one = <span class="number">1</span></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:  </div><div class="line">    line = line.strip()  </div><div class="line">  </div><div class="line">    key, time_take = line.split(<span class="string">'\t'</span>, one)  </div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        time_take = float(time_take)  </div><div class="line">    <span class="keyword">except</span> ValueError:  </div><div class="line">        <span class="comment">#bad line pass </span></div><div class="line">        <span class="keyword">continue</span>  </div><div class="line">    <span class="keyword">if</span> current_key == key:  </div><div class="line">        total_take += time_take</div><div class="line">        times += one</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="comment"># if current_key ne next_key handle this logic and  print result,then init new key line data and init times</span></div><div class="line">        <span class="keyword">if</span> current_key:  </div><div class="line">            <span class="keyword">print</span> <span class="string">'%s\t%s\t%s'</span> % (current_key,times,total_take/times)  </div><div class="line">        total_take = time_take  </div><div class="line">        current_key = key</div><div class="line">        times = one  </div><div class="line"></div><div class="line"><span class="comment"># if stdin input over ,then handle this logic(there is no comparation after the last key compute ,so print here is necessary)</span></div><div class="line"><span class="keyword">if</span> current_key == key:</div><div class="line">    <span class="keyword">print</span> <span class="string">'%s\t%s\t%f'</span> % (current_key,times,total_take/times)</div></pre></td></tr></table></figure>
+<h4 id="方法二-使用迭代器"><a href="#方法二-使用迭代器" class="headerlink" title="方法二　使用迭代器"></a>方法二　使用迭代器</h4><blockquote>
+<p>同样也可以利用mapreduce中间的shuffle过程，map代码同上，reduce代码则使用yield生成迭代器同时配合groupby 工具函数来完成聚合。<br>reduce.py</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*-coding:utf-8-*-  </span></div><div class="line"><span class="comment">#!/usr/bin/env python  </span></div><div class="line"></div><div class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> groupby  </div><div class="line"><span class="keyword">from</span> operator <span class="keyword">import</span> itemgetter  </div><div class="line"><span class="keyword">import</span> sys  </div><div class="line">  </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_mapper_output</span><span class="params">(file, separator=<span class="string">'\t'</span>)</span>:</span>  </div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> file:  </div><div class="line">        <span class="keyword">yield</span> line.rstrip().split(separator, <span class="number">1</span>)  </div><div class="line">  </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(separator=<span class="string">'\t'</span>)</span>:</span>  </div><div class="line">    data = read_mapper_output(sys.stdin, separator=separator)  </div><div class="line">    <span class="keyword">for</span> current_word, group <span class="keyword">in</span> groupby(data, itemgetter(<span class="number">0</span>)):  </div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="comment"># (float(count) for current_word,count in group)'s return is generator,if you want handle this twice,</span></div><div class="line">            <span class="comment"># you should store　generator into one collection(here:list) ,if not the generator just can be used once,</span></div><div class="line">            <span class="comment"># because the generator.next()(once used) had pointed to the end,can’t　be used more.</span></div><div class="line">            res_temp = list(float(count) <span class="keyword">for</span> current_word,count <span class="keyword">in</span> group)</div><div class="line">            size_count = sum(<span class="number">1</span> <span class="keyword">for</span> _ <span class="keyword">in</span> res_temp)</div><div class="line">            total_count = sum(res_temp)</div><div class="line">            <span class="keyword">print</span> <span class="string">"%s%s%d%s%f"</span> % (current_word, separator, size_count ,separator ,total_count/size_count)</div><div class="line">        <span class="keyword">except</span> ValueError:  </div><div class="line">            <span class="keyword">pass</span>  </div><div class="line">  </div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:  </div><div class="line">    main()</div></pre></td></tr></table></figure>
+<blockquote>
+<p>以上两种mapreduce实现逻辑，我以用蹩脚的英文解释，看不懂，就使劲儿看。</p>
+</blockquote>
+<ul>
+<li>知识点</li>
+</ul>
+<blockquote>
+<p>yield 的好处<br>Python 的老用户应该会熟悉 Python 2 中的一个特性：内建函数 range 和 xrange。其中，range 函数返回的是一个列表，而 xrange 返回的是一个迭代器。</p>
+<p>在 Python 3 中，range 相当于 Python 2 中的 xrange；而 Python 2 中的 range 可以用 list(range()) 来实现。</p>
+<p>Python 之所以要提供这样的解决方案，是因为在很多时候，我们只是需要逐个顺序访问容器内的元素。大多数时候，我们不需要「一口气获取容器内所有的元素」。比方说，顺序访问容器内的前 5 个元素，可以有两种做法：</p>
+</blockquote>
+<ol>
+<li>获取容器内的所有元素，然后取出前 5 个；</li>
+<li>从头开始，逐个迭代容器内的元素，迭代 5 个元素之后停止。</li>
+</ol>
+<blockquote>
+<p>显而易见，如果容器内的元素数量非常多（比如有 10 ** 8 个），或者容器内的元素体积非常大，那么后一种方案能节省巨大的时间、空间开销。<br>现在假设，我们有一个函数，其产出（返回值）是一个列表。而若我们知道，调用者对该函数的返回值，只有逐个迭代这一种方式。那么，如果函数生产列表中的每一个元素都需要耗费非常多的时间，或者生成所有元素需要等待很长时间，则使用 yield 把函数变成一个生成器函数，每次只产生一个元素，就能节省很多开销了。特别是你在使用大的字典配置文件的时候这么用就有很大优势了,当然如果配置文件大小尚可,放到内存中去解析配置当然是最快的匹配途径.</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>mapreduce思想可以很自然的解决此类问题，但是也考虑到仅有map的情况下，怎么解决？但是这次写的代码还是存在问题，后续会解决更新。</p>
+</blockquote>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/ITWO/2017/10/10/python-实现聚合（单机版和mapreduce版本）/">python- 实现聚合（单机版和mapreduce版本）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
+        <p><span>发布时间:</span>2017-10-10, 15:56:56</p>
+        <p><span>最后更新:</span>2018-09-13, 20:36:41</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/ITWO/2017/10/10/python-实现聚合（单机版和mapreduce版本）/" title="python- 实现聚合（单机版和mapreduce版本）">http://www.tangyuxiaoyao.club/ITWO/2017/10/10/python-实现聚合（单机版和mapreduce版本）/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.tangyuxiaoyao.club/ITWO/2017/10/10/python-实现聚合（单机版和mapreduce版本）/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/ITWO/2017/10/12/python-操作mongo实现查询和聚合/">
+                    python 操作mongo实现查询和聚合
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/ITWO/2017/10/09/mongo-中实现带where的group-by/">
+                    mongo中实现带where的group by
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需求背景"><span class="toc-number">1.</span> <span class="toc-text">需求背景:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#需求分析"><span class="toc-number">2.</span> <span class="toc-text">需求分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技术实现"><span class="toc-number">3.</span> <span class="toc-text">技术实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#方法一-使用panda-series解决-此解决方案由同事提供"><span class="toc-number">3.1.</span> <span class="toc-text">方法一: 使用panda series解决(此解决方案由同事提供)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mapreduce版"><span class="toc-number">3.2.</span> <span class="toc-text">mapreduce版</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法一-使用mapreduce的特性"><span class="toc-number">3.2.1.</span> <span class="toc-text">方法一:使用mapreduce的特性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法二-使用迭代器"><span class="toc-number">3.2.2.</span> <span class="toc-text">方法二　使用迭代器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"python- 实现聚合（单机版和mapreduce版本）　| ITWO　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/ITWO/2017/10/12/python-操作mongo实现查询和聚合/" title="上一篇: python 操作mongo实现查询和聚合">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/ITWO/2017/10/09/mongo-中实现带where的group-by/" title="下一篇: mongo中实现带where的group by">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/ITWO/2019/01/03/数据特殊join/">数据特殊join</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/11/12/python中-1的妙用/">python中-1的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/">linux 下怎么使用命令制作U盘启动盘</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/10/12/ssh-免密码登录以及多种用途共存/">ssh 免密码登录以及多种用途共存</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/10/08/ubantu-unzip或手动解压文件乱码/">ubantu unzip或手动解压文件乱码</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/09/13/java-mr-lzo-支持/">java mr lzo 支持</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/09/13/scala-match-使用遇到的问题/">scala 使用遇到的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/09/07/java-scala-怎么给可变参数传值/">java/scala 怎么给可变参数传值</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/09/07/使用elasticSearch-实现商户名称的模糊匹配/">使用elasticSearch 实现商户名称的模糊匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/08/24/java-调用spark-submit填坑/">java 调用spark-submit填坑</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/08/13/cron-使用范例/">cron 使用范例</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/07/27/spark-聚合进化/">spark 聚合进化</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/07/23/mapredcue 温习/">mapreduce 温故</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/07/18/使用hive-mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区/">使用hive/mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/07/06/hbase-load-问题总结/">hbase/es load 问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/06/08/比较两个文件内容的不同/">比较两个文件内容的不同</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/05/28/安装es遇到的问题和解决方案/">安装es遇到的问题和解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/05/23/mongo查询慢排查/">mongo查询慢排查</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/">hadoop streaming 配置文件和字典文件分发方式</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/05/09/chrome-浏览器页面乱码问题/">chrome 浏览器页面乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/05/04/linux-实用技巧总结/">linux 实用技巧总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/27/mapreduce-结果集中在多个reduce输出中的一个/">mapreduce 结果集中在多个reduce输出part中的一个</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/27/spring-优雅地关闭程序/">spring 优雅地关闭程序</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/27/ Hadoop HDFS 数据自动平衡/">Hadoop HDFS 数据自动平衡</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/27/python-utc时间转换为本地时间/">python utc时间转换为本地时间</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/16/hexo yilia github 搭建个人博客/">hexo yilla 和github 结合搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/11/如何在hadoop-streaming-mapreduce中-使用python第三方包/">如何在hadoop streaming mapreduce中 使用python第三方包</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/08/shell-遍历多级目录取文件的第一行/">shell 遍历多级目录取文件的第一行</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/04/mysql-和mongo-导入数据总结/">mysql 和mongo 导入数据总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/30/清洗流水之去除字段中多余的分隔符/">清洗流水之去除字段中多余的分隔符</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/">hbase 批量 提取数据</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/14/nohup-使用解释/">nohup & > 使用解释</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/13/maven,gradle-问题解决总结/">maven,gradle 问题解决总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/13/idea-导入gradle项目报错/">idea 导入gradle项目报错</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/07/解决ubantu-谷歌浏览器打不开问题/">解决ubantu 谷歌浏览器打不开问题</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/">shell 合并hdfs文件 分发 并加文件校验和</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/">hive trim() 去除空格遇到的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/30/python-拾遗/">python 拾遗</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/25/spark-ListBuffer遍历/">spark ListBuffer遍历</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/">hadoop streaming 使用中遇到的问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/">给hive mapreduce分配队列和优先级</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/09/矩阵变形记/">矩阵变形记</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/02/crontab-使用规范/">crontab 使用规范</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/28/spring-boot-和layui-集合实现简单的提供页面加解密工具/">spring boot 和layui 集合实现简单的提供页面加解密工具</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/26/hbase-数据导入问题总结/">hbase 数据导入问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/22/yarn-详解/">yarn 详解</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/21/selenium-爬取淘宝商品明细数据/">selenium 爬取淘宝商品明细数据</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/19/hive-NullPointerExcption解决/">hive NullPointerExcption解决</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/07/spark中RDD、DataFrame和DataSet/">spark中RDD、DataFrame和DataSet</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/06/另类的数据结构HashMap/">另类的数据结构HashMap</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/22/hadoop-mapredcue和streaming-hive-三种思路实现not-in-join/">hadoop mapredcue和streaming hive 三种思路实现not in join</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/17/spark-本地模式处理文件时报错/">spark 本地模式处理文件时报错</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/hadoop-二次排序join的实现/">hadoop  streaming 二次排序join的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-解决办法/">spring jpa no property column found for type 解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/scrapy-入门/">scrapy 入门</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/hadoop-建立多级目录-报错误-No-such-file-or-directory/">hadoop 建立多级目录　报错误　　No such file or directory</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/ubantu-下chrome-崩溃的解决办法/">ubantu 下chrome 崩溃的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/python-怎么随机生成15位随机数字/">python 怎么随机生成15位随机数字</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/aws-s3-递归上传和下载/">aws s3 　递归上传和下载 </a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/18/cat-和-xargs-cat的区别/">cat 和　xargs cat的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/16/数据集join杂谈/">数据集join杂谈</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/13/mongo-中count的正确用法/">mongo 中count的正确用法</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/12/python-操作mongo实现查询和聚合/">python 操作mongo实现查询和聚合</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/10/python-实现聚合（单机版和mapreduce版本）/">python- 实现聚合（单机版和mapreduce版本）</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/09/mongo-中实现带where的group-by/">mongo中实现带where的group by</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/29/ssh-免登陆设置/">ssh 免登陆设置</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/spark-lzo-体验/">spark lzo 体验</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/sublime-给文本排序/">sublime 给文本排序</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/shell-获取上个月或者上一年/">shell 获取上个月或者上一年</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/spark-scala中map和flatmap的区别/">spark scala中map和flatmap的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/">如何在ubantu中设置任务栏和菜单中的快速启动和搜索</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/spark-项目启动的时候报出如下错误/">spark 项目启动的时候报出如下错误</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/ubantu16-04怎么彻底移除mysql/">ubantu16.04怎么彻底移除mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/git-commit-怎么撤销/">git commit 怎么撤销</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/apache-http-ssl模块NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/">apache http ssl模块NoClassDefFoundError: org/apache/http/ssl/TrustStrategy</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/shell在指定行插入文本/">shell在指定行插入文本</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 唐钰逍遥
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/ITWO/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/ITWO/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":false},"log":false});</script></body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="唐钰逍遥" />
+
+
+
+<meta name="description" content="使用背景 ubantu自带的工具没有响应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 下怎么使用命令制作U盘启动盘">
+<meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/index.html">
+<meta property="og:site_name" content="ITWO">
+<meta property="og:description" content="使用背景 ubantu自带的工具没有响应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-10-25T01:41:31.855Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 下怎么使用命令制作U盘启动盘">
+<meta name="twitter:description" content="使用背景 ubantu自带的工具没有响应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.">
+
+<link rel="apple-touch-icon" href= "/ITWO//apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="ITWO" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/ITWO//ITWO/assets/Coding.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/ITWO/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>linux 下怎么使用命令制作U盘启动盘 | ITWO</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = /ITWO/; </script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/ITWO/" class="profilepic">
+            <img src="/ITWO/assets/webwxgeticon.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/ITWO/">唐钰逍遥</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">毋庸多言,只管前行.</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="flase" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/ITWO/">主页</a></li>
+                        
+                            <li><a href="/ITWO/archives/">所有文章</a></li>
+                        
+                            <li><a href="/ITWO/tags/">标签云</a></li>
+                        
+                            <li><a href="/ITWO/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:593030994@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/ITWO/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/DataFrame/">DataFrame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/DataSet/">DataSet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/HashMap/">HashMap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/NoClassDefFound/">NoClassDefFound</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/NullPointerException/">NullPointerException</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/RDD/">RDD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/agg/">agg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/aggr/">aggr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/android/">android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/apache/">apache</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/awk/">awk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/aws/">aws</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/balancer/">balancer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/boot/">boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/bulkload/">bulkload</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/cacheFile/">cacheFile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/cat/">cat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/chrome/">chrome</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/chromium/">chromium</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/column/">column</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/comm/">comm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/commit/">commit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/convert/">convert</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/count/">count</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/crontab/">crontab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/dash/">dash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/date/">date</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/dateutil/">dateutil</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/db/">db</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/dbKoda/">dbKoda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/dict/">dict</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/elasticSearch/">elasticSearch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/error/">error</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/es/">es</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/explode/">explode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/file/">file</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/files/">files</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/flatmap/">flatmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/github/">github</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/gradle/">gradle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/groupby/">groupby</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop/">hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hadoop-streaming/">hadoop streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hbase/">hbase</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hdfs/">hdfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/hive/">hive</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/https/">https</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/idea/">idea</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/idfa/">idfa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ik/">ik</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/imei/">imei</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/join/">join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/jpa/">jpa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/layui/">layui</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/local/">local</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/log/">log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/lzo/">lzo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/map/">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mapreduce/">mapreduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/match/">match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/maven/">maven</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mean/">mean</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mobile/">mobile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mongo/">mongo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/no/">no</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/nohup/">nohup</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/not/">not</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/not-in/">not in</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/numpy/">numpy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/panda/">panda</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/part/">part</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/percentile/">percentile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/pivot/">pivot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/priority/">priority</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/queue/">queue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/reduce/">reduce</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/regex-replace/">regex_replace</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/registerShutdownHook/">registerShutdownHook</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/remove/">remove</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/row-number/">row_number</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/s3/">s3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/scala/">scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/scp/">scp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/scrapy/">scrapy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/sed/">sed</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/selenium/">selenium</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shell/">shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/shuffer/">shuffer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/sort/">sort</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spark/">spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/split/">split</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spring/">spring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/spring-cron/">spring,cron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/sql/">sql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ssh/">ssh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ssl/">ssl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/streaming/">streaming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/string/">string*</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/string/">string...</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/strip/">strip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/sublime/">sublime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/submit/">submit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/such/">such</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/suffix/">suffix</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/sum/">sum</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/tab/">tab</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/term/">term</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/tomcat/">tomcat</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/trim/">trim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/ubantu/">ubantu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/unzip/">unzip</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/utc/">utc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/utf-8/">utf-8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/where/">where</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/xargs/">xargs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/yarn/">yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/yilla/">yilla</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/乱码/">乱码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/制表符/">制表符</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/打不开/">打不开</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/排序/">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/数据结构/">数据结构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/爬虫/">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/矩阵/">矩阵</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/移除/">移除</a></li><li class="tag-list-item"><a class="tag-list-link" href="/ITWO/tags/空格/">空格</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">毋庸多言，只管前行。</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">唐钰逍遥</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/ITWO/" class="profilepic">
+                <img src="/ITWO/assets/webwxgeticon.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/ITWO/" title="回到主页">唐钰逍遥</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">毋庸多言,只管前行.</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/ITWO/">主页</a></li>
+                
+                    <li><a href="/ITWO/archives/">所有文章</a></li>
+                
+                    <li><a href="/ITWO/tags/">标签云</a></li>
+                
+                    <li><a href="/ITWO/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:593030994@qq.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="#" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/ITWO/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-linux-下怎么使用命令制作U盘启动盘" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/" class="article-date">
+      <time datetime="2018-10-24T05:27:07.000Z" itemprop="datePublished">2018-10-24</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      linux 下怎么使用命令制作U盘启动盘
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote>
+<p>ubantu自带的工具没有响应,后来查到可以使用命令的方式来格式化u盘和制作装机盘.</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">unmout the mount pan</span></div><div class="line">sudo umount /dev/sdb</div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">format u pan</span></div><div class="line">sudo mkfs.vfat /dev/sdb –I</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#</span><span class="bash">make u pan to a pan <span class="built_in">which</span> can play as a bootpan</span></div><div class="line">sudo dd if=~/iso/deepin-15.7-amd64.iso of=/dev/sdb</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/">linux 下怎么使用命令制作U盘启动盘</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">唐钰逍遥</a></p>
+        <p><span>发布时间:</span>2018-10-24, 13:27:07</p>
+        <p><span>最后更新:</span>2018-10-25, 09:41:31</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/" title="linux 下怎么使用命令制作U盘启动盘">http://www.tangyuxiaoyao.club/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.tangyuxiaoyao.club/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/　　作者: 唐钰逍遥" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/ITWO/2018/11/12/python中-1的妙用/">
+                    python中-1的妙用
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/ITWO/2018/10/12/ssh-免密码登录以及多种用途共存/">
+                    ssh 免密码登录以及多种用途共存
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用背景"><span class="toc-number">1.</span> <span class="toc-text">使用背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#技术实现"><span class="toc-number">2.</span> <span class="toc-text">技术实现</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"linux 下怎么使用命令制作U盘启动盘　| ITWO　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/ITWO/2018/11/12/python中-1的妙用/" title="上一篇: python中-1的妙用">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/ITWO/2018/10/12/ssh-免密码登录以及多种用途共存/" title="下一篇: ssh 免密码登录以及多种用途共存">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/ITWO/2019/01/03/数据特殊join/">数据特殊join</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/11/12/python中-1的妙用/">python中-1的妙用</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/10/24/linux-下怎么使用命令制作U盘启动盘/">linux 下怎么使用命令制作U盘启动盘</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/10/12/ssh-免密码登录以及多种用途共存/">ssh 免密码登录以及多种用途共存</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/10/08/ubantu-unzip或手动解压文件乱码/">ubantu unzip或手动解压文件乱码</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/09/13/java-mr-lzo-支持/">java mr lzo 支持</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/09/13/scala-match-使用遇到的问题/">scala 使用遇到的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/09/07/java-scala-怎么给可变参数传值/">java/scala 怎么给可变参数传值</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/09/07/使用elasticSearch-实现商户名称的模糊匹配/">使用elasticSearch 实现商户名称的模糊匹配</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/08/24/java-调用spark-submit填坑/">java 调用spark-submit填坑</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/08/13/cron-使用范例/">cron 使用范例</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/07/27/spark-聚合进化/">spark 聚合进化</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/07/23/mapredcue 温习/">mapreduce 温故</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/07/18/使用hive-mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区/">使用hive/mapreduce给大数据全局排序，同时巧用该方法实现hbase的预分区</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/07/06/hbase-load-问题总结/">hbase/es load 问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/06/08/比较两个文件内容的不同/">比较两个文件内容的不同</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/05/28/安装es遇到的问题和解决方案/">安装es遇到的问题和解决方案</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/05/23/mongo查询慢排查/">mongo查询慢排查</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/">hadoop streaming 配置文件和字典文件分发方式</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/05/09/chrome-浏览器页面乱码问题/">chrome 浏览器页面乱码问题</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/05/04/linux-实用技巧总结/">linux 实用技巧总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/27/mapreduce-结果集中在多个reduce输出中的一个/">mapreduce 结果集中在多个reduce输出part中的一个</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/27/spring-优雅地关闭程序/">spring 优雅地关闭程序</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/27/ Hadoop HDFS 数据自动平衡/">Hadoop HDFS 数据自动平衡</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/27/python-utc时间转换为本地时间/">python utc时间转换为本地时间</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/16/hexo yilia github 搭建个人博客/">hexo yilla 和github 结合搭建个人博客</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/11/如何在hadoop-streaming-mapreduce中-使用python第三方包/">如何在hadoop streaming mapreduce中 使用python第三方包</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/08/shell-遍历多级目录取文件的第一行/">shell 遍历多级目录取文件的第一行</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/04/04/mysql-和mongo-导入数据总结/">mysql 和mongo 导入数据总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/30/清洗流水之去除字段中多余的分隔符/">清洗流水之去除字段中多余的分隔符</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/">hbase 批量 提取数据</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/14/nohup-使用解释/">nohup & > 使用解释</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/13/maven,gradle-问题解决总结/">maven,gradle 问题解决总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/13/idea-导入gradle项目报错/">idea 导入gradle项目报错</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/07/解决ubantu-谷歌浏览器打不开问题/">解决ubantu 谷歌浏览器打不开问题</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/">shell 合并hdfs文件 分发 并加文件校验和</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/">hive trim() 去除空格遇到的问题</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/30/python-拾遗/">python 拾遗</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/25/spark-ListBuffer遍历/">spark ListBuffer遍历</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/">hadoop streaming 使用中遇到的问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/">给hive mapreduce分配队列和优先级</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/09/矩阵变形记/">矩阵变形记</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2018/01/02/crontab-使用规范/">crontab 使用规范</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/28/spring-boot-和layui-集合实现简单的提供页面加解密工具/">spring boot 和layui 集合实现简单的提供页面加解密工具</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/26/hbase-数据导入问题总结/">hbase 数据导入问题总结</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/22/yarn-详解/">yarn 详解</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/21/selenium-爬取淘宝商品明细数据/">selenium 爬取淘宝商品明细数据</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/19/hive-NullPointerExcption解决/">hive NullPointerExcption解决</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/07/spark中RDD、DataFrame和DataSet/">spark中RDD、DataFrame和DataSet</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/12/06/另类的数据结构HashMap/">另类的数据结构HashMap</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/22/hadoop-mapredcue和streaming-hive-三种思路实现not-in-join/">hadoop mapredcue和streaming hive 三种思路实现not in join</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/17/spark-本地模式处理文件时报错/">spark 本地模式处理文件时报错</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/hadoop-二次排序join的实现/">hadoop  streaming 二次排序join的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-解决办法/">spring jpa no property column found for type 解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/scrapy-入门/">scrapy 入门</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/hadoop-建立多级目录-报错误-No-such-file-or-directory/">hadoop 建立多级目录　报错误　　No such file or directory</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/ubantu-下chrome-崩溃的解决办法/">ubantu 下chrome 崩溃的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/python-怎么随机生成15位随机数字/">python 怎么随机生成15位随机数字</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/11/02/aws-s3-递归上传和下载/">aws s3 　递归上传和下载 </a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/18/cat-和-xargs-cat的区别/">cat 和　xargs cat的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/16/数据集join杂谈/">数据集join杂谈</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/13/mongo-中count的正确用法/">mongo 中count的正确用法</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/12/python-操作mongo实现查询和聚合/">python 操作mongo实现查询和聚合</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/10/python-实现聚合（单机版和mapreduce版本）/">python- 实现聚合（单机版和mapreduce版本）</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/10/09/mongo-中实现带where的group-by/">mongo中实现带where的group by</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/29/ssh-免登陆设置/">ssh 免登陆设置</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/spark-lzo-体验/">spark lzo 体验</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/sublime-给文本排序/">sublime 给文本排序</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/21/shell-获取上个月或者上一年/">shell 获取上个月或者上一年</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/spark-scala中map和flatmap的区别/">spark scala中map和flatmap的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/如何在ubantu中设置任务栏和菜单中的快速启动和搜索/">如何在ubantu中设置任务栏和菜单中的快速启动和搜索</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/19/spark-项目启动的时候报出如下错误/">spark 项目启动的时候报出如下错误</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/ubantu16-04怎么彻底移除mysql/">ubantu16.04怎么彻底移除mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/git-commit-怎么撤销/">git commit 怎么撤销</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/apache-http-ssl模块NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/">apache http ssl模块NoClassDefFoundError: org/apache/http/ssl/TrustStrategy</a></li><li class="post-list-item"><a class="post-list-link" href="/ITWO/2017/09/18/shell在指定行插入文本/">shell在指定行插入文本</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2019 唐钰逍遥
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/ITWO/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+    <script>
+        var originTitle = document.title;
+        var titleTime;
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+                clearTimeout(titleTime);
+            }
+            else {
+                document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+                titleTime = setTimeout(function() {
+                    document.title = originTitle;
+                }, 2000);
+            }
+        })
+    </script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+<script src="/ITWO/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/ITWO/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":false},"log":false});</script></body>
+</html>
