@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="https://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2018-11-12T07:39:51.591Z</updated>
+  <updated>2019-01-03T12:49:43.468Z</updated>
   <id>https://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据特殊join</title>
+    <link href="https://www.tangyuxiaoyao.club/ITWO/2019/01/03/%E6%95%B0%E6%8D%AE%E7%89%B9%E6%AE%8Ajoin/"/>
+    <id>https://www.tangyuxiaoyao.club/ITWO/2019/01/03/数据特殊join/</id>
+    <published>2019-01-03T12:05:06.000Z</published>
+    <updated>2019-01-03T12:49:43.468Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote><p>有两份计费数据一份是测试账号的，一份是正式账号，现计费策略如下：</p></blockquote><ul><li>测试账号调用过的key如果在正式账号调用记录中出现:<ol><li>测试账号调用该key的次数大于等于正式账号，则计费次数为测试出现的次数减去正式账号出现该key的次数。</li><li>测试账号调用该key的次数如果小于正式账号，则计费次数为正式账号调用的次数。</li></ol></li><li>测试账号和正式账号的没有重复的则分别计费即可。</li></ul><h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><ul><li>相同部分不好计费，需要特殊计费通过Python来实现。</li><li>不同部分通过awk追加到一个文件中，然后使用sort|uniq -c 来统计词频即可。（此处不能使用comm，使用该命令一定要先排序去重，那计费数据不就丢了？）</li></ul><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">step1:compute the key cnt with tag</div><div class="line"></div><div class="line">sort Tcard &gt; s_tcard</div><div class="line">sort Fcard &gt; s_fcard</div><div class="line"></div><div class="line">cat s_tcard|uniq -c |awk -F' ' '&#123;print $2"\tT_"$1&#125;' &gt;tag_tcard</div><div class="line">cat s_fcard|uniq -c |awk -F' ' '&#123;print $2"\tF_"$1&#125;' &gt;tag_Fcard</div><div class="line"></div><div class="line"></div><div class="line">step2: handle the common part</div><div class="line"></div><div class="line">sort tag* |python handleCnt.py &gt;common.tsv</div><div class="line"></div><div class="line"></div><div class="line">step3:handle the diff part</div><div class="line"></div><div class="line"></div><div class="line">awk  'NR==FNR&#123;a[$0]&#125;NR&gt;FNR&#123; if(!($1 in a)) print $0&#125;' s_tcard s_fcard &gt;diff_temp</div><div class="line">awk  'NR==FNR&#123;a[$0]&#125;NR&gt;FNR&#123; if(!($1 in a)) print $0&#125;' s_fcard s_tcard &gt;&gt; diff_temp</div><div class="line"></div><div class="line"></div><div class="line">sort diff_temp |uniq -c |awk -F' ' '&#123;print $2"\t"$1&#125;' &gt;diff.tsv</div><div class="line"></div><div class="line"></div><div class="line">step4:cat comm and diff to final.tsv</div><div class="line"></div><div class="line">cat common.tsv diff.tsv &gt;final.tsv</div></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># vim: set fileencoding=utf-8</span></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(separator = <span class="string">'\t'</span>)</span>:</span></div><div class="line">    initDict = &#123;&#125;</div><div class="line">    card = <span class="keyword">None</span></div><div class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> sys.stdin:</div><div class="line">        detail = data.strip().split(separator)</div><div class="line">        <span class="keyword">if</span>(detail[<span class="number">1</span>].startswith(<span class="string">"F"</span>)):</div><div class="line">            card = detail[<span class="number">0</span>]</div><div class="line">            cnt = detail[<span class="number">1</span>].split(<span class="string">"_"</span>)[<span class="number">1</span>]</div><div class="line">            initDict[card] = cnt</div><div class="line">        <span class="keyword">elif</span>(detail[<span class="number">0</span>] <span class="keyword">in</span>  initDict.keys() <span class="keyword">and</span> detail[<span class="number">1</span>].startswith(<span class="string">"T_"</span>)):</div><div class="line">            cnt =  detail[<span class="number">1</span>].split(<span class="string">"_"</span>,<span class="number">1</span>)[<span class="number">1</span>]</div><div class="line">            <span class="keyword">if</span>(initDict[card]&gt;=cnt):</div><div class="line">                <span class="keyword">print</span> card+separator+initDict[card]</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">print</span> card+separator+str(int(cnt)-int(initDict[card]))</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;需求背景&quot;&gt;&lt;a href=&quot;#需求背景&quot; class=&quot;headerlink&quot; title=&quot;需求背景&quot;&gt;&lt;/a&gt;需求背景&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;有两份计费数据一份是测试账号的，一份是正式账号，现计费策略如下：&lt;/p&gt;
+&lt;/blockquote
+      
+    
+    </summary>
+    
+    
+      <category term="shell" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/shell/"/>
+    
+      <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+    
+      <category term="comm" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/comm/"/>
+    
+  </entry>
   
   <entry>
     <title>python中-1的妙用</title>
@@ -389,9 +418,9 @@
     <link href="https://www.tangyuxiaoyao.club/ITWO/2018/06/08/%E6%AF%94%E8%BE%83%E4%B8%A4%E4%B8%AA%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E4%B8%8D%E5%90%8C/"/>
     <id>https://www.tangyuxiaoyao.club/ITWO/2018/06/08/比较两个文件内容的不同/</id>
     <published>2018-06-08T02:29:06.000Z</published>
-    <updated>2018-06-08T02:32:12.410Z</updated>
+    <updated>2019-01-03T12:48:03.174Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>比较两个文件的不同</p></blockquote><a id="more"></a><h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">koulb@koulb-ubantu:~/testdata$ more a</div><div class="line">1</div><div class="line">a</div><div class="line">b</div><div class="line">d</div><div class="line">c</div><div class="line">koulb@koulb-ubantu:~/testdata$ more b</div><div class="line">a</div><div class="line">b</div></pre></td></tr></table></figure><blockquote><p>这时你去比较</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">koulb@koulb-ubantu:~/testdata$ comm -23 a b</div><div class="line">1</div><div class="line">f</div><div class="line">comm: 文件1 没有被正确排序</div><div class="line">e</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div></pre></td></tr></table></figure><blockquote><p>你需要做的是:</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">koulb@koulb-ubantu:~/testdata$ sort a &gt;c</div><div class="line">koulb@koulb-ubantu:~/testdata$ comm -23 c b</div><div class="line">1</div><div class="line">c</div><div class="line">d</div></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>比较两个文件的不同</p></blockquote><a id="more"></a><h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">koulb@koulb-ubantu:~/testdata$ more a</div><div class="line">1</div><div class="line">a</div><div class="line">b</div><div class="line">d</div><div class="line">c</div><div class="line">koulb@koulb-ubantu:~/testdata$ more b</div><div class="line">a</div><div class="line">b</div></pre></td></tr></table></figure><blockquote><p>这时你去比较</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">koulb@koulb-ubantu:~/testdata$ comm -23 a b</div><div class="line">1</div><div class="line">f</div><div class="line">comm: 文件1 没有被正确排序</div><div class="line">e</div><div class="line">a</div><div class="line">b</div><div class="line">c</div><div class="line">d</div></pre></td></tr></table></figure><blockquote><p>你需要做的是:</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">koulb@koulb-ubantu:~/testdata$ sort -u a &gt;c</div><div class="line">koulb@koulb-ubantu:~/testdata$ comm -23 c b</div><div class="line">1</div><div class="line">c</div><div class="line">d</div></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">只显示file1独有的行：</div><div class="line">需要把第2列和第3列去掉：</div><div class="line">koulb@koulb-ubantu:~/testdata$ comm -2 -3 file1 file2</div><div class="line">只显示file2独有的行：</div><div class="line">koulb@koulb-ubantu:~/testdata$ comm -1 -3 file1 file2</div><div class="line"></div><div class="line">只显示两者重复的行：</div><div class="line">koulb@koulb-ubantu:~/testdata$ comm -1 -2 file1 file2</div><div class="line">只显示两者不重复的行：</div><div class="line">后面的sed是将以\t开头的\t去掉：</div><div class="line">koulb@koulb-ubantu:~/testdata$ comm -3 file1 file2 | sed 's/^\t//'</div></pre></td></tr></table></figure><h2 id="tips"><a href="#tips" class="headerlink" title="tips"></a>tips</h2><ul><li>使用该命令一定要先排序去重，否则不生效，切记。</li></ul>]]></content>
     
     <summary type="html">
     
@@ -476,9 +505,9 @@
     </summary>
     
     
-      <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
-    
       <category term="python" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/python/"/>
+    
+      <category term="hadoop streaming" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/hadoop-streaming/"/>
     
       <category term="cacheFile" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/cacheFile/"/>
     
@@ -512,32 +541,6 @@
       <category term="utf-8" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/utf-8/"/>
     
       <category term="tomcat" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/tomcat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>linux 实用技巧总结</title>
-    <link href="https://www.tangyuxiaoyao.club/ITWO/2018/05/04/linux-%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/"/>
-    <id>https://www.tangyuxiaoyao.club/ITWO/2018/05/04/linux-实用技巧总结/</id>
-    <published>2018-05-04T02:32:29.000Z</published>
-    <updated>2018-09-07T05:34:04.799Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>总结以往在使用linux时,用到的一点小技巧或者命令集合</p></blockquote><a id="more"></a><h2 id="批量图片格式文件转换成一个pdf"><a href="#批量图片格式文件转换成一个pdf" class="headerlink" title="批量图片格式文件转换成一个pdf"></a>批量图片格式文件转换成一个pdf</h2><blockquote><p>convert *.jpg output.pdf<br>ps:就是这么任性</p></blockquote><h2 id="awk-按照某个key分发文件的妙用"><a href="#awk-按照某个key分发文件的妙用" class="headerlink" title="awk 按照某个key分发文件的妙用"></a>awk 按照某个key分发文件的妙用</h2><h3 id="需求背景："><a href="#需求背景：" class="headerlink" title="需求背景："></a>需求背景：</h3><blockquote><p>本来的需求是提取一个月的数据，但是出来以后产品又要拆分为每天的量<br><!--more--></p></blockquote><h3 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h3><blockquote><p>本来打算使用python foreach去解决，但是想到以前用过awk处理过类似的问题，乍一看日期后面还有时分秒，必然又用到了substr，妙的是awk也支持，脚本如下：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $3  &gt;substr($2,1,10)".csv"&#125;'</span> sy*.txt;</div></pre></td></tr></table></figure><blockquote><p>完美的解决了我的问题，第二列是时间(带有时分秒,日期格式为2017-06-13的样式)，第三列为个人标示，唯一标示一条记录，当然你也可以使用$0，完成真正意义上的拆分文件。</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk -F <span class="string">','</span> <span class="string">'&#123;print $0 &gt;substr($2,1,10)".csv"&#125;'</span>  sy*.txt;</div></pre></td></tr></table></figure><h2 id="awk-批量更改某列的值"><a href="#awk-批量更改某列的值" class="headerlink" title="awk 批量更改某列的值"></a>awk 批量更改某列的值</h2><blockquote><p>需要更改某个文件中的某列值,用python的话很好实现,伪脚本如下</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</div><div class="line">    details = line.strip().split(sep)</div><div class="line">details[n] = <span class="string">"new data"</span></div><div class="line"><span class="keyword">print</span> sep.join(details)</div></pre></td></tr></table></figure><blockquote><p>awk 的实现方式如下:</p></blockquote><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">awk  'BEGIN&#123;FS=OFS=","&#125; $2="ccc"; print $0&#125;' aa</div></pre></td></tr></table></figure><blockquote><p>如上的代码中需要同时制定输入和输出的分隔符,如果输出分隔符不指定的话,会导致print $0的时候默认的分隔符为空格.</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;总结以往在使用linux时,用到的一点小技巧或者命令集合&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-    
-      <category term="linux" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/linux/"/>
-    
-      <category term="convert" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/convert/"/>
-    
-      <category term="awk" scheme="https://www.tangyuxiaoyao.club/ITWO/tags/awk/"/>
     
   </entry>
   
