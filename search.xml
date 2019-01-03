@@ -672,11 +672,11 @@
             
             <tag> file </tag>
             
-            <tag> scala </tag>
-            
             <tag> spark </tag>
             
             <tag> awk </tag>
+            
+            <tag> scala </tag>
             
             <tag> suffix </tag>
             
@@ -1320,9 +1320,9 @@
       
         <tags>
             
-            <tag> scala </tag>
-            
             <tag> spark </tag>
+            
+            <tag> scala </tag>
             
             <tag> map </tag>
             
