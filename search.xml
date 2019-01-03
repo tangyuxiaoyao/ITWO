@@ -341,9 +341,9 @@
       
         <tags>
             
-            <tag> python </tag>
-            
             <tag> hadoop streaming </tag>
+            
+            <tag> python </tag>
             
             <tag> cacheFile </tag>
             
@@ -672,11 +672,11 @@
             
             <tag> file </tag>
             
+            <tag> scala </tag>
+            
             <tag> spark </tag>
             
             <tag> awk </tag>
-            
-            <tag> scala </tag>
             
             <tag> suffix </tag>
             
@@ -1121,7 +1121,7 @@
       <title>cat 和　xargs cat的区别</title>
       <link href="/ITWO/2017/10/18/cat-%E5%92%8C-xargs-cat%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
       <url>/ITWO/2017/10/18/cat-%E5%92%8C-xargs-cat%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-      <content type="html"><![CDATA[<h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><blockquote><p>在hadoop官方文档上有看到这样的使用<br><a id="more"></a><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">HADOOP_HOME/bin/hadoop  jar <span class="variable">$HADOOP_HOME</span>/hadoop-streaming.jar \</span></div><div class="line">                 -archives 'hdfs://hadoop-nn1.example.com/user/me/samples/cachefile/cachedir.jar' \  </div><div class="line">                 -D mapred.map.tasks=1 \</div><div class="line">                 -D mapred.reduce.tasks=1 \ </div><div class="line">                 -D mapred.job.name="Experiment" \</div><div class="line">                 -input "/user/me/samples/cachefile/input.txt"  \</div><div class="line">                 -output "/user/me/samples/cachefile/out" \  </div><div class="line">                 -mapper "xargs cat"  \</div><div class="line">                 -reducer "cat"</div></pre></td></tr></table></figure></p><p>其中 mapper中用的可执行命令是xargs cat而redcuer用的是cat,这样的区别在哪里？</p></blockquote><h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote><p>管道是实现“将前面的标准输出作为后面的标准输入”<br>xargs是实现“将标准输入作为命令的参数”</p><p>你可以试试运行：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> <span class="string">"--help"</span>|cat</div><div class="line"><span class="built_in">echo</span> <span class="string">"--help"</span>|xargs cat</div></pre></td></tr></table></figure>]]></content>
+      <content type="html"><![CDATA[<h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><blockquote><p>在hadoop官方文档上有看到这样的使用<br><a id="more"></a><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/hadoop-streaming.jar \</div><div class="line">                 -archives 'hdfs://hadoop-nn1.example.com/user/me/samples/cachefile/cachedir.jar' \  </div><div class="line">                 -D mapred.map.tasks=1 \</div><div class="line">                 -D mapred.reduce.tasks=1 \ </div><div class="line">                 -D mapred.job.name="Experiment" \</div><div class="line">                 -input "/user/me/samples/cachefile/input.txt"  \</div><div class="line">                 -output "/user/me/samples/cachefile/out" \  </div><div class="line">                 -mapper "xargs cat"  \</div><div class="line">                 -reducer "cat"</div></pre></td></tr></table></figure></p><p>其中 mapper中用的可执行命令是xargs cat而redcuer用的是cat,这样的区别在哪里？</p></blockquote><h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote><p>管道是实现“将前面的标准输出作为后面的标准输入”<br>xargs是实现“将标准输入作为命令的参数”</p><p>你可以试试运行：</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">echo</span> <span class="string">"--help"</span>|cat</div><div class="line"><span class="built_in">echo</span> <span class="string">"--help"</span>|xargs cat</div></pre></td></tr></table></figure>]]></content>
       
       
         <tags>
@@ -1320,9 +1320,9 @@
       
         <tags>
             
-            <tag> spark </tag>
-            
             <tag> scala </tag>
+            
+            <tag> spark </tag>
             
             <tag> map </tag>
             
