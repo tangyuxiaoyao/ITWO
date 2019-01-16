@@ -6,7 +6,7 @@
   <link href="/ITWO/atom.xml" rel="self"/>
   
   <link href="http://www.tangyuxiaoyao.club/ITWO/"/>
-  <updated>2019-01-03T12:53:16.167Z</updated>
+  <updated>2019-01-16T01:38:37.230Z</updated>
   <id>http://www.tangyuxiaoyao.club/ITWO/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>docker use</title>
+    <link href="http://www.tangyuxiaoyao.club/ITWO/2019/01/15/docker-use/"/>
+    <id>http://www.tangyuxiaoyao.club/ITWO/2019/01/15/docker-use/</id>
+    <published>2019-01-15T11:16:06.000Z</published>
+    <updated>2019-01-16T01:38:37.230Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>docker的使用总结</p><hr><a id="more"></a><ul><li>指定镜像启动容器</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker run -P tomcat //随机端口访问 将tomcat容器的8080端口映射到宿主机的随机端口</div><div class="line">docker run -p 80:8080 tomcat //指定端口访问 将tomcat容器的8080端口映射到宿主机的80端口</div></pre></td></tr></table></figure><ul><li>编辑正在访问的容器</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker exec -it CONTAINER ID bash //进入容器的命令行式交互式界面</div></pre></td></tr></table></figure><ul><li>停止正在运行的容器</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker kill cid/cname</div><div class="line">docker stop cid/cname</div></pre></td></tr></table></figure><ul><li>继承并定制化自己风格的容器</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mkdir empty</div><div class="line">cd empty</div><div class="line">vi Dockerfile</div><div class="line">FROM tomcat</div><div class="line">RUN echo '&lt;h1&gt;Hello, Docker!&lt;/h1&gt;' &gt; /usr/local/tomcat/webapps/ROOT/index.jsp</div><div class="line"></div><div class="line">docker build -t tomcat:hello .</div><div class="line"></div><div class="line">~/docker/testDocker$ docker images</div><div class="line">REPOSITORY   TAG                 IMAGE ID            CREATED              SIZE</div><div class="line">tomcat       hello               a5ed8e716cce        About a minute ago   462MB</div></pre></td></tr></table></figure><ul><li>本地文件打包部署到容器</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">TODO</div></pre></td></tr></table></figure><ul><li>清除掉归档状态的容器(status=Exited)</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker container prune //删除全部</div><div class="line">docker rm cid/cname //删除指定的容器</div></pre></td></tr></table></figure><ul><li>使用数据卷实现宿主项目挂载到容器</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run -p 8081:8080  -v /home/user/docker/testDocker/vtest:/usr/local/tomcat/webapps/ROOT --name tomcat2 -d tomcat</div></pre></td></tr></table></figure><ul><li>部署mysql指定版本容器</li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">docker run -p 3306:3306 --name mysql \</div><div class="line">-v $PWD/conf:/etc/mysql/conf.d \</div><div class="line">-v $PWD/logs:/logs \</div><div class="line">-v $PWD/data:/var/lib/mysql \</div><div class="line">-e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7.22</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;p&gt;docker的使用总结&lt;/p&gt;
+&lt;hr&gt;
+    
+    </summary>
+    
+    
+      <category term="docker" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/docker/"/>
+    
+  </entry>
   
   <entry>
     <title>数据特殊join</title>
@@ -519,33 +541,6 @@
       <category term="file" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/file/"/>
     
       <category term="files" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/files/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>chrome 浏览器页面乱码问题</title>
-    <link href="http://www.tangyuxiaoyao.club/ITWO/2018/05/09/chrome-%E6%B5%8F%E8%A7%88%E5%99%A8%E9%A1%B5%E9%9D%A2%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/"/>
-    <id>http://www.tangyuxiaoyao.club/ITWO/2018/05/09/chrome-浏览器页面乱码问题/</id>
-    <published>2018-05-09T01:51:20.000Z</published>
-    <updated>2018-05-09T02:16:27.818Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote><p>在做es分词的时候用到了ik分词器要用热分词,要用到一个web容器来搭建在线词库,遇到了以下的问题.<br><a id="more"></a></p><p>建立词库的时候原本打算是在服务器上建立的后来,无法确认它的编码格式,后来在本地用文本建立的词典,同时也另存为了utf-8格式,然后传到了tomcat服务器的ROOT目录下,然后启动在页面预览,但是出现了乱码.</p></blockquote><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><blockquote><p>原本下意识的解决思路是修改tomcat自带的server.xml配置,但是改了以后于事无补,在页面预览还是乱码.<br>后来考虑到是不是浏览器自己的编码格式问题,使用了curl直接访问这个文本静态文件,没有乱码的问题出现,从而定位去修改浏览器的默认格式问题,但是最新版本的chrome浏览器没有提供直接修改默认编码的通道,后来在chrome商店有搜到有以下这款插件可以解决问题.<br>ps:(A Google Chrome extension used to modify the page default encoding for Google Chrome 55+.)<br>55版本以后已经不支持在自定义字体里面修改.<br><a href="https://chrome.google.com/webstore/detail/oenllhgkiiljibhfagbfogdbchhdchml" target="_blank" rel="external">Charset</a></p></blockquote><h2 id="写在后面"><a href="#写在后面" class="headerlink" title="写在后面"></a>写在后面</h2><blockquote><p>后来发现其实跟server.xml的配置没关系,是不是新版本已经没有该问题了?(apache-tomcat-8.5.31)</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;在做es分词的时候用到了ik分词器要用热分词,要用到一个web容器来搭建在线词库,遇到了以下的问题.&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="chrome" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/chrome/"/>
-    
-      <category term="ubantu" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/ubantu/"/>
-    
-      <category term="utf-8" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/utf-8/"/>
-    
-      <category term="tomcat" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/tomcat/"/>
     
   </entry>
   
