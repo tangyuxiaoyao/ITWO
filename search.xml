@@ -3,6 +3,23 @@
   
     
     <entry>
+      <title>通过shell来实现任务状态汇报</title>
+      <link href="/ITWO/2019/02/19/%E9%80%9A%E8%BF%87shell%E6%9D%A5%E5%AE%9E%E7%8E%B0%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81%E6%B1%87%E6%8A%A5/"/>
+      <url>/ITWO/2019/02/19/%E9%80%9A%E8%BF%87shell%E6%9D%A5%E5%AE%9E%E7%8E%B0%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81%E6%B1%87%E6%8A%A5/</url>
+      <content type="html"><![CDATA[<h2 id="业务背景"><a href="#业务背景" class="headerlink" title="业务背景"></a>业务背景</h2><blockquote><p>三台机器负责接受分发的数据然后运行各自的逻辑，完成之后发送信号给主节点，然后继续后续的数据分发以及跑批任务。</p></blockquote><a id="more"></a><h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote><p>如果是传统的java/python程序去处理的话可以考虑到和zookeeper结合利用zk的心跳机制完成任务的定时上报和任务完成信号的汇报，shell的话怎么办？</p></blockquote><ul><li>思路：在主节点配置一个监听服务器等待接受任务节点的信号，并定时轮训接受信号的文件当第一批次的任务信号接受完成，置空该信号文件并继续分发下一次批次数据给任务节点，依次类推。</li></ul><h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env bash</span></div><div class="line"></div><div class="line"></div><div class="line">master:</div><div class="line">nohup  nc -l -k 10000 &gt;signalFile &amp;</div><div class="line"></div><div class="line"><span class="function"><span class="title">monitorDataNode</span></span>()&#123;</div><div class="line">  susseedCnt=`grep <span class="variable">$1</span> signalFile |wc -l`</div><div class="line">  <span class="built_in">return</span> susseedCnt</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">hive -f get_inner.sql</div><div class="line"><span class="keyword">if</span> [ $? != 0 ];</div><div class="line"><span class="keyword">then</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"get_inner failed"</span></div><div class="line"><span class="built_in">exit</span> 2</div><div class="line"><span class="keyword">else</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"get_inner succeed"</span></div><div class="line">  hive -f stanard_inner.sh</div><div class="line">  <span class="keyword">if</span> [ $? != 0 ];</div><div class="line">  <span class="keyword">then</span></div><div class="line">  <span class="built_in">echo</span> <span class="string">"stanard_inner failed"</span></div><div class="line">  <span class="built_in">exit</span> 2</div><div class="line">  <span class="keyword">else</span></div><div class="line">  <span class="built_in">echo</span> <span class="string">"stanard_inner succeed"</span></div><div class="line">    hive -f merge_inner.sql &amp;&amp; bash  deal_out.sh</div><div class="line">    <span class="keyword">if</span> [ $? != 0 ];</div><div class="line">      <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"merge_inner &amp;&amp; deal_out failed"</span></div><div class="line">          <span class="built_in">exit</span> 2</div><div class="line">    <span class="keyword">else</span></div><div class="line">      <span class="built_in">echo</span> <span class="string">"merge_inner &amp;&amp; deal_out succeed"</span></div><div class="line">      monitorDataNode 0_do_get</div><div class="line">      <span class="keyword">if</span> [ $? == 3 ];</div><div class="line">        <span class="keyword">then</span></div><div class="line">          <span class="built_in">echo</span> <span class="string">'0_do_get succeed'</span></div><div class="line">          bash  1_do_reindex.sh</div><div class="line">          .</div><div class="line">          .</div><div class="line">          .</div><div class="line">      <span class="keyword">else</span></div><div class="line">        monitorDataNode 0_do_get</div><div class="line">      <span class="keyword">fi</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">  <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">dataNode:</div><div class="line"></div><div class="line">bash  0_do_get.sh</div><div class="line"><span class="keyword">if</span> [ $? != 0 ];</div><div class="line">     <span class="keyword">then</span></div><div class="line">         <span class="built_in">echo</span> <span class="string">"0_do_get failed"</span></div><div class="line">          <span class="built_in">exit</span> 2</div><div class="line"><span class="keyword">else</span></div><div class="line">   <span class="built_in">echo</span> <span class="string">"0_do_get succeed"</span> |  netcat master 10000</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>]]></content>
+      
+      
+        <tags>
+            
+            <tag> shell </tag>
+            
+            <tag> netcat </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>docker use</title>
       <link href="/ITWO/2019/01/15/docker-use/"/>
       <url>/ITWO/2019/01/15/docker-use/</url>
@@ -259,11 +276,11 @@
       
         <tags>
             
+            <tag> python </tag>
+            
             <tag> mapreduce </tag>
             
             <tag> hive </tag>
-            
-            <tag> python </tag>
             
             <tag> row_number </tag>
             
@@ -514,11 +531,11 @@
             
             <tag> hadoop </tag>
             
-            <tag> mapreduce </tag>
-            
             <tag> streaming </tag>
             
             <tag> python </tag>
+            
+            <tag> mapreduce </tag>
             
             <tag> numpy </tag>
             
@@ -968,9 +985,9 @@
             
             <tag> hadoop </tag>
             
-            <tag> mapreduce </tag>
-            
             <tag> streaming </tag>
+            
+            <tag> mapreduce </tag>
             
             <tag> hive </tag>
             
