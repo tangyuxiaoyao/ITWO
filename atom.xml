@@ -289,9 +289,9 @@
     
       <category term="git" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/git/"/>
     
-      <category term="ssh" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/ssh/"/>
-    
       <category term="scp" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/scp/"/>
+    
+      <category term="ssh" scheme="http://www.tangyuxiaoyao.club/ITWO/tags/ssh/"/>
     
   </entry>
   

@@ -181,9 +181,9 @@
             
             <tag> git </tag>
             
-            <tag> ssh </tag>
-            
             <tag> scp </tag>
+            
+            <tag> ssh </tag>
             
         </tags>
       
@@ -1272,9 +1272,9 @@
             
             <tag> python </tag>
             
-            <tag> count </tag>
-            
             <tag> date </tag>
+            
+            <tag> count </tag>
             
             <tag> sum </tag>
             
