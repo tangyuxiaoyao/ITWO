@@ -3,6 +3,23 @@
   
     
     <entry>
+      <title>ubuntu下好用的截图工具</title>
+      <link href="/ITWO/2019/06/12/ubuntu%E4%B8%8B%E5%A5%BD%E7%94%A8%E7%9A%84%E6%88%AA%E5%9B%BE%E5%B7%A5%E5%85%B7/"/>
+      <url>/ITWO/2019/06/12/ubuntu%E4%B8%8B%E5%A5%BD%E7%94%A8%E7%9A%84%E6%88%AA%E5%9B%BE%E5%B7%A5%E5%85%B7/</url>
+      <content type="html"><![CDATA[<h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><ul><li>ubuntu 自带的截图工具实在是太寒颤，而且不能二次编辑和直接复制到剪贴板．</li></ul><a id="more"></a><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ul><li>那么有没有一种类似ＱＱ或者微信下的截图工具呢，后来经过多方检索和试用，得到了一款截图工具特此跟大家分享下．</li></ul><h2 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><a href="http://justcode.ikeepstudying.com/wp-content/uploads/2015/12/deepin-scrot_2.0-0deepin_all.zip" target="_blank" rel="external">点击这里下载安装包</a></p><ul><li>下载后cd 到下载的目录　然后试用unzip 命令解压　</li><li>使用sudo dpkg -i deepin-scrot_2.0-0deepin_all.deb　命令安装<blockquote><p>tips: 如果报错如下</p></blockquote></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">dpkg: 依赖关系问题使得 deepin-scrot 的配置工作不能继续：</div><div class="line"> deepin-scrot 依赖于 gconf2 (&gt;= 2.28.1-2)；然而：</div><div class="line">  未安装软件包 gconf2。</div><div class="line"> deepin-scrot 依赖于 python-xlib；然而：</div><div class="line">  未安装软件包 python-xlib。</div><div class="line"></div><div class="line">dpkg: 处理软件包 deepin-scrot (--install)时出错：</div><div class="line"> 依赖关系问题 - 仍未被配置</div><div class="line">在处理时有错误发生：</div><div class="line"> deepin-scrot</div></pre></td></tr></table></figure><blockquote><p>需要安装python-xlib．<br>解决办法:sudo apt-get install python-xlib</p></blockquote><ul><li>然后试用　Deepin scrot<blockquote><p>如果还有报错如下:</p></blockquote></li></ul><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Traceback (most recent call last):</div><div class="line">  File "./deepinScrot.py", line 24, in &lt;module&gt;</div><div class="line">    import gtk, os, sys, time</div><div class="line">ImportError: No module named gtk</div></pre></td></tr></table></figure><blockquote><p>解决方案：sudo apt-get install python-gtk2</p></blockquote><ul><li>设置快捷键（直接看图）</li></ul><p><img src="/ITWO/assets/jietu_keymap_set.png" alt="设置快捷键"></p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> ubuntu </tag>
+            
+            <tag> 截图 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>利用python seek 实现实时监控vpn多次尝试失败账号</title>
       <link href="/ITWO/2019/06/06/%E5%88%A9%E7%94%A8python-seek-%E5%AE%9E%E7%8E%B0%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7vpn%E5%A4%9A%E6%AC%A1%E5%B0%9D%E8%AF%95%E5%A4%B1%E8%B4%A5%E8%B4%A6%E5%8F%B7/"/>
       <url>/ITWO/2019/06/06/%E5%88%A9%E7%94%A8python-seek-%E5%AE%9E%E7%8E%B0%E5%AE%9E%E6%97%B6%E7%9B%91%E6%8E%A7vpn%E5%A4%9A%E6%AC%A1%E5%B0%9D%E8%AF%95%E5%A4%B1%E8%B4%A5%E8%B4%A6%E5%8F%B7/</url>
@@ -449,11 +466,11 @@
             
             <tag> python </tag>
             
-            <tag> file </tag>
-            
             <tag> hadoop streaming </tag>
             
             <tag> cacheFile </tag>
+            
+            <tag> file </tag>
             
             <tag> files </tag>
             
@@ -742,9 +759,9 @@
             
             <tag> scala </tag>
             
-            <tag> awk </tag>
-            
             <tag> spark </tag>
+            
+            <tag> awk </tag>
             
             <tag> suffix </tag>
             
@@ -1118,11 +1135,11 @@
             
             <tag> hadoop </tag>
             
+            <tag> file </tag>
+            
             <tag> no </tag>
             
             <tag> such </tag>
-            
-            <tag> file </tag>
             
         </tags>
       
@@ -1272,9 +1289,9 @@
             
             <tag> python </tag>
             
-            <tag> date </tag>
-            
             <tag> count </tag>
+            
+            <tag> date </tag>
             
             <tag> sum </tag>
             
@@ -1430,9 +1447,9 @@
             
             <tag> spark </tag>
             
-            <tag> match </tag>
-            
             <tag> not </tag>
+            
+            <tag> match </tag>
             
         </tags>
       
