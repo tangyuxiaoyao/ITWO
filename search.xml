@@ -198,9 +198,9 @@
             
             <tag> git </tag>
             
-            <tag> scp </tag>
-            
             <tag> ssh </tag>
+            
+            <tag> scp </tag>
             
         </tags>
       
@@ -367,11 +367,11 @@
       
         <tags>
             
+            <tag> python </tag>
+            
             <tag> mapreduce </tag>
             
             <tag> hive </tag>
-            
-            <tag> python </tag>
             
             <tag> row_number </tag>
             
@@ -466,11 +466,11 @@
             
             <tag> python </tag>
             
+            <tag> file </tag>
+            
             <tag> hadoop streaming </tag>
             
             <tag> cacheFile </tag>
-            
-            <tag> file </tag>
             
             <tag> files </tag>
             
@@ -584,11 +584,11 @@
             
             <tag> hadoop </tag>
             
-            <tag> mapreduce </tag>
-            
             <tag> streaming </tag>
             
             <tag> python </tag>
+            
+            <tag> mapreduce </tag>
             
             <tag> numpy </tag>
             
@@ -749,19 +749,19 @@
       
         <tags>
             
+            <tag> shell </tag>
+            
             <tag> hadoop </tag>
             
             <tag> hdfs </tag>
-            
-            <tag> shell </tag>
             
             <tag> file </tag>
             
             <tag> scala </tag>
             
-            <tag> spark </tag>
-            
             <tag> awk </tag>
+            
+            <tag> spark </tag>
             
             <tag> suffix </tag>
             
@@ -1038,9 +1038,9 @@
             
             <tag> hadoop </tag>
             
-            <tag> mapreduce </tag>
-            
             <tag> streaming </tag>
+            
+            <tag> mapreduce </tag>
             
             <tag> hive </tag>
             
@@ -1059,11 +1059,11 @@
       
         <tags>
             
-            <tag> error </tag>
-            
             <tag> spark </tag>
             
             <tag> local </tag>
+            
+            <tag> error </tag>
             
         </tags>
       
@@ -1135,11 +1135,11 @@
             
             <tag> hadoop </tag>
             
-            <tag> file </tag>
-            
             <tag> no </tag>
             
             <tag> such </tag>
+            
+            <tag> file </tag>
             
         </tags>
       
