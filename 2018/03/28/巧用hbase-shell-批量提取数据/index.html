@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求描述 有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。第三种策略">
+  <meta name="description" content="有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。第三种策略则是用m">
 <meta name="keywords" content="shell,python,hbase">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hbase 批量 提取数据">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求描述 有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。第三种策略">
+<meta property="og:description" content="有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。第三种策略则是用m">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-23T07:21:57.541Z">
+<meta property="og:updated_time" content="2019-07-18T12:13:21.285Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hbase 批量 提取数据">
-<meta name="twitter:description" content="需求描述 有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。第三种策略">
+<meta name="twitter:description" content="有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。第三种策略则是用m">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,7 +139,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h2><blockquote>
+            <blockquote>
 <p>有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做join拿到要的数据，当然也是最简单，但是该hbase集群没有装hive，就是这么意外，第二策略是使用Python访问hbase(happybase),但是也要安装很多东西，最后是使用hbase shell 拿到数据以后，再批量拼装。第三种策略则是用mapreduce去读取hbase数据存储到hdfs上.<br><a id="more"></a></p>
 <h2 id="技术分析实现"><a href="#技术分析实现" class="headerlink" title="技术分析实现"></a>技术分析实现</h2></blockquote>
 <h3 id="hive"><a href="#hive" class="headerlink" title="hive"></a>hive</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">external</span> <span class="keyword">table</span> hive_hbase_test(<span class="keyword">key</span> <span class="built_in">int</span>,<span class="keyword">value</span> <span class="keyword">string</span>)</div><div class="line"><span class="keyword">stored</span> <span class="keyword">by</span> <span class="string">'org.apache.hadoop.hive.hbase.HBaseStorageHandler'</span> <span class="keyword">with</span> serdeproperties(<span class="string">"hbase.columns.mapping"</span>=<span class="string">":key,cf1:val"</span>) tblproperties(<span class="string">"hbase.table.name"</span>=<span class="string">"hive_hbase_test"</span>);</div></pre></td></tr></table></figure>
@@ -195,7 +198,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年11月23日 15:21</p>
+        <p>最后更新： 2019年07月18日 20:13</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/" title="hbase 批量 提取数据">http://www.tangyuxiaoyao.club/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -263,8 +266,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/&title=《hbase 批量 提取数据》 — ITWO&source=需求描述
-有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/03/28/巧用hbase-shell-批量提取数据/&title=《hbase 批量 提取数据》 — ITWO&source=
+有一批卡号的需求提取全量的指标数据，这批数据存在于hbase中，所以要考虑去做mapping，来拿到数据，首先考虑的是通过hive sql语句去做joi..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -318,7 +321,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求描述"><span class="post-toc-text">需求描述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术分析实现"><span class="post-toc-text">技术分析实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#hive"><span class="post-toc-text">hive</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#python"><span class="post-toc-text">python</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#hbase，shell-，python"><span class="post-toc-text">hbase，shell ，python</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mapreduce"><span class="post-toc-text">mapreduce</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术分析实现"><span class="post-toc-text">技术分析实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#hive"><span class="post-toc-text">hive</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#python"><span class="post-toc-text">python</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#hbase，shell-，python"><span class="post-toc-text">hbase，shell ，python</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mapreduce"><span class="post-toc-text">mapreduce</span></a></li></ol></li></ol>
         </nav>
     </aside>
     

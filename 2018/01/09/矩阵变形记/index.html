@@ -8,19 +8,19 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 描述如下图所示:把左边的图形转换为右边的模样">
+  <meta name="description" content="描述如下图所示:把左边的图形转换为右边的模样">
 <meta name="keywords" content="python,numpy,矩阵">
 <meta property="og:type" content="article">
 <meta property="og:title" content="矩阵变形记">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/01/09/矩阵变形记/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 描述如下图所示:把左边的图形转换为右边的模样">
+<meta property="og:description" content="描述如下图所示:把左边的图形转换为右边的模样">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.tangyuxiaoyao.club/ITWO/assets/rangeImg.png">
-<meta property="og:updated_time" content="2018-04-16T03:26:08.800Z">
+<meta property="og:updated_time" content="2019-07-18T12:13:43.752Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="矩阵变形记">
-<meta name="twitter:description" content="需求背景 描述如下图所示:把左边的图形转换为右边的模样">
+<meta name="twitter:description" content="描述如下图所示:把左边的图形转换为右边的模样">
 <meta name="twitter:image" content="http://www.tangyuxiaoyao.club/ITWO/assets/rangeImg.png">
   
   
@@ -94,7 +94,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -102,6 +102,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -138,9 +141,10 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
-<p>描述如下图所示:<br><img src="/ITWO/assets/rangeImg.png" alt="矩阵变换图"><br>把左边的图形转换为右边的模样<a id="more"></a></p>
+            <blockquote>
+<p>描述如下图所示:<br><img src="/ITWO/assets/rangeImg.png" alt="矩阵变换图"><br>把左边的图形转换为右边的模样</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote>
 <p>使用的是快速上手的python脚本语言,逻辑理顺了,语言只是辅助.<br>逻辑分析:<br>既要控制纵向输出的列数,又要控制横向的输出格式,所以会用到两层的for循环,在控制纵向延伸的同时,往胖的控制膨胀,纵向的长度可以看出等于传入的c+k-1,横向的宽度是为k,因为使用的是二维角标遍历,所以要考虑到越界的问题,拿最极端的第c列来模拟通用的输出函数,好比这里传入的是3,print a[2][0],a[1][1],a[0][2],可以看出输出的一维二维的角标之和等于纵向遍历的i的值,而且可以看出一维的角标为降序,截止纵向角标越界之前,我们可以得到tempColl.append(str(a[i-j][j])),输出的结果可以这么堆积,这样的就可以把横向的输出控制在i的个数内,然后讨论偏移,我们可以看出偏移部分要补位,补位的个数又和纵向遍历的i-j&gt;c-1遍历的次数相等,利用该特性,我们不用刻意去补几个空位,利用纵向遍历超出c-1时,一维角标就要越界的特性,在横向遍历的时候,i-j&gt;c-1(角标等于长度减一)几次就补几个空格,当遍历到正常输出的二维角标时,也同时套用上边的通用公式输出tempColl.append(str(a[i-j][j])).<br><strong>核心</strong>:无论二维角标怎么变换,最终肯定会控制在i-j的范围内(越界的补位(空格)).</p>
 </blockquote>
@@ -151,7 +155,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:26</p>
+        <p>最后更新： 2019年07月18日 20:13</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2018/01/09/矩阵变形记/" title="矩阵变形记">http://www.tangyuxiaoyao.club/ITWO/2018/01/09/矩阵变形记/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -219,8 +223,9 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/01/09/矩阵变形记/&title=《矩阵变形记》 — ITWO&source=需求背景
-描述如下图所示:把左边的图形转换为右边的模样" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/01/09/矩阵变形记/&title=《矩阵变形记》 — ITWO&source=
+描述如下图所示:把左边的图形转换为右边的模样
+" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -274,7 +279,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术分析"><span class="post-toc-text">技术分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码分析"><span class="post-toc-text">代码分析</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术分析"><span class="post-toc-text">技术分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#代码分析"><span class="post-toc-text">代码分析</span></a></li></ol>
         </nav>
     </aside>
     

@@ -3,21 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives | ITWO</title>
+  <title>Hadoop HDFS 数据自动平衡 | ITWO</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="毋庸多言,只管前行.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="ITWO">
-<meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/archives/page/9/index.html">
+  <meta name="description" content="在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Had">
+<meta name="keywords" content="hadoop,hdfs,balancer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop HDFS 数据自动平衡">
+<meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="毋庸多言,只管前行.">
+<meta property="og:description" content="在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Had">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-18T12:14:54.872Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ITWO">
-<meta name="twitter:description" content="毋庸多言,只管前行.">
+<meta name="twitter:title" content="Hadoop HDFS 数据自动平衡">
+<meta name="twitter:description" content="在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Had">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -90,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -99,65 +101,199 @@
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
                     
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
                 </div>
             </nav>
         </div>
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap">
-  
-  
+        <section id="main" class="body-wrap"><article id="post- Hadoop HDFS 数据自动平衡" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/ITWO/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/ITWO/2017/09/18/shell在指定行插入文本/" class="archive-article-date">
-  <time datetime="2017-09-18T12:28:34.000Z" itemprop="datePublished">09-18</time>
-</a>
-      
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/ITWO/2017/09/18/shell在指定行插入文本/"  >shell在指定行插入文本</a>
+    <h1 class="post-title" itemprop="name">
+      Hadoop HDFS 数据自动平衡
     </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-07-18
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
   
 
-    </header>
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
       
-        <div class="archive-post-footer">
+            
+            <blockquote>
+<p>在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Hadoop_home/bin/start-balancer.sh –threshold`<br><a id="more"></a></p>
+</blockquote>
+<h2 id="影响Balancer的几个参数："><a href="#影响Balancer的几个参数：" class="headerlink" title="影响Balancer的几个参数："></a>影响Balancer的几个参数：</h2><p>-threshold</p>
+<blockquote>
+<p>默认设置：10，参数取值范围：0-100<br>参数含义：判断集群是否平衡的阈值。理论上，该参数设置的越小，整个集群就越平衡<br>dfs.balance.bandwidthPerSec<br>默认设置：1048576（1M/S）<br>参数含义：Balancer运行时允许占用的带宽<br>示例如下：</p>
+</blockquote>
+<p>#启动数据均衡，默认阈值为 10%<br>$Hadoop_home/bin/start-balancer.sh</p>
+<p>#启动数据均衡，阈值 5%<br>bin/start-balancer.sh –threshold 5</p>
+<p>#停止数据均衡<br>$Hadoop_home/bin/stop-balancer.sh<br>在hdfs-site.xml文件中可以设置数据均衡占用的网络带宽限制</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.balance.bandwidthPerSec<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1048576<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span> Specifies the maximum bandwidth that each datanode can utilize for the balancing purpose in term of the number of bytes per second. <span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年07月18日 20:14</p>
+        <p>原始链接： <a class="post-url" href="/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/" title="Hadoop HDFS 数据自动平衡">http://www.tangyuxiaoyao.club/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/</a></p>
+        <footer>
+            <a href="http://www.tangyuxiaoyao.club/ITWO">
+                <img src="/ITWO/images/logo.png" alt="唐钰逍遥">
+                唐钰逍遥
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/ITWO/images/wxzf.png" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/ITWO/images/wxzf.png">
+                <img class="reward-select-item-wechat" src="/ITWO/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/ITWO/images/zfb.png">
+                <img class="reward-select-item-alipay" src="/ITWO/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/&title=《Hadoop HDFS 数据自动平衡》 — ITWO&pic=http://www.tangyuxiaoyao.club/ITWOimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/&title=《Hadoop HDFS 数据自动平衡》 — ITWO&source=
+在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 ..." data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Hadoop HDFS 数据自动平衡》 — ITWO&url=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/&via=http://www.tangyuxiaoyao.club/ITWO" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
             
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/ITWO/tags/shell/" class="color1">shell</a>
+    <a href="/ITWO/tags/hadoop/" class="color2">hadoop</a>
       
-    <a href="/ITWO/tags/sed/" class="color4">sed</a>
+    <a href="/ITWO/tags/hdfs/" class="color5">hdfs</a>
+      
+    <a href="/ITWO/tags/balancer/" class="color4">balancer</a>
       
   </li>
 
-        </div>
-      
+        </ul>
+        
+    </footer>
   </div>
 </article>
 
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#影响Balancer的几个参数："><span class="post-toc-text">影响Balancer的几个参数：</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/ITWO/2019/07/18/通过shell来实现任务状态汇报/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">通过shell来实现任务状态汇报</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
   
+</nav>
 
 
-  <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/ITWO/archives/page/8/"><< Prev</a><a class="page-number" href="/ITWO/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/ITWO/archives/page/7/">7</a><a class="page-number" href="/ITWO/archives/page/8/">8</a><span class="page-number current">9</span>
-  </nav>
+
+    
 </section>
         
       </div>

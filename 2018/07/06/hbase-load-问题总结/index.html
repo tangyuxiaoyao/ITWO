@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
+  <meta name="description" content="公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
 <meta name="keywords" content="hbase,bulkload,es">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hbase&#x2F;es load 问题总结">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
+<meta property="og:description" content="公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-11T09:54:50.301Z">
+<meta property="og:updated_time" content="2019-07-18T12:08:05.622Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hbase&#x2F;es load 问题总结">
-<meta name="twitter:description" content="需求背景 公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
+<meta name="twitter:description" content="公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,7 +139,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
+            <blockquote>
 <p>公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hbase对于高并发的响应不是很理想，但凡高并发上来以后，时效性就会有影响。</p>
 </blockquote>
 <a id="more"></a>
@@ -218,7 +221,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年07月11日 17:54</p>
+        <p>最后更新： 2019年07月18日 20:08</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2018/07/06/hbase-load-问题总结/" title="hbase/es load 问题总结">http://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -286,8 +289,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/&title=《hbase/es load 问题总结》 — ITWO&source=需求背景
-公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/07/06/hbase-load-问题总结/&title=《hbase/es load 问题总结》 — ITWO&source=
+公司指标2.0开发了很多新的指标，数据量很客观，需要导入到列式存储数据库中，实现毫秒级别的响应查询，之前也有一版本的导入是导入到hbase中，但是hba..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -341,7 +344,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现思路"><span class="post-toc-text">实现思路</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HBase部分"><span class="post-toc-text">HBase部分</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ES部分"><span class="post-toc-text">ES部分</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题总结"><span class="post-toc-text">问题总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#配置文件"><span class="post-toc-text">配置文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HA的开启"><span class="post-toc-text">HA的开启</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#habse-依赖问题"><span class="post-toc-text">habse 依赖问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mapreduce-过程报错"><span class="post-toc-text">mapreduce 过程报错</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#map-reduce-阶段报错"><span class="post-toc-text">map reduce  阶段报错</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#如果是只有reduce阶段报错"><span class="post-toc-text">如果是只有reduce阶段报错</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#reduce-100-beyond-physical-memory-limits"><span class="post-toc-text">reduce 100%  beyond physical memory limits</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ClassNotFoundException"><span class="post-toc-text">ClassNotFoundException</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#es导入"><span class="post-toc-text">es导入</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Limit-of-total-fields-1000-in-index-card-nature-has-been-exceeded"><span class="post-toc-text">Limit of total fields [1000] in index [card_nature] has been exceeded</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建立索引的时候报错：-usr-bin-curl-Argument-list-too-long"><span class="post-toc-text">建立索引的时候报错：/usr/bin/curl: Argument list too long</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建索引的时候报错"><span class="post-toc-text">建索引的时候报错</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#es建立索引总结"><span class="post-toc-text">es建立索引总结</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现思路"><span class="post-toc-text">实现思路</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HBase部分"><span class="post-toc-text">HBase部分</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ES部分"><span class="post-toc-text">ES部分</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题总结"><span class="post-toc-text">问题总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#配置文件"><span class="post-toc-text">配置文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HA的开启"><span class="post-toc-text">HA的开启</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#habse-依赖问题"><span class="post-toc-text">habse 依赖问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mapreduce-过程报错"><span class="post-toc-text">mapreduce 过程报错</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#map-reduce-阶段报错"><span class="post-toc-text">map reduce  阶段报错</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#如果是只有reduce阶段报错"><span class="post-toc-text">如果是只有reduce阶段报错</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#reduce-100-beyond-physical-memory-limits"><span class="post-toc-text">reduce 100%  beyond physical memory limits</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ClassNotFoundException"><span class="post-toc-text">ClassNotFoundException</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#es导入"><span class="post-toc-text">es导入</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Limit-of-total-fields-1000-in-index-card-nature-has-been-exceeded"><span class="post-toc-text">Limit of total fields [1000] in index [card_nature] has been exceeded</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建立索引的时候报错：-usr-bin-curl-Argument-list-too-long"><span class="post-toc-text">建立索引的时候报错：/usr/bin/curl: Argument list too long</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建索引的时候报错"><span class="post-toc-text">建索引的时候报错</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#es建立索引总结"><span class="post-toc-text">es建立索引总结</span></a></li></ol></li></ol>
         </nav>
     </aside>
     

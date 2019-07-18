@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而">
+  <meta name="description" content="集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而当一个队">
 <meta name="keywords" content="mapreduce,hive,queue,priority">
 <meta property="og:type" content="article">
 <meta property="og:title" content="给hive mapreduce分配队列和优先级">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而">
+<meta property="og:description" content="集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而当一个队">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:26:25.308Z">
+<meta property="og:updated_time" content="2019-07-18T12:13:56.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="给hive mapreduce分配队列和优先级">
-<meta name="twitter:description" content="需求背景 集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而">
+<meta name="twitter:description" content="集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而当一个队">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,9 +139,10 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
-<p>集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而当一个队列的资源有剩余时，可暂时将剩余资源共享给其他队列。<a id="more"></a></p>
+            <blockquote>
+<p>集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而当一个队列的资源有剩余时，可暂时将剩余资源共享给其他队列。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="使用详解"><a href="#使用详解" class="headerlink" title="使用详解"></a>使用详解</h2><blockquote>
 <p>hive –hiveconf mapreduce.job.queuename=root.fast –hiveconf mapreduce.job.name=’job name’ -f  etl.hql<br>hive<br>set mapreduce.job.queuename=root.fast;<br>set mapreduce.job.name=’job name’</p>
 <p>yarn application  -movetoqueue  application_1478676388082_963529  -queue  root.etl #迁移任务到另一个队列</p>
@@ -151,7 +155,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:26</p>
+        <p>最后更新： 2019年07月18日 20:13</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/" title="给hive mapreduce分配队列和优先级">http://www.tangyuxiaoyao.club/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -219,8 +223,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/&title=《给hive mapreduce分配队列和优先级》 — ITWO&source=需求背景
-集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/01/10/给hive-mapreduce分配队列和优先级/&title=《给hive mapreduce分配队列和优先级》 — ITWO&source=
+集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -276,7 +280,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用详解"><span class="post-toc-text">使用详解</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用详解"><span class="post-toc-text">使用详解</span></a></li></ol>
         </nav>
     </aside>
     

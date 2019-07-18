@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.">
+  <meta name="description" content="hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.">
 <meta name="keywords" content="hadoop,streaming,python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hadoop streaming 使用中遇到的问题总结">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.">
+<meta property="og:description" content="hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:16:11.162Z">
+<meta property="og:updated_time" content="2019-07-18T12:07:15.781Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hadoop streaming 使用中遇到的问题总结">
-<meta name="twitter:description" content="需求背景 hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.">
+<meta name="twitter:description" content="hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,9 +139,11 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
+            <blockquote>
 <p>hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.<br><a id="more"></a></p>
-<h2 id="问题汇总"><a href="#问题汇总" class="headerlink" title="问题汇总"></a>问题汇总</h2><h3 id="last-tool-output-null"><a href="#last-tool-output-null" class="headerlink" title="last tool output null"></a>last tool output null</h3><p>报错信息如下</p>
+</blockquote>
+<h2 id="问题汇总"><a href="#问题汇总" class="headerlink" title="问题汇总"></a>问题汇总</h2><h3 id="last-tool-output-null"><a href="#last-tool-output-null" class="headerlink" title="last tool output null"></a>last tool output null</h3><blockquote>
+<p>报错信息如下</p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">USER=lming_08  </div><div class="line">HADOOP_USER=<span class="keyword">null</span>  </div><div class="line">last tool output: |<span class="keyword">null</span>|  </div><div class="line">  </div><div class="line">java.io.IOException: Broken pipe</div></pre></td></tr></table></figure>
 <blockquote>
@@ -147,7 +152,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:16</p>
+        <p>最后更新： 2019年07月18日 20:07</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/" title="hadoop streaming 使用中遇到的问题总结">http://www.tangyuxiaoyao.club/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -215,8 +220,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/&title=《hadoop streaming 使用中遇到的问题总结》 — ITWO&source=需求背景
-hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/01/11/hadoop-streaming-使用中遇到的问题总结/&title=《hadoop streaming 使用中遇到的问题总结》 — ITWO&source=
+hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -270,19 +275,19 @@ hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题汇总"><span class="post-toc-text">问题汇总</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#last-tool-output-null"><span class="post-toc-text">last tool output null</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题汇总"><span class="post-toc-text">问题汇总</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#last-tool-output-null"><span class="post-toc-text">last tool output null</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
 
 <nav id="article-nav">
   
-    <a href="/ITWO/2018/01/25/spark-ListBuffer遍历/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/ITWO/2018/01/30/python-拾遗/" id="article-nav-newer" class="article-nav-link-wrap">
 
       <span class="article-nav-title">
         <i class="fa fa-hand-o-left" aria-hidden="true"></i>
         
-          spark ListBuffer遍历
+          python 拾遗
         
       </span>
     </a>

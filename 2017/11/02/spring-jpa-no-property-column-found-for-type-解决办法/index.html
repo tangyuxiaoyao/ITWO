@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 一般爆出这种错误，会明显提示那个持久化类和那个实体类，也会告诉你那个实体类中的字段未找到，触发错误的关键在于，你已经从实体类中删除了某个字段映射，但是在持久化类中还有用到包含该字段的方法，从而导致方法解析到sql语句时，找不到对应的数据库表字段（实际情况可能到不了这一步）。">
+  <meta name="description" content="一般爆出这种错误，会明显提示那个持久化类和那个实体类，也会告诉你那个实体类中的字段未找到，触发错误的关键在于，你已经从实体类中删除了某个字段映射，但是在持久化类中还有用到包含该字段的方法，从而导致方法解析到sql语句时，找不到对应的数据库表字段（实际情况可能到不了这一步）。">
 <meta name="keywords" content="spring,jpa,column">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spring jpa no property column found for type 解决办法">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-解决办法/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 一般爆出这种错误，会明显提示那个持久化类和那个实体类，也会告诉你那个实体类中的字段未找到，触发错误的关键在于，你已经从实体类中删除了某个字段映射，但是在持久化类中还有用到包含该字段的方法，从而导致方法解析到sql语句时，找不到对应的数据库表字段（实际情况可能到不了这一步）。">
+<meta property="og:description" content="一般爆出这种错误，会明显提示那个持久化类和那个实体类，也会告诉你那个实体类中的字段未找到，触发错误的关键在于，你已经从实体类中删除了某个字段映射，但是在持久化类中还有用到包含该字段的方法，从而导致方法解析到sql语句时，找不到对应的数据库表字段（实际情况可能到不了这一步）。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:23:55.959Z">
+<meta property="og:updated_time" content="2019-07-18T12:11:54.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spring jpa no property column found for type 解决办法">
-<meta name="twitter:description" content="需求背景 一般爆出这种错误，会明显提示那个持久化类和那个实体类，也会告诉你那个实体类中的字段未找到，触发错误的关键在于，你已经从实体类中删除了某个字段映射，但是在持久化类中还有用到包含该字段的方法，从而导致方法解析到sql语句时，找不到对应的数据库表字段（实际情况可能到不了这一步）。">
+<meta name="twitter:description" content="一般爆出这种错误，会明显提示那个持久化类和那个实体类，也会告诉你那个实体类中的字段未找到，触发错误的关键在于，你已经从实体类中删除了某个字段映射，但是在持久化类中还有用到包含该字段的方法，从而导致方法解析到sql语句时，找不到对应的数据库表字段（实际情况可能到不了这一步）。">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,7 +139,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
+            <blockquote>
 <p>一般爆出这种错误，会明显提示那个持久化类和那个实体类，也会告诉你那个实体类中的字段未找到，触发错误的关键在于，你已经从实体类中删除了某个字段映射，但是在持久化类中还有用到包含该字段的方法，从而导致方法解析到sql语句时，找不到对应的数据库表字段（实际情况可能到不了这一步）。<a id="more"></a></p>
 </blockquote>
 <h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><blockquote>
@@ -145,7 +148,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:23</p>
+        <p>最后更新： 2019年07月18日 20:11</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-解决办法/" title="spring jpa no property column found for type 解决办法">http://www.tangyuxiaoyao.club/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-解决办法/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -213,8 +216,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-解决办法/&title=《spring jpa no property column found for type 解决办法》 — ITWO&source=需求背景
-一般爆出这种错误，会明显提示那个持久化类和那个实体类，也会告诉你那个实体类中的字段未找到，触发错误的关键在于，你已经从实体类中删除了某个字段映射..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/11/02/spring-jpa-no-property-column-found-for-type-解决办法/&title=《spring jpa no property column found for type 解决办法》 — ITWO&source=
+一般爆出这种错误，会明显提示那个持久化类和那个实体类，也会告诉你那个实体类中的字段未找到，触发错误的关键在于，你已经从实体类中删除了某个字段映射，但是在..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -268,7 +271,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决办法"><span class="post-toc-text">解决办法</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决办法"><span class="post-toc-text">解决办法</span></a></li></ol>
         </nav>
     </aside>
     

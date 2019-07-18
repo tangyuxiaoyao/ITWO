@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景: 分月分接口统计下我部门所有接口服务每月总计收到的请求数量">
+  <meta name="description" content="分月分接口统计下我部门所有接口服务每月总计收到的请求数量">
 <meta name="keywords" content="python,mongo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python 操作mongo实现查询和聚合">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/10/12/python-操作mongo实现查询和聚合/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景: 分月分接口统计下我部门所有接口服务每月总计收到的请求数量">
+<meta property="og:description" content="分月分接口统计下我部门所有接口服务每月总计收到的请求数量">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:20:34.875Z">
+<meta property="og:updated_time" content="2019-07-18T12:10:47.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python 操作mongo实现查询和聚合">
-<meta name="twitter:description" content="需求背景: 分月分接口统计下我部门所有接口服务每月总计收到的请求数量">
+<meta name="twitter:description" content="分月分接口统计下我部门所有接口服务每月总计收到的请求数量">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,7 +139,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景:"></a>需求背景:</h2><blockquote>
+            <blockquote>
 <p>分月分接口统计下我部门所有接口服务每月总计收到的请求数量<a id="more"></a></p>
 </blockquote>
 <h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><blockquote>
@@ -164,7 +167,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:20</p>
+        <p>最后更新： 2019年07月18日 20:10</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2017/10/12/python-操作mongo实现查询和聚合/" title="python 操作mongo实现查询和聚合">http://www.tangyuxiaoyao.club/ITWO/2017/10/12/python-操作mongo实现查询和聚合/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -232,7 +235,7 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/10/12/python-操作mongo实现查询和聚合/&title=《python 操作mongo实现查询和聚合》 — ITWO&source=需求背景:
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/10/12/python-操作mongo实现查询和聚合/&title=《python 操作mongo实现查询和聚合》 — ITWO&source=
 分月分接口统计下我部门所有接口服务每月总计收到的请求数量" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
@@ -285,7 +288,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求分析"><span class="post-toc-text">需求分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术选型"><span class="post-toc-text">技术选型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结:</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#难点一"><span class="post-toc-text">难点一:</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#难点二"><span class="post-toc-text">难点二</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#注意点"><span class="post-toc-text">注意点:</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#笔记"><span class="post-toc-text">笔记</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求分析"><span class="post-toc-text">需求分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术选型"><span class="post-toc-text">技术选型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结:</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#难点一"><span class="post-toc-text">难点一:</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#难点二"><span class="post-toc-text">难点二</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#注意点"><span class="post-toc-text">注意点:</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#笔记"><span class="post-toc-text">笔记</span></a></li></ol>
         </nav>
     </aside>
     

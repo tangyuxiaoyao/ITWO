@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 公司平台需要一个工具包处理，aes→sm3的工具包。写好发布到线上以后跑yarn-client模式没有错误，但是在跑取本地模式的时候会报错如下:">
+  <meta name="description" content="公司平台需要一个工具包处理，aes→sm3的工具包。写好发布到线上以后跑yarn-client模式没有错误，但是在跑取本地模式的时候会报错如下:">
 <meta name="keywords" content="error,spark,local">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spark 本地模式处理文件时报错">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/11/17/spark-本地模式处理文件时报错/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 公司平台需要一个工具包处理，aes→sm3的工具包。写好发布到线上以后跑yarn-client模式没有错误，但是在跑取本地模式的时候会报错如下:">
+<meta property="og:description" content="公司平台需要一个工具包处理，aes→sm3的工具包。写好发布到线上以后跑yarn-client模式没有错误，但是在跑取本地模式的时候会报错如下:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:22:35.501Z">
+<meta property="og:updated_time" content="2019-07-18T12:11:39.501Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spark 本地模式处理文件时报错">
-<meta name="twitter:description" content="需求背景 公司平台需要一个工具包处理，aes→sm3的工具包。写好发布到线上以后跑yarn-client模式没有错误，但是在跑取本地模式的时候会报错如下:">
+<meta name="twitter:description" content="公司平台需要一个工具包处理，aes→sm3的工具包。写好发布到线上以后跑yarn-client模式没有错误，但是在跑取本地模式的时候会报错如下:">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,7 +139,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
+            <blockquote>
 <p>公司平台需要一个工具包处理，aes→sm3的工具包。写好发布到线上以后跑yarn-client模式没有错误，但是在跑取本地模式的时候会报错如下:<a id="more"></a></p>
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="number">17</span>/<span class="number">11</span>/<span class="number">17</span> <span class="number">14</span>:<span class="number">48</span>:<span class="number">28</span> ERROR LiveListenerBus: Listener EventLoggingListener threw an exception</div><div class="line">java.lang.reflect.InvocationTargetException</div><div class="line">        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</div><div class="line">        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">57</span>)</div><div class="line">        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)</div><div class="line">        at java.lang.reflect.Method.invoke(Method.java:<span class="number">606</span>)</div><div class="line">        at org.apache.spark.scheduler.EventLoggingListener$$anonfun$logEvent$<span class="number">3</span>.apply(EventLoggingListener.scala:<span class="number">144</span>)</div><div class="line">        at org.apache.spark.scheduler.EventLoggingListener$$anonfun$logEvent$<span class="number">3</span>.apply(EventLoggingListener.scala:<span class="number">144</span>)</div><div class="line">        at scala.Option.foreach(Option.scala:<span class="number">236</span>)</div><div class="line">        at org.apache.spark.scheduler.EventLoggingListener.logEvent(EventLoggingListener.scala:<span class="number">144</span>)</div><div class="line">        at org.apache.spark.scheduler.EventLoggingListener.onJobEnd(EventLoggingListener.scala:<span class="number">169</span>)</div><div class="line">        at org.apache.spark.scheduler.SparkListenerBus$class.onPostEvent(SparkListenerBus.scala:36)</div><div class="line">        at org.apache.spark.scheduler.LiveListenerBus.onPostEvent(LiveListenerBus.scala:<span class="number">31</span>)</div><div class="line">        at org.apache.spark.scheduler.LiveListenerBus.onPostEvent(LiveListenerBus.scala:<span class="number">31</span>)</div><div class="line">        at org.apache.spark.util.ListenerBus$class.postToAll(ListenerBus.scala:53)</div><div class="line">        at org.apache.spark.util.AsynchronousListenerBus.postToAll(AsynchronousListenerBus.scala:<span class="number">36</span>)</div><div class="line">        at org.apache.spark.util.AsynchronousListenerBus$$anon$<span class="number">1</span>$$anonfun$run$<span class="number">1</span>.apply$mcV$sp(AsynchronousListenerBus.scala:<span class="number">76</span>)</div><div class="line">        at org.apache.spark.util.AsynchronousListenerBus$$anon$<span class="number">1</span>$$anonfun$run$<span class="number">1</span>.apply(AsynchronousListenerBus.scala:<span class="number">61</span>)</div><div class="line">        at org.apache.spark.util.AsynchronousListenerBus$$anon$<span class="number">1</span>$$anonfun$run$<span class="number">1</span>.apply(AsynchronousListenerBus.scala:<span class="number">61</span>)</div><div class="line">        at org.apache.spark.util.Utils$.logUncaughtExceptions(Utils.scala:<span class="number">1617</span>)</div><div class="line">        at org.apache.spark.util.AsynchronousListenerBus$$anon$<span class="number">1</span>.run(AsynchronousListenerBus.scala:<span class="number">60</span>)</div><div class="line">Caused by: java.io.IOException: Filesystem closed</div><div class="line">        at org.apache.hadoop.hdfs.DFSClient.checkOpen(DFSClient.java:<span class="number">792</span>)</div><div class="line">        at org.apache.hadoop.hdfs.DFSOutputStream.flushOrSync(DFSOutputStream.java:<span class="number">1998</span>)</div><div class="line">        at org.apache.hadoop.hdfs.DFSOutputStream.hflush(DFSOutputStream.java:<span class="number">1959</span>)</div><div class="line">        at org.apache.hadoop.fs.FSDataOutputStream.hflush(FSDataOutputStream.java:<span class="number">130</span>)</div><div class="line">        ... <span class="number">19</span> more</div></pre></td></tr></table></figure>
@@ -146,7 +149,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:22</p>
+        <p>最后更新： 2019年07月18日 20:11</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2017/11/17/spark-本地模式处理文件时报错/" title="spark 本地模式处理文件时报错">http://www.tangyuxiaoyao.club/ITWO/2017/11/17/spark-本地模式处理文件时报错/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -214,7 +217,7 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/11/17/spark-本地模式处理文件时报错/&title=《spark 本地模式处理文件时报错》 — ITWO&source=需求背景
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/11/17/spark-本地模式处理文件时报错/&title=《spark 本地模式处理文件时报错》 — ITWO&source=
 公司平台需要一个工具包处理，aes→sm3的工具包。写好发布到线上以后跑yarn-client模式没有错误，但是在跑取本地模式的时候会报错如下:" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
@@ -269,7 +272,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题定位"><span class="post-toc-text">问题定位</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题定位"><span class="post-toc-text">问题定位</span></a></li></ol>
         </nav>
     </aside>
     

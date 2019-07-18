@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 公司接入市场流水，有两个路径去存储，有一天突然发现，有个路径下面流水重复，有个路径下面的流水缺失，缺失的路径下面的是生产环境用到的，所以现需要找到这部分缺失的流水，然后打补丁到该hdfs文件路径下。">
-<meta name="keywords" content="hadoop,streaming,mapreduce,hive,not in">
+  <meta name="description" content="公司接入市场流水，有两个路径去存储，有一天突然发现，有个路径下面流水重复，有个路径下面的流水缺失，缺失的路径下面的是生产环境用到的，所以现需要找到这部分缺失的流水，然后打补丁到该hdfs文件路径下。">
+<meta name="keywords" content="hadoop,mapreduce,streaming,hive,not in">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hadoop mapredcue和streaming hive 三种思路实现not in join">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/11/22/hadoop-mapredcue和streaming-hive-三种思路实现not-in-join/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 公司接入市场流水，有两个路径去存储，有一天突然发现，有个路径下面流水重复，有个路径下面的流水缺失，缺失的路径下面的是生产环境用到的，所以现需要找到这部分缺失的流水，然后打补丁到该hdfs文件路径下。">
+<meta property="og:description" content="公司接入市场流水，有两个路径去存储，有一天突然发现，有个路径下面流水重复，有个路径下面的流水缺失，缺失的路径下面的是生产环境用到的，所以现需要找到这部分缺失的流水，然后打补丁到该hdfs文件路径下。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:15:56.963Z">
+<meta property="og:updated_time" content="2019-07-18T12:07:10.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hadoop mapredcue和streaming hive 三种思路实现not in join">
-<meta name="twitter:description" content="需求背景 公司接入市场流水，有两个路径去存储，有一天突然发现，有个路径下面流水重复，有个路径下面的流水缺失，缺失的路径下面的是生产环境用到的，所以现需要找到这部分缺失的流水，然后打补丁到该hdfs文件路径下。">
+<meta name="twitter:description" content="公司接入市场流水，有两个路径去存储，有一天突然发现，有个路径下面流水重复，有个路径下面的流水缺失，缺失的路径下面的是生产环境用到的，所以现需要找到这部分缺失的流水，然后打补丁到该hdfs文件路径下。">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,9 +139,11 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
+            <blockquote>
 <p>公司接入市场流水，有两个路径去存储，有一天突然发现，有个路径下面流水重复，有个路径下面的流水缺失，缺失的路径下面的是生产环境用到的，所以现需要找到这部分缺失的流水，然后打补丁到该hdfs文件路径下。<br><a id="more"></a></p>
-<h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><p>首先想到的技术是hive,利用传统的类sql去解决，因为以前有做过类似的需求，left outer join 去解决。<br>第二想到的是hadoop streaming ，其实是领导要求的，用python脚本语言去实现缺失数据打补丁的需求。<br>第三个是原汁原味的hadoop mapreduce经典案例wordcount的改良，其实也是受以前有做过wordcount和使用hadoop mapreduce实现去重联想到的，其实个人觉着这种方法是最简单的。</p>
+</blockquote>
+<h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote>
+<p>首先想到的技术是hive,利用传统的类sql去解决，因为以前有做过类似的需求，left outer join 去解决。<br>第二想到的是hadoop streaming ，其实是领导要求的，用python脚本语言去实现缺失数据打补丁的需求。<br>第三个是原汁原味的hadoop mapreduce经典案例wordcount的改良，其实也是受以前有做过wordcount和使用hadoop mapreduce实现去重联想到的，其实个人觉着这种方法是最简单的。</p>
 </blockquote>
 <h2 id="细节实现"><a href="#细节实现" class="headerlink" title="细节实现"></a>细节实现</h2><blockquote>
 <p>hive<br>思路解析:在hive中一张大表和一张小表去做left ouer join ，<strong>当小表mapping到大表中不存在的关联键时，补值null</strong>,这样我们就可以利用小表id is  null,然后输出a.*,来实现输出大表中有而小表中没有的数据。</p>
@@ -168,7 +173,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:15</p>
+        <p>最后更新： 2019年07月18日 20:07</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2017/11/22/hadoop-mapredcue和streaming-hive-三种思路实现not-in-join/" title="hadoop mapredcue和streaming hive 三种思路实现not in join">http://www.tangyuxiaoyao.club/ITWO/2017/11/22/hadoop-mapredcue和streaming-hive-三种思路实现not-in-join/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -236,8 +241,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/11/22/hadoop-mapredcue和streaming-hive-三种思路实现not-in-join/&title=《hadoop mapredcue和streaming hive 三种思路实现not in join》 — ITWO&source=需求背景
-公司接入市场流水，有两个路径去存储，有一天突然发现，有个路径下面流水重复，有个路径下面的流水缺失，缺失的路径下面的是生产环境用到的，所以现需要找..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/11/22/hadoop-mapredcue和streaming-hive-三种思路实现not-in-join/&title=《hadoop mapredcue和streaming hive 三种思路实现not in join》 — ITWO&source=
+公司接入市场流水，有两个路径去存储，有一天突然发现，有个路径下面流水重复，有个路径下面的流水缺失，缺失的路径下面的是生产环境用到的，所以现需要找到这部分..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -276,9 +281,9 @@
       
     <a href="/ITWO/tags/hadoop/" class="color2">hadoop</a>
       
-    <a href="/ITWO/tags/streaming/" class="color5">streaming</a>
-      
     <a href="/ITWO/tags/mapreduce/" class="color5">mapreduce</a>
+      
+    <a href="/ITWO/tags/streaming/" class="color5">streaming</a>
       
     <a href="/ITWO/tags/hive/" class="color5">hive</a>
       
@@ -295,7 +300,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术分析"><span class="post-toc-text">技术分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#细节实现"><span class="post-toc-text">细节实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#写在后面"><span class="post-toc-text">写在后面</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术分析"><span class="post-toc-text">技术分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#细节实现"><span class="post-toc-text">细节实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#写在后面"><span class="post-toc-text">写在后面</span></a></li></ol>
         </nav>
     </aside>
     

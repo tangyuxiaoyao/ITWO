@@ -8,20 +8,20 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="问题描述 线上建模结果缓存在mongo中，之前由于数据量较少，进来一段时间由于老系统业务迁移过来，数据量也上来了，随之而来暴露出来一个问题.">
+  <meta name="description" content="线上建模结果缓存在mongo中，之前由于数据量较少，进来一段时间由于老系统业务迁移过来，数据量也上来了，随之而来暴露出来一个问题.">
 <meta name="keywords" content="shell,mongo,dbKoda">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mongo查询慢排查">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/05/23/mongo查询慢排查/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="问题描述 线上建模结果缓存在mongo中，之前由于数据量较少，进来一段时间由于老系统业务迁移过来，数据量也上来了，随之而来暴露出来一个问题.">
+<meta property="og:description" content="线上建模结果缓存在mongo中，之前由于数据量较少，进来一段时间由于老系统业务迁移过来，数据量也上来了，随之而来暴露出来一个问题.">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.tangyuxiaoyao.club/ITWO/assets/index_01.png">
 <meta property="og:image" content="http://www.tangyuxiaoyao.club/ITWO/assets/index_02.png">
-<meta property="og:updated_time" content="2018-05-23T07:30:24.257Z">
+<meta property="og:updated_time" content="2019-07-18T12:10:20.676Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongo查询慢排查">
-<meta name="twitter:description" content="问题描述 线上建模结果缓存在mongo中，之前由于数据量较少，进来一段时间由于老系统业务迁移过来，数据量也上来了，随之而来暴露出来一个问题.">
+<meta name="twitter:description" content="线上建模结果缓存在mongo中，之前由于数据量较少，进来一段时间由于老系统业务迁移过来，数据量也上来了，随之而来暴露出来一个问题.">
 <meta name="twitter:image" content="http://www.tangyuxiaoyao.club/ITWO/assets/index_01.png">
   
   
@@ -95,7 +95,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -103,6 +103,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -139,7 +142,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><blockquote>
+            <blockquote>
 <p>线上建模结果缓存在mongo中，之前由于数据量较少，进来一段时间由于老系统业务迁移过来，数据量也上来了，随之而来暴露出来一个问题.</p>
 </blockquote>
 <a id="more"></a>
@@ -182,7 +185,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年05月23日 15:30</p>
+        <p>最后更新： 2019年07月18日 20:10</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2018/05/23/mongo查询慢排查/" title="mongo查询慢排查">http://www.tangyuxiaoyao.club/ITWO/2018/05/23/mongo查询慢排查/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -250,7 +253,7 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/05/23/mongo查询慢排查/&title=《mongo查询慢排查》 — ITWO&source=问题描述
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/05/23/mongo查询慢排查/&title=《mongo查询慢排查》 — ITWO&source=
 线上建模结果缓存在mongo中，之前由于数据量较少，进来一段时间由于老系统业务迁移过来，数据量也上来了，随之而来暴露出来一个问题.
 " data-title="QQ">
               <i class="fa fa-qq"></i>
@@ -306,7 +309,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题描述"><span class="post-toc-text">问题描述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决思路"><span class="post-toc-text">解决思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决办法"><span class="post-toc-text">解决办法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#写在后面"><span class="post-toc-text">写在后面</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决思路"><span class="post-toc-text">解决思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决办法"><span class="post-toc-text">解决办法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#写在后面"><span class="post-toc-text">写在后面</span></a></li></ol>
         </nav>
     </aside>
     

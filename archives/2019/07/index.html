@@ -3,23 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>通过shell来实现任务状态汇报 | ITWO</title>
+  <title>Archives: 2019/7 | ITWO</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="业务背景 三台机器负责接受分发的数据然后运行各自的逻辑，完成之后发送信号给主节点，然后继续后续的数据分发以及跑批任务。">
-<meta name="keywords" content="shell,netcat">
-<meta property="og:type" content="article">
-<meta property="og:title" content="通过shell来实现任务状态汇报">
-<meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2019/05/29/通过shell来实现任务状态汇报/index.html">
+  <meta name="description" content="毋庸多言,只管前行.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ITWO">
+<meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/archives/2019/07/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="业务背景 三台机器负责接受分发的数据然后运行各自的逻辑，完成之后发送信号给主节点，然后继续后续的数据分发以及跑批任务。">
+<meta property="og:description" content="毋庸多言,只管前行.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-19T03:36:54.625Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="通过shell来实现任务状态汇报">
-<meta name="twitter:description" content="业务背景 三台机器负责接受分发的数据然后运行各自的逻辑，完成之后发送信号给主节点，然后继续后续的数据分发以及跑批任务。">
+<meta name="twitter:title" content="ITWO">
+<meta name="twitter:description" content="毋庸多言,只管前行.">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +90,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -101,158 +99,80 @@
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
                     
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
                 </div>
             </nav>
         </div>
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap"><article id="post-通过shell来实现任务状态汇报" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+        <section id="main" class="body-wrap">
   
-    <h1 class="post-title" itemprop="name">
-      通过shell来实现任务状态汇报
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/ITWO/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/" class="archive-article-date">
+  <time datetime="2019-07-18T12:14:54.872Z" itemprop="datePublished">07-18</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/ITWO/2019/07/18/ Hadoop HDFS 数据自动平衡/"  >Hadoop HDFS 数据自动平衡</a>
     </h1>
-    <div class="post-title-bar">
-      <ul>
-          
-        <li>
-          <i class="fa fa-calendar"></i>  2019-05-29
-        </li>
-        <li>
-          <i class="fa fa-eye"></i>
-          <span id="busuanzi_value_page_pv"></span>
-        </li>
-      </ul>
-    </div>
   
 
-          
-      </header>
+    </header>
+      
+        <div class="archive-post-footer">
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/ITWO/tags/hadoop/" class="color2">hadoop</a>
+      
+    <a href="/ITWO/tags/hdfs/" class="color5">hdfs</a>
+      
+    <a href="/ITWO/tags/balancer/" class="color4">balancer</a>
+      
+  </li>
+
+        </div>
+      
+  </div>
+</article>
+
+  
     
-    <div class="article-entry post-content" itemprop="articleBody">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/ITWO/2019/07/18/通过shell来实现任务状态汇报/" class="archive-article-date">
+  <time datetime="2019-07-18T12:14:05.043Z" itemprop="datePublished">07-18</time>
+</a>
       
-            
-            <h2 id="业务背景"><a href="#业务背景" class="headerlink" title="业务背景"></a>业务背景</h2><blockquote>
-<p>三台机器负责接受分发的数据然后运行各自的逻辑，完成之后发送信号给主节点，然后继续后续的数据分发以及跑批任务。</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote>
-<p>如果是传统的java/python程序去处理的话可以考虑到和zookeeper结合利用zk的心跳机制完成任务的定时上报和任务完成信号的汇报，shell的话怎么办？</p>
-</blockquote>
-<ul>
-<li>思路：在主节点配置一个监听服务器等待接受任务节点的信号，并定时轮训接受信号的文件当第一批次的任务信号接受完成，置空该信号文件并继续分发下一次批次数据给任务节点，依次类推。</li>
-</ul>
-<h2 id="技术实现"><a href="#技术实现" class="headerlink" title="技术实现"></a>技术实现</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/usr/bin/env bash</span></div><div class="line"></div><div class="line"></div><div class="line">master:</div><div class="line">nohup  nc -l -k 10000 &gt;signalFile &amp;</div><div class="line"></div><div class="line"><span class="function"><span class="title">monitorDataNode</span></span>()&#123;</div><div class="line">  susseedCnt=`grep <span class="variable">$1</span> signalFile |wc -l`</div><div class="line">  <span class="built_in">return</span> susseedCnt</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">hive -f get_inner.sql</div><div class="line"><span class="keyword">if</span> [ $? != 0 ];</div><div class="line">	<span class="keyword">then</span></div><div class="line">		<span class="built_in">echo</span> <span class="string">"get_inner failed"</span></div><div class="line">			<span class="built_in">exit</span> 2</div><div class="line"><span class="keyword">else</span></div><div class="line">	<span class="built_in">echo</span> <span class="string">"get_inner succeed"</span></div><div class="line">  hive -f stanard_inner.sh</div><div class="line">  <span class="keyword">if</span> [ $? != 0 ];</div><div class="line">  	<span class="keyword">then</span></div><div class="line">  		<span class="built_in">echo</span> <span class="string">"stanard_inner failed"</span></div><div class="line">  			<span class="built_in">exit</span> 2</div><div class="line">  <span class="keyword">else</span></div><div class="line">  	<span class="built_in">echo</span> <span class="string">"stanard_inner succeed"</span></div><div class="line">    hive -f merge_inner.sql &amp;&amp; bash  deal_out.sh</div><div class="line">    <span class="keyword">if</span> [ $? != 0 ];</div><div class="line">      <span class="keyword">then</span></div><div class="line">        <span class="built_in">echo</span> <span class="string">"merge_inner &amp;&amp; deal_out failed"</span></div><div class="line">          <span class="built_in">exit</span> 2</div><div class="line">    <span class="keyword">else</span></div><div class="line">      <span class="built_in">echo</span> <span class="string">"merge_inner &amp;&amp; deal_out succeed"</span></div><div class="line">      monitorDataNode 0_do_get</div><div class="line">      <span class="keyword">if</span> [ $? == 3 ];</div><div class="line">        <span class="keyword">then</span></div><div class="line">          <span class="built_in">echo</span> <span class="string">'0_do_get succeed'</span></div><div class="line">          bash  1_do_reindex.sh</div><div class="line">          .</div><div class="line">          .</div><div class="line">          .</div><div class="line">      <span class="keyword">else</span></div><div class="line">        monitorDataNode 0_do_get</div><div class="line">      <span class="keyword">fi</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">  <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">dataNode:</div><div class="line"></div><div class="line">bash  0_do_get.sh</div><div class="line"><span class="keyword">if</span> [ $? != 0 ];</div><div class="line">     <span class="keyword">then</span></div><div class="line">         <span class="built_in">echo</span> <span class="string">"0_do_get failed"</span></div><div class="line">          <span class="built_in">exit</span> 2</div><div class="line"><span class="keyword">else</span></div><div class="line">   <span class="built_in">echo</span> <span class="string">"0_do_get succeed"</span> |  netcat master 10000</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/ITWO/2019/07/18/通过shell来实现任务状态汇报/"  >通过shell来实现任务状态汇报</a>
+    </h1>
+  
 
-            <div class="post-copyright">
-    <div class="content">
-        <p>最后更新： 2019年02月19日 11:36</p>
-        <p>原始链接： <a class="post-url" href="/ITWO/2019/05/29/通过shell来实现任务状态汇报/" title="通过shell来实现任务状态汇报">http://www.tangyuxiaoyao.club/ITWO/2019/05/29/通过shell来实现任务状态汇报/</a></p>
-        <footer>
-            <a href="http://www.tangyuxiaoyao.club/ITWO">
-                <img src="/ITWO/images/logo.png" alt="唐钰逍遥">
-                唐钰逍遥
-            </a>
-        </footer>
-    </div>
-</div>
-
+    </header>
       
-        
-            
-<div class="page-reward">
-    <a id="rewardBtn" href="javascript:;">赏</a>
-</div>
-
-<div id="reward" class="post-modal reward-lay">
-    <a class="close" href="javascript:;" id="reward-close">×</a>
-    <span class="reward-title">
-        <i class="icon icon-quote-left"></i>
-        请我吃糖~
-        <i class="icon icon-quote-right"></i>
-    </span>
-    <div class="reward-content">
-        
-        <div class="reward-code">
-            <img id="rewardCode" src="/ITWO/images/wxzf.png" alt="打赏二维码">
-        </div>
-        <div class="reward-select">
-            
-            <label class="reward-select-item checked" data-id="wechat" data-wechat="/ITWO/images/wxzf.png">
-                <img class="reward-select-item-wechat" src="/ITWO/images/wechat.png" alt="微信">
-            </label>
-            
-            
-            <label class="reward-select-item" data-id="alipay" data-alipay="/ITWO/images/zfb.png">
-                <img class="reward-select-item-alipay" src="/ITWO/images/alipay.png" alt="支付宝">
-            </label>
-            
-        </div>
-    </div>
-</div>
-
-
-        
-    </div>
-    <footer class="article-footer">
-        
-        
-<div class="post-share">
-    <a href="javascript:;" id="share-sub" class="post-share-fab">
-        <i class="fa fa-share-alt"></i>
-    </a>
-    <div class="post-share-list" id="share-list">
-        <ul class="share-icons">
-          <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/通过shell来实现任务状态汇报/&title=《通过shell来实现任务状态汇报》 — ITWO&pic=http://www.tangyuxiaoyao.club/ITWOimages/logo.png" data-title="微博">
-              <i class="fa fa-weibo"></i>
-            </a>
-          </li>
-          <li>
-            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
-              <i class="fa fa-weixin"></i>
-            </a>
-          </li>
-          <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/通过shell来实现任务状态汇报/&title=《通过shell来实现任务状态汇报》 — ITWO&source=业务背景
-三台机器负责接受分发的数据然后运行各自的逻辑，完成之后发送信号给主节点，然后继续后续的数据分发以及跑批任务。
-" data-title="QQ">
-              <i class="fa fa-qq"></i>
-            </a>
-          </li>
-          <li>
-            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/通过shell来实现任务状态汇报/" data-title="Facebook">
-              <i class="fa fa-facebook"></i>
-            </a>
-          </li>
-          <li>
-            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《通过shell来实现任务状态汇报》 — ITWO&url=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/通过shell来实现任务状态汇报/&via=http://www.tangyuxiaoyao.club/ITWO" data-title="Twitter">
-              <i class="fa fa-twitter"></i>
-            </a>
-          </li>
-          <li>
-            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/通过shell来实现任务状态汇报/" data-title="Google+">
-              <i class="fa fa-google-plus"></i>
-            </a>
-          </li>
-        </ul>
-     </div>
-</div>
-<div class="post-modal wx-share" id="wxShare">
-    <a class="close" href="javascript:;" id="wxShare-close">×</a>
-    <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/通过shell来实现任务状态汇报/" alt="微信分享二维码">
-</div>
-
-<div class="mask"></div>
-
-        
-        <ul class="article-footer-menu">
-            
+        <div class="archive-post-footer">
             
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
@@ -263,43 +183,120 @@
       
   </li>
 
-        </ul>
-        
-    </footer>
+        </div>
+      
   </div>
 </article>
 
-
-    <aside class="post-toc-pos post-toc-top" id="post-toc">
-        <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#业务背景"><span class="post-toc-text">业务背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术分析"><span class="post-toc-text">技术分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术实现"><span class="post-toc-text">技术实现</span></a></li></ol>
-        </nav>
-    </aside>
+  
     
-
-<nav id="article-nav">
-  
-    <a href="/ITWO/2019/05/29/线上mongo查询过慢排查总结/" id="article-nav-newer" class="article-nav-link-wrap">
-
-      <span class="article-nav-title">
-        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
-        
-          线上mongo查询过慢排查总结
-        
-      </span>
-    </a>
-  
-  
-    <a href="/ITWO/2019/01/15/docker-use/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">docker use</span>
-      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-    </a>
-  
-</nav>
-
-
-
     
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/ITWO/2019/07/18/线上mongo查询过慢排查总结/" class="archive-article-date">
+  <time datetime="2019-07-18T12:13:39.744Z" itemprop="datePublished">07-18</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/ITWO/2019/07/18/线上mongo查询过慢排查总结/"  >线上mongo查询过慢排查总结</a>
+    </h1>
+  
+
+    </header>
+      
+        <div class="archive-post-footer">
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/ITWO/tags/mongo/" class="color1">mongo</a>
+      
+    <a href="/ITWO/tags/explain/" class="color3">explain</a>
+      
+  </li>
+
+        </div>
+      
+  </div>
+</article>
+
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/ITWO/2019/07/18/mapredcue 温习/" class="archive-article-date">
+  <time datetime="2019-07-18T12:08:54.368Z" itemprop="datePublished">07-18</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/ITWO/2019/07/18/mapredcue 温习/"  >mapreduce 温故</a>
+    </h1>
+  
+
+    </header>
+      
+        <div class="archive-post-footer">
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/ITWO/tags/mapreduce/" class="color5">mapreduce</a>
+      
+    <a href="/ITWO/tags/shuffer/" class="color3">shuffer</a>
+      
+  </li>
+
+        </div>
+      
+  </div>
+</article>
+
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/ITWO/2019/07/18/hexo yilia github 搭建个人博客/" class="archive-article-date">
+  <time datetime="2019-07-18T12:05:25.893Z" itemprop="datePublished">07-18</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/ITWO/2019/07/18/hexo yilia github 搭建个人博客/"  >hexo yilla 和github 结合搭建个人博客</a>
+    </h1>
+  
+
+    </header>
+      
+        <div class="archive-post-footer">
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/ITWO/tags/hexo/" class="color5">hexo</a>
+      
+    <a href="/ITWO/tags/yilla/" class="color1">yilla</a>
+      
+    <a href="/ITWO/tags/github/" class="color2">github</a>
+      
+  </li>
+
+        </div>
+      
+  </div>
+</article>
+
+  
+  
+    </div></section>
+  
+
 </section>
         
       </div>

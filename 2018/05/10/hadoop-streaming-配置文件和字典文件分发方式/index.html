@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="背景描述 通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
-<meta name="keywords" content="python,hadoop streaming,cacheFile,file,files">
+  <meta name="description" content="通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
+<meta name="keywords" content="hadoop streaming,python,cacheFile,file,files">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hadoop streaming 配置文件和字典文件分发方式">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="背景描述 通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
+<meta property="og:description" content="通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-14T01:48:11.952Z">
+<meta property="og:updated_time" content="2019-07-18T12:07:21.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hadoop streaming 配置文件和字典文件分发方式">
-<meta name="twitter:description" content="背景描述 通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
+<meta name="twitter:description" content="通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,7 +139,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote>
+            <blockquote>
 <p>通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者join操作.但是我们需要用到一些配置文件怎么办?</p>
 </blockquote>
 <a id="more"></a>
@@ -178,7 +181,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年05月14日 09:48</p>
+        <p>最后更新： 2019年07月18日 20:07</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/" title="hadoop streaming 配置文件和字典文件分发方式">http://www.tangyuxiaoyao.club/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -246,8 +249,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/&title=《hadoop streaming 配置文件和字典文件分发方式》 — ITWO&source=背景描述
-通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/05/10/hadoop-streaming-配置文件和字典文件分发方式/&title=《hadoop streaming 配置文件和字典文件分发方式》 — ITWO&source=
+通常情况下我们在hadoop streaming中通过input来设置我们需要处理的数据,然后逐条遍历打标记,从而在reduce端可以区别对待做聚合或者..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -284,9 +287,9 @@
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/ITWO/tags/python/" class="color2">python</a>
-      
     <a href="/ITWO/tags/hadoopstreaming/" class="color2">hadoop streaming</a>
+      
+    <a href="/ITWO/tags/python/" class="color2">python</a>
       
     <a href="/ITWO/tags/cacheFile/" class="color5">cacheFile</a>
       
@@ -305,7 +308,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#背景描述"><span class="post-toc-text">背景描述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术细节"><span class="post-toc-text">技术细节</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Hadoop-Streaming中的大文件和档案"><span class="post-toc-text">Hadoop Streaming中的大文件和档案</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实践校验"><span class="post-toc-text">实践校验</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#细节描述"><span class="post-toc-text">细节描述</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#map使用细节"><span class="post-toc-text">map使用细节</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#recude使用细节"><span class="post-toc-text">recude使用细节</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用总结"><span class="post-toc-text">使用总结</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术细节"><span class="post-toc-text">技术细节</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Hadoop-Streaming中的大文件和档案"><span class="post-toc-text">Hadoop Streaming中的大文件和档案</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#实践校验"><span class="post-toc-text">实践校验</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#细节描述"><span class="post-toc-text">细节描述</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#map使用细节"><span class="post-toc-text">map使用细节</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#recude使用细节"><span class="post-toc-text">recude使用细节</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用总结"><span class="post-toc-text">使用总结</span></a></li></ol></li></ol>
         </nav>
     </aside>
     

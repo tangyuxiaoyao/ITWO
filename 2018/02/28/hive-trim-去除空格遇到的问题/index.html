@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，">
+  <meta name="description" content="在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，所以又查">
 <meta name="keywords" content="hive,trim,空格,tab,制表符,regex_replace">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hive trim() 去除空格遇到的问题">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，">
+<meta property="og:description" content="在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，所以又查">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:18:43.224Z">
+<meta property="og:updated_time" content="2019-07-18T12:08:28.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hive trim() 去除空格遇到的问题">
-<meta name="twitter:description" content="需求背景 在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，">
+<meta name="twitter:description" content="在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，所以又查">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,7 +139,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
+            <blockquote>
 <p>在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，所以又查到hive有正则替换。</p>
 </blockquote>
 <a id="more"></a>
@@ -145,7 +148,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:18</p>
+        <p>最后更新： 2019年07月18日 20:08</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/" title="hive trim() 去除空格遇到的问题">http://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -213,8 +216,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/&title=《hive trim() 去除空格遇到的问题》 — ITWO&source=需求背景
-在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/02/28/hive-trim-去除空格遇到的问题/&title=《hive trim() 去除空格遇到的问题》 — ITWO&source=
+在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -274,7 +277,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#源码分析"><span class="post-toc-text">源码分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决方案"><span class="post-toc-text">解决方案</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#源码分析"><span class="post-toc-text">源码分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决方案"><span class="post-toc-text">解决方案</span></a></li></ol>
         </nav>
     </aside>
     

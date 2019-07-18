@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求分析 在hadoop官方文档上有看到这样的使用">
+  <meta name="description" content="在hadoop官方文档上有看到这样的使用">
 <meta name="keywords" content="shell,cat,xargs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cat 和　xargs cat的区别">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/10/18/cat-和-xargs-cat的区别/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求分析 在hadoop官方文档上有看到这样的使用">
+<meta property="og:description" content="在hadoop官方文档上有看到这样的使用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:15:09.729Z">
+<meta property="og:updated_time" content="2019-07-18T12:05:51.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cat 和　xargs cat的区别">
-<meta name="twitter:description" content="需求分析 在hadoop官方文档上有看到这样的使用">
+<meta name="twitter:description" content="在hadoop官方文档上有看到这样的使用">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,8 +139,12 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><blockquote>
-<p>在hadoop官方文档上有看到这样的使用<br><a id="more"></a><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span>HADOOP_HOME/bin/hadoop  jar $HADOOP_HOME/hadoop-streaming.jar \</div><div class="line">                 -archives 'hdfs://hadoop-nn1.example.com/user/me/samples/cachefile/cachedir.jar' \  </div><div class="line">                 -D mapred.map.tasks=1 \</div><div class="line">                 -D mapred.reduce.tasks=1 \ </div><div class="line">                 -D mapred.job.name="Experiment" \</div><div class="line">                 -input "/user/me/samples/cachefile/input.txt"  \</div><div class="line">                 -output "/user/me/samples/cachefile/out" \  </div><div class="line">                 -mapper "xargs cat"  \</div><div class="line">                 -reducer "cat"</div></pre></td></tr></table></figure></p>
+            <blockquote>
+<p>在hadoop官方文档上有看到这样的使用</p>
+</blockquote>
+<a id="more"></a>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash">HADOOP_HOME/bin/hadoop  jar <span class="variable">$HADOOP_HOME</span>/hadoop-streaming.jar \</span></div><div class="line">                 -archives 'hdfs://hadoop-nn1.example.com/user/me/samples/cachefile/cachedir.jar' \  </div><div class="line">                 -D mapred.map.tasks=1 \</div><div class="line">                 -D mapred.reduce.tasks=1 \ </div><div class="line">                 -D mapred.job.name="Experiment" \</div><div class="line">                 -input "/user/me/samples/cachefile/input.txt"  \</div><div class="line">                 -output "/user/me/samples/cachefile/out" \  </div><div class="line">                 -mapper "xargs cat"  \</div><div class="line">                 -reducer "cat"</div></pre></td></tr></table></figure>
+<blockquote>
 <p>其中 mapper中用的可执行命令是xargs cat而redcuer用的是cat,这样的区别在哪里？</p>
 </blockquote>
 <h2 id="技术分析"><a href="#技术分析" class="headerlink" title="技术分析"></a>技术分析</h2><blockquote>
@@ -148,7 +155,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:15</p>
+        <p>最后更新： 2019年07月18日 20:05</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2017/10/18/cat-和-xargs-cat的区别/" title="cat 和　xargs cat的区别">http://www.tangyuxiaoyao.club/ITWO/2017/10/18/cat-和-xargs-cat的区别/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -216,8 +223,9 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/10/18/cat-和-xargs-cat的区别/&title=《cat 和　xargs cat的区别》 — ITWO&source=需求分析
-在hadoop官方文档上有看到这样的使用" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/10/18/cat-和-xargs-cat的区别/&title=《cat 和　xargs cat的区别》 — ITWO&source=
+在hadoop官方文档上有看到这样的使用
+" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -271,7 +279,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求分析"><span class="post-toc-text">需求分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术分析"><span class="post-toc-text">技术分析</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术分析"><span class="post-toc-text">技术分析</span></a></li></ol>
         </nav>
     </aside>
     

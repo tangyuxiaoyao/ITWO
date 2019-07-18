@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景: 在搭建大数据平台的时候，我们测试或者入门可以在local模式下进行，但是要模拟集群环境的话，就需要设置主从模式，这里已spark为例，搭建spark的standalone模式，因为涉及到远端启动所以我们需要设置ssh免登陆，">
+  <meta name="description" content="在搭建大数据平台的时候，我们测试或者入门可以在local模式下进行，但是要模拟集群环境的话，就需要设置主从模式，这里已spark为例，搭建spark的standalone模式，因为涉及到远端启动所以我们需要设置ssh免登陆，">
 <meta name="keywords" content="hadoop,spark,ssh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ssh 免登陆设置">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/09/29/ssh-免登陆设置/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景: 在搭建大数据平台的时候，我们测试或者入门可以在local模式下进行，但是要模拟集群环境的话，就需要设置主从模式，这里已spark为例，搭建spark的standalone模式，因为涉及到远端启动所以我们需要设置ssh免登陆，">
+<meta property="og:description" content="在搭建大数据平台的时候，我们测试或者入门可以在local模式下进行，但是要模拟集群环境的话，就需要设置主从模式，这里已spark为例，搭建spark的standalone模式，因为涉及到远端启动所以我们需要设置ssh免登陆，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:24:08.167Z">
+<meta property="og:updated_time" content="2019-07-18T12:12:04.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ssh 免登陆设置">
-<meta name="twitter:description" content="需求背景: 在搭建大数据平台的时候，我们测试或者入门可以在local模式下进行，但是要模拟集群环境的话，就需要设置主从模式，这里已spark为例，搭建spark的standalone模式，因为涉及到远端启动所以我们需要设置ssh免登陆，">
+<meta name="twitter:description" content="在搭建大数据平台的时候，我们测试或者入门可以在local模式下进行，但是要模拟集群环境的话，就需要设置主从模式，这里已spark为例，搭建spark的standalone模式，因为涉及到远端启动所以我们需要设置ssh免登陆，">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,7 +139,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景:"></a>需求背景:</h2><blockquote>
+            <blockquote>
 <p>在搭建大数据平台的时候，我们测试或者入门可以在local模式下进行，但是要模拟集群环境的话，就需要设置主从模式，这里已spark为例，搭建spark的standalone模式，因为涉及到远端启动所以我们需要设置ssh免登陆，<a id="more"></a></p>
 </blockquote>
 <h2 id="步骤如下"><a href="#步骤如下" class="headerlink" title="步骤如下:"></a>步骤如下:</h2><p> 1.在各个节点上使用ssh-keygen -t rsa,过程中三次回车即可,然后在当前用户的.ssh目录下面会生成私钥文件.<br> 2.我们需要将这个公钥文件使用scp拷贝到其他节点并且重命名为authorized_keys．<br> 3.跟有交互需求的拷贝自己的公钥文件给对方从而实现该节点可以免登陆到其他节点．．</p>
@@ -144,7 +147,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:24</p>
+        <p>最后更新： 2019年07月18日 20:12</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2017/09/29/ssh-免登陆设置/" title="ssh 免登陆设置">http://www.tangyuxiaoyao.club/ITWO/2017/09/29/ssh-免登陆设置/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -212,8 +215,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/09/29/ssh-免登陆设置/&title=《ssh 免登陆设置》 — ITWO&source=需求背景:
-在搭建大数据平台的时候，我们测试或者入门可以在local模式下进行，但是要模拟集群环境的话，就需要设置主从模式，这里已spark为例，搭建sp..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/09/29/ssh-免登陆设置/&title=《ssh 免登陆设置》 — ITWO&source=
+在搭建大数据平台的时候，我们测试或者入门可以在local模式下进行，但是要模拟集群环境的话，就需要设置主从模式，这里已spark为例，搭建spark的s..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -267,7 +270,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#步骤如下"><span class="post-toc-text">步骤如下:</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#步骤如下"><span class="post-toc-text">步骤如下:</span></a></li></ol>
         </nav>
     </aside>
     

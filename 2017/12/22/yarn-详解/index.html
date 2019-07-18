@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。温故知新，查缺补漏。">
+  <meta name="description" content="yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。温故知新，查缺补漏。">
 <meta name="keywords" content="hadoop,mapreduce,yarn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="yarn 详解">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/12/22/yarn-详解/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。温故知新，查缺补漏。">
+<meta property="og:description" content="yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。温故知新，查缺补漏。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:25:12.081Z">
+<meta property="og:updated_time" content="2019-07-18T12:12:39.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="yarn 详解">
-<meta name="twitter:description" content="需求背景 yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。温故知新，查缺补漏。">
+<meta name="twitter:description" content="yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。温故知新，查缺补漏。">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,9 +139,10 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
-<p>yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。<br>温故知新，查缺补漏。<a id="more"></a></p>
+            <blockquote>
+<p>yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。<br>温故知新，查缺补漏。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="出现背景"><a href="#出现背景" class="headerlink" title="出现背景"></a>出现背景</h2><blockquote>
 <p>在hadoop1.0体系中，我们经常使用client提交任务会提交给JobTracker，然后jobTracker会根据集群现有的资源分配资源给该请求,负责任务的监控和任务的重试机制（失败→重启），TaskTracker通过心跳机制把当前任务的状态以及自己的状态报告给jobTracker。<br>jobTracker的职责:</p>
 </blockquote>
@@ -183,7 +187,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:25</p>
+        <p>最后更新： 2019年07月18日 20:12</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2017/12/22/yarn-详解/" title="yarn 详解">http://www.tangyuxiaoyao.club/ITWO/2017/12/22/yarn-详解/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -251,8 +255,9 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/12/22/yarn-详解/&title=《yarn 详解》 — ITWO&source=需求背景
-yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。温故知新，查缺补漏。" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/12/22/yarn-详解/&title=《yarn 详解》 — ITWO&source=
+yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。温故知新，查缺补漏。
+" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -306,7 +311,7 @@ yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#出现背景"><span class="post-toc-text">出现背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#yarn的出现"><span class="post-toc-text">yarn的出现</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#出现背景"><span class="post-toc-text">出现背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#yarn的出现"><span class="post-toc-text">yarn的出现</span></a></li></ol>
         </nav>
     </aside>
     

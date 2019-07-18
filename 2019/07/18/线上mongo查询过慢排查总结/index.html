@@ -3,23 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hadoop HDFS 数据自动平衡 | ITWO</title>
+  <title>线上mongo查询过慢排查总结 | ITWO</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="Hadoop HDFS 数据自动平衡脚本使用方法 在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.s">
-<meta name="keywords" content="hadoop,hdfs,balancer">
+  <meta name="description" content="日志监控系统提示mongo查询耗时过长，提示信息如下  12345【app】银联智惠监控中心项目: goblin#01-&amp;gt;mongo主机: lrma02时间: 2019-02-27 15:30:00详情: mongo响应时间超过阈值,1分钟内响应时间超过1000ms占比大于10.0%,当前占比:12.20%,总请求次数:164">
+<meta name="keywords" content="mongo,explain">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hadoop HDFS 数据自动平衡">
-<meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2019/05/29/ Hadoop HDFS 数据自动平衡/index.html">
+<meta property="og:title" content="线上mongo查询过慢排查总结">
+<meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2019/07/18/线上mongo查询过慢排查总结/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="Hadoop HDFS 数据自动平衡脚本使用方法 在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.s">
+<meta property="og:description" content="日志监控系统提示mongo查询耗时过长，提示信息如下  12345【app】银联智惠监控中心项目: goblin#01-&amp;gt;mongo主机: lrma02时间: 2019-02-27 15:30:00详情: mongo响应时间超过阈值,1分钟内响应时间超过1000ms占比大于10.0%,当前占比:12.20%,总请求次数:164">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-11T12:14:06.761Z">
+<meta property="og:image" content="http://www.tangyuxiaoyao.club/ITWO/assets/mongo-data.png">
+<meta property="og:updated_time" content="2019-07-18T12:13:39.744Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hadoop HDFS 数据自动平衡">
-<meta name="twitter:description" content="Hadoop HDFS 数据自动平衡脚本使用方法 在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.s">
+<meta name="twitter:title" content="线上mongo查询过慢排查总结">
+<meta name="twitter:description" content="日志监控系统提示mongo查询耗时过长，提示信息如下  12345【app】银联智惠监控中心项目: goblin#01-&amp;gt;mongo主机: lrma02时间: 2019-02-27 15:30:00详情: mongo响应时间超过阈值,1分钟内响应时间超过1000ms占比大于10.0%,当前占比:12.20%,总请求次数:164">
+<meta name="twitter:image" content="http://www.tangyuxiaoyao.club/ITWO/assets/mongo-data.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +94,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -101,26 +103,29 @@
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
                     
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
                 </div>
             </nav>
         </div>
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap"><article id="post- Hadoop HDFS 数据自动平衡" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main" class="body-wrap"><article id="post-线上mongo查询过慢排查总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="post-title" itemprop="name">
-      Hadoop HDFS 数据自动平衡
+      线上mongo查询过慢排查总结
     </h1>
     <div class="post-title-bar">
       <ul>
           
         <li>
-          <i class="fa fa-calendar"></i>  2019-05-29
+          <i class="fa fa-calendar"></i>  2019-07-18
         </li>
         <li>
           <i class="fa fa-eye"></i>
@@ -136,22 +141,75 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="Hadoop-HDFS-数据自动平衡脚本使用方法"><a href="#Hadoop-HDFS-数据自动平衡脚本使用方法" class="headerlink" title="Hadoop HDFS 数据自动平衡脚本使用方法"></a>Hadoop HDFS 数据自动平衡脚本使用方法</h2><blockquote>
-<p>在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡服务。该工具可以做到热插拔，即无须重启计算机和 Hadoop 服务。HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘HadoopHome/bin目录下的start−balancer.sh脚本就是该任务的启动脚本。启动命令为：‘Hadoop_home/bin/start-balancer.sh –threshold`<br><a id="more"></a></p>
+            <blockquote>
+<p>日志监控系统提示mongo查询耗时过长，提示信息如下</p>
 </blockquote>
-<h2 id="影响Balancer的几个参数："><a href="#影响Balancer的几个参数：" class="headerlink" title="影响Balancer的几个参数："></a>影响Balancer的几个参数：</h2><p>-threshold</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">【app】银联智惠监控中心</div><div class="line">项目: goblin#01-&gt;mongo</div><div class="line">主机: lrma02</div><div class="line">时间: 2019-02-27 15:30:00</div><div class="line">详情: mongo响应时间超过阈值,1分钟内响应时间超过1000ms占比大于10.0%,当前占比:12.20%,总请求次数:164</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="排查思路"><a href="#排查思路" class="headerlink" title="排查思路"></a>排查思路</h2><blockquote>
+<p>针对以上提示，可以定位到中间件为mongo，相关人员第一时间要通知到运维查看mongo的操作日志，从而在后台定位到查询耗时过长的是那张表以及查询条件是什么？日志表象如下:</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="number">2019</span>-<span class="number">02</span>-<span class="number">27</span>T15:<span class="number">21</span>:<span class="number">07.038</span>+<span class="number">0800</span> I COMMAND  [conn25570] command clearing.fee_detail command: find &#123; find: <span class="string">"fee_detail"</span>, filter: &#123; account: <span class="string">"F1130004"</span>, interfacePath: <span class="string">"/index/personal"</span>, smartOrderId: <span class="string">"91dce17a-bd66-4eeb-959c-57f961802a72"</span> &#125;, limit: <span class="number">1</span>, singleBatch: <span class="keyword">true</span> &#125; planSummary: IXSCAN &#123; account: <span class="number">1</span>, interface_path: <span class="number">1</span>, batch: <span class="number">1</span> &#125; keysExamined:<span class="number">351130</span> docsExamined:<span class="number">351130</span> cursorExhausted:<span class="number">1</span> numYields:<span class="number">2750</span> nreturned:<span class="number">0</span> reslen:<span class="number">107</span> locks:&#123; Global: &#123; acquireCount: &#123; r: <span class="number">5502</span> &#125; &#125;, Database: &#123; acquireCount: &#123; r: <span class="number">2751</span> &#125; &#125;, Collection: &#123; acquireCount: &#123; r: <span class="number">2751</span> &#125; &#125; &#125; protocol:op_query <span class="number">1750</span>ms</div></pre></td></tr></table></figure>
 <blockquote>
-<p>默认设置：10，参数取值范围：0-100<br>参数含义：判断集群是否平衡的阈值。理论上，该参数设置的越小，整个集群就越平衡<br>dfs.balance.bandwidthPerSec<br>默认设置：1048576（1M/S）<br>参数含义：Balancer运行时允许占用的带宽<br>示例如下：</p>
+<p>从操作日志可定位到表名:fee_detail,查询的条件涉及到的字段: { account: “F1130004”, interfacePath: “/index/personal”, smartOrderId: “91dce17a-bd66-4eeb-959c-57f961802a72” },接下来需要做的就是使用该条件去查询该表并打印它的执行计划，在执行计划中查看<br>命令: db.table.find({ account: “F1130004”, interfacePath: “/index/personal”, smartOrderId: “91dce17a-bd66-4eeb-959c-57f961802a72” }).explain()</p>
 </blockquote>
-<p>#启动数据均衡，默认阈值为 10%<br>$Hadoop_home/bin/start-balancer.sh</p>
-<p>#启动数据均衡，阈值 5%<br>bin/start-balancer.sh –threshold 5</p>
-<p>#停止数据均衡<br>$Hadoop_home/bin/stop-balancer.sh<br>在hdfs-site.xml文件中可以设置数据均衡占用的网络带宽限制</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.balance.bandwidthPerSec<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>1048576<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span> Specifies the maximum bandwidth that each datanode can utilize for the balancing purpose in term of the number of bytes per second. <span class="tag">&lt;/<span class="name">description</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure>
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"> db.table.find(&#123;"col":"CYHS1301942"&#125;).explain()</div><div class="line">&#123;</div><div class="line">    "queryPlanner" : &#123;</div><div class="line">        "plannerVersion" : 1,</div><div class="line">        "namespace" : "db.table",    #集合</div><div class="line">        "indexFilterSet" : false,</div><div class="line">        "parsedQuery" : &#123;</div><div class="line">            "b" : &#123;</div><div class="line">                "$eq" : "CYHS1301942"</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        "winningPlan" : &#123;</div><div class="line">            "stage" : "FETCH",</div><div class="line">            "inputStage" : &#123;</div><div class="line">                "stage" : "IXSCAN",     #索引扫描，COLLSCAN表示全表扫描。</div><div class="line">                "keyPattern" : &#123;</div><div class="line">                    "account" : 1,</div><div class="line">                    "interfacePath" : 1</div><div class="line">					"smartOrderId" : 1</div><div class="line">                &#125;,</div><div class="line">                "indexName" : "account_1_interfacePath_1_smartOrderId_1", #索引名</div><div class="line">                "isMultiKey" : false,</div><div class="line">                "direction" : "forward",</div><div class="line">                "indexBounds" : &#123;</div><div class="line">                    "account" : [</div><div class="line">                        "[\"CYHS1301942\", \"CYHS1301942\"]"</div><div class="line">                    ],</div><div class="line">                    "interfacePath" : [</div><div class="line">                        "[MinKey, MaxKey]"</div><div class="line">                    ],</div><div class="line">					"smartOrderId" : [</div><div class="line">					 "[\"91dce17a-bd66-4eeb-959c-57f961802a72\", \"91dce17a-bd66-4eeb-959c-57f961802a73\"]"</div><div class="line">					]</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        "rejectedPlans" : [ ]</div><div class="line">    &#125;,</div><div class="line">    "serverInfo" : &#123;</div><div class="line">        "host" : "mongo1",</div><div class="line">        "port" : 27017,</div><div class="line">        "version" : "3.0.4",</div><div class="line">        "gitVersion" : "0481c958daeb2969800511e7475dc66986fa9ed5"</div><div class="line">    &#125;,</div><div class="line">    "ok" : 1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>从执行计划中从”stage” : “IXSCAN”该步骤中keyPattern可以看出具体使用的索引内容从而定位到用的复合索引是不是传输所用的索引。下午发现的问题是因为使用的索引并非建立的索引导致的查询缓慢。</p>
+<p>也可以使用查看所有索引的方式来直接定位是不是所用到的索引存在</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">  db.fee_detail.getIndexes()</div><div class="line">[</div><div class="line">     &#123;</div><div class="line">         "v" : 2,</div><div class="line">         "key" : &#123;</div><div class="line">             "_id" : 1</div><div class="line">         &#125;,</div><div class="line">         "name" : "_id_",</div><div class="line">         "ns" : "clearing.fee_detail"</div><div class="line">     &#125;,</div><div class="line">     &#123;</div><div class="line">         "v" : 2,</div><div class="line">         "key" : &#123;</div><div class="line">             "account" : 1,</div><div class="line">             "interface_path" : 1,</div><div class="line">             "batch" : 1</div><div class="line">         &#125;,</div><div class="line">         "name" : "account_path_batch_index",</div><div class="line">         "ns" : "clearing.fee_detail"</div><div class="line">     &#125;,</div><div class="line">     &#123;</div><div class="line">         "v" : 2,</div><div class="line">         "key" : &#123;</div><div class="line">             "createDate" : 1</div><div class="line">         &#125;,</div><div class="line">         "name" : "createDate_expire_index",</div><div class="line">         "ns" : "clearing.fee_detail",</div><div class="line">         "expireAfterSeconds" : NumberLong(31536000)</div><div class="line">     &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
+<blockquote>
+<p>从上可以看出并没有找到要用到的索引。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>定位到问题之后根据查询条件以及业务需要手动地在该表中给该三个字段添加索引。然后观察日志，查询缓慢的问题得到解决。</p>
+<ul>
+<li>添加索引的脚本</li>
+</ul>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">db.fee_detail.ensureIndex(&#123;account: 1, interface_path: 1, smartOrderId:1&#125;);</div></pre></td></tr></table></figure>
+<h2 id="方案优化"><a href="#方案优化" class="headerlink" title="方案优化"></a>方案优化</h2><ul>
+<li>待考量的三种方案</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.account,interface_path,smartOrderId;account,interface_path,batch 两个复合索引</div><div class="line">2.account,interface_path;batch;smartOrderId 三个索引</div><div class="line">3.account;interface_path 两个索引</div></pre></td></tr></table></figure>
+<h2 id="方案跟踪"><a href="#方案跟踪" class="headerlink" title="方案跟踪"></a>方案跟踪</h2><ul>
+<li>方案一:</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">db.fee_detail.ensureIndex(&#123;account: 1, interface_path: 1, smartOrderId:1&#125;);</div><div class="line">db.fee_detail.ensureIndex(&#123;account: 1, interface_path: 1, batch:1&#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li>方案二</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">db.fee_detail.ensureIndex(&#123;account: 1, interface_path: 1&#125;);</div><div class="line">db.fee_detail.ensureIndex(&#123;batch:1&#125;);</div><div class="line">db.fee_detail.ensureIndex(&#123;smartOrderId:1&#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li>方案三：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">db.fee_detail.ensureIndex(&#123;account:1&#125;);</div><div class="line">db.fee_detail.ensureIndex(&#123;interface_path:1&#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li>测试步骤</li>
+</ul>
+<hr>
+<ol>
+<li>准备mongo存量数据,分别100W,500W,1000W。</li>
+<li>并发请求接口，造４要素的数据确保４要素不会重复，这样每次都会调用第三方不走缓存＝＞每次都会insert和update mongo库。</li>
+<li>获取系统的日志记录的插入mongo库和更新mongo库的时间解析，计算插入和更新mongo库的平均响应时间。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">        　　com.unionpaysmart.goblin.service.MongoService[<span class="number">83</span>]:middleware_opt|mongo|<span class="number">5573</span>|success|插入mongo 成功日志=&gt;<span class="number">5573</span></div></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>比较结果见下图</li>
+</ul>
+<p><img src="/ITWO/assets/mongo-data.png" alt="mongo 执行比较"></p>
+<h2 id="进一步跟踪"><a href="#进一步跟踪" class="headerlink" title="进一步跟踪"></a>进一步跟踪</h2><blockquote>
+<p>既然第二种和第三种查询速率不分伯仲，望再帮忙看下，这两种分别建立的索引占的空间大小。<br>命令如下:</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">db.sys_request_info.stats(1024*1024)</div><div class="line">查看totalIndexSize的大小 单位是M</div></pre></td></tr></table></figure>
+<ul>
+<li>结果如下:</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">２种方案创建的索引大小如下，请参考：</div><div class="line"></div><div class="line">方案一:</div><div class="line">db.fee_detail.ensureIndex(&#123;account: 1, interface_path: 1, smartOrderId:1&#125;);</div><div class="line">db.fee_detail.ensureIndex(&#123;account: 1, interface_path: 1, batch:1&#125;);</div><div class="line"><span class="meta">PRIMARY&gt;</span><span class="bash">  db.fee_detail.stats(1024*1024)</span></div><div class="line">&#123;</div><div class="line">	"totalIndexSize" : 2100,</div><div class="line">	"indexSizes" : &#123;</div><div class="line">		"_id_" : 573,</div><div class="line">		"createDate_expire_index" : 492,</div><div class="line">		"account_1_interface_path_1_smartOrderId_1" : 648,</div><div class="line">		"account_1_interface_path_1_batch_1" : 386</div><div class="line">	&#125;,</div><div class="line">	"ok" : 1</div><div class="line">&#125;</div><div class="line"></div><div class="line">方案二:</div><div class="line">db.fee_detail.ensureIndex(&#123;account: 1, interface_path: 1&#125;);</div><div class="line">db.fee_detail.ensureIndex(&#123;batch:1&#125;);</div><div class="line">db.fee_detail.ensureIndex(&#123;smartOrderId:1&#125;);</div><div class="line"><span class="meta">PRIMARY&gt;</span><span class="bash">  db.fee_detail.stats(1024*1024)</span></div><div class="line">&#123;</div><div class="line">	"totalIndexSize" : 2145,</div><div class="line">	"indexSizes" : &#123;</div><div class="line">		"_id_" : 573,</div><div class="line">		"createDate_expire_index" : 492,</div><div class="line">		"account_1_interface_path_1" : 267,</div><div class="line">		"batch_1" : 277,</div><div class="line">		"smartOrderId_1" : 535</div><div class="line">	&#125;,</div><div class="line">	"ok" : 1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年07月11日 20:14</p>
-        <p>原始链接： <a class="post-url" href="/ITWO/2019/05/29/ Hadoop HDFS 数据自动平衡/" title="Hadoop HDFS 数据自动平衡">http://www.tangyuxiaoyao.club/ITWO/2019/05/29/ Hadoop HDFS 数据自动平衡/</a></p>
+        <p>最后更新： 2019年07月18日 20:13</p>
+        <p>原始链接： <a class="post-url" href="/ITWO/2019/07/18/线上mongo查询过慢排查总结/" title="线上mongo查询过慢排查总结">http://www.tangyuxiaoyao.club/ITWO/2019/07/18/线上mongo查询过慢排查总结/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
                 <img src="/ITWO/images/logo.png" alt="唐钰逍遥">
@@ -208,7 +266,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/ Hadoop HDFS 数据自动平衡/&title=《Hadoop HDFS 数据自动平衡》 — ITWO&pic=http://www.tangyuxiaoyao.club/ITWOimages/logo.png" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/线上mongo查询过慢排查总结/&title=《线上mongo查询过慢排查总结》 — ITWO&pic=http://www.tangyuxiaoyao.club/ITWOimages/logo.png" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -218,23 +276,25 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/ Hadoop HDFS 数据自动平衡/&title=《Hadoop HDFS 数据自动平衡》 — ITWO&source=Hadoop HDFS 数据自动平衡脚本使用方法
-在Hadoop中，包含一个start-balancer.sh脚本，通过运行这个工具，启动HDFS数据均衡..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/线上mongo查询过慢排查总结/&title=《线上mongo查询过慢排查总结》 — ITWO&source=
+日志监控系统提示mongo查询耗时过长，提示信息如下
+
+12345【app】银联智惠监控中心项目: goblin#01-&gt;mongo主机: lrm..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
           <li>
-            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/ Hadoop HDFS 数据自动平衡/" data-title="Facebook">
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/线上mongo查询过慢排查总结/" data-title="Facebook">
               <i class="fa fa-facebook"></i>
             </a>
           </li>
           <li>
-            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Hadoop HDFS 数据自动平衡》 — ITWO&url=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/ Hadoop HDFS 数据自动平衡/&via=http://www.tangyuxiaoyao.club/ITWO" data-title="Twitter">
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《线上mongo查询过慢排查总结》 — ITWO&url=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/线上mongo查询过慢排查总结/&via=http://www.tangyuxiaoyao.club/ITWO" data-title="Twitter">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
           <li>
-            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/ Hadoop HDFS 数据自动平衡/" data-title="Google+">
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/线上mongo查询过慢排查总结/" data-title="Google+">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -244,7 +304,7 @@
 <div class="post-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" id="wxShare-close">×</a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://www.tangyuxiaoyao.club/ITWO/2019/05/29/ Hadoop HDFS 数据自动平衡/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://www.tangyuxiaoyao.club/ITWO/2019/07/18/线上mongo查询过慢排查总结/" alt="微信分享二维码">
 </div>
 
 <div class="mask"></div>
@@ -256,11 +316,9 @@
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/ITWO/tags/hadoop/" class="color2">hadoop</a>
+    <a href="/ITWO/tags/mongo/" class="color1">mongo</a>
       
-    <a href="/ITWO/tags/hdfs/" class="color5">hdfs</a>
-      
-    <a href="/ITWO/tags/balancer/" class="color4">balancer</a>
+    <a href="/ITWO/tags/explain/" class="color3">explain</a>
       
   </li>
 
@@ -273,25 +331,25 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hadoop-HDFS-数据自动平衡脚本使用方法"><span class="post-toc-text">Hadoop HDFS 数据自动平衡脚本使用方法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#影响Balancer的几个参数："><span class="post-toc-text">影响Balancer的几个参数：</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#排查思路"><span class="post-toc-text">排查思路</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决方案"><span class="post-toc-text">解决方案</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#方案优化"><span class="post-toc-text">方案优化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#方案跟踪"><span class="post-toc-text">方案跟踪</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#进一步跟踪"><span class="post-toc-text">进一步跟踪</span></a></li></ol>
         </nav>
     </aside>
     
 
 <nav id="article-nav">
   
-    <a href="/ITWO/2019/05/29/hexo yilia github 搭建个人博客/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/ITWO/2019/07/18/通过shell来实现任务状态汇报/" id="article-nav-newer" class="article-nav-link-wrap">
 
       <span class="article-nav-title">
         <i class="fa fa-hand-o-left" aria-hidden="true"></i>
         
-          hexo yilla 和github 结合搭建个人博客
+          通过shell来实现任务状态汇报
         
       </span>
     </a>
   
   
-    <a href="/ITWO/2019/05/29/mapredcue 温习/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/ITWO/2019/07/18/mapredcue 温习/" id="article-nav-older" class="article-nav-link-wrap">
       <span class="article-nav-title">mapreduce 温故</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>

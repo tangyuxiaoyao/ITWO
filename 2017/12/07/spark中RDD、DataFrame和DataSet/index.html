@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景: 分析下虽然提供了这么多的数据格式，那种适用，那种才是适合自己的。">
+  <meta name="description" content="分析下虽然提供了这么多的数据格式，那种适用，那种才是适合自己的。">
 <meta name="keywords" content="spark,RDD,DataFrame,DataSet">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spark中RDD、DataFrame和DataSet">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/12/07/spark中RDD、DataFrame和DataSet/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景: 分析下虽然提供了这么多的数据格式，那种适用，那种才是适合自己的。">
+<meta property="og:description" content="分析下虽然提供了这么多的数据格式，那种适用，那种才是适合自己的。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:23:32.200Z">
+<meta property="og:updated_time" content="2019-07-18T12:11:47.185Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spark中RDD、DataFrame和DataSet">
-<meta name="twitter:description" content="需求背景: 分析下虽然提供了这么多的数据格式，那种适用，那种才是适合自己的。">
+<meta name="twitter:description" content="分析下虽然提供了这么多的数据格式，那种适用，那种才是适合自己的。">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,7 +139,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景:"></a>需求背景:</h2><blockquote>
+            <blockquote>
 <p>分析下虽然提供了这么多的数据格式，那种适用，那种才是适合自己的。</p>
 </blockquote>
 <a id="more"></a>
@@ -149,7 +152,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:23</p>
+        <p>最后更新： 2019年07月18日 20:11</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2017/12/07/spark中RDD、DataFrame和DataSet/" title="spark中RDD、DataFrame和DataSet">http://www.tangyuxiaoyao.club/ITWO/2017/12/07/spark中RDD、DataFrame和DataSet/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -217,7 +220,7 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/12/07/spark中RDD、DataFrame和DataSet/&title=《spark中RDD、DataFrame和DataSet》 — ITWO&source=需求背景:
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/12/07/spark中RDD、DataFrame和DataSet/&title=《spark中RDD、DataFrame和DataSet》 — ITWO&source=
 分析下虽然提供了这么多的数据格式，那种适用，那种才是适合自己的。
 " data-title="QQ">
               <i class="fa fa-qq"></i>
@@ -275,7 +278,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析细节"><span class="post-toc-text">分析细节</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RDD"><span class="post-toc-text">RDD</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DataFrame"><span class="post-toc-text">DataFrame</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DataSet"><span class="post-toc-text">DataSet</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析细节"><span class="post-toc-text">分析细节</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RDD"><span class="post-toc-text">RDD</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DataFrame"><span class="post-toc-text">DataFrame</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#DataSet"><span class="post-toc-text">DataSet</span></a></li></ol></li></ol>
         </nav>
     </aside>
     

@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝迁移。">
+  <meta name="description" content="线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝迁移。">
 <meta name="keywords" content="mongo,mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql 和mongo 导入数据总结">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/04/04/mysql-和mongo-导入数据总结/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝迁移。">
+<meta property="og:description" content="线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝迁移。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T02:43:57.221Z">
+<meta property="og:updated_time" content="2019-07-18T12:10:25.736Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql 和mongo 导入数据总结">
-<meta name="twitter:description" content="需求背景 线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝迁移。">
+<meta name="twitter:description" content="线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝迁移。">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,9 +139,11 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
+            <blockquote>
 <p>线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝迁移。<br><a id="more"></a></p>
-<h2 id="实现分析"><a href="#实现分析" class="headerlink" title="实现分析"></a>实现分析</h2><p>因为系统落地之前都会放到队列里面等待消费，然后落库，所以新系统保证服务正常以后，域名解析到新环境，然后流程环节知道队列，等待老版环境队列消费完了而且ngnix中无用户请求记录进来（因为域名解析会有几分钟的时间），我们开始提取增量的数据，mysql记录的是表记录的最大id，mongo记录也是最大的集合objectId，然后批量导出。</p>
+</blockquote>
+<h2 id="实现分析"><a href="#实现分析" class="headerlink" title="实现分析"></a>实现分析</h2><blockquote>
+<p>因为系统落地之前都会放到队列里面等待消费，然后落库，所以新系统保证服务正常以后，域名解析到新环境，然后流程环节知道队列，等待老版环境队列消费完了而且ngnix中无用户请求记录进来（因为域名解析会有几分钟的时间），我们开始提取增量的数据，mysql记录的是表记录的最大id，mongo记录也是最大的集合objectId，然后批量导出。</p>
 </blockquote>
 <h2 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h2><h3 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">导出</span></div><div class="line">mysql -uupsmart -p dbname -e 'select * from t where id&gt;max(id)' &gt;new_data.tsv</div><div class="line"><span class="meta">#</span><span class="bash">导入</span></div><div class="line">mysqlimport [options] db_name textfile1 ...</div></pre></td></tr></table></figure>
 <blockquote>
@@ -151,7 +156,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 10:43</p>
+        <p>最后更新： 2019年07月18日 20:10</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2018/04/04/mysql-和mongo-导入数据总结/" title="mysql 和mongo 导入数据总结">http://www.tangyuxiaoyao.club/ITWO/2018/04/04/mysql-和mongo-导入数据总结/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -219,8 +224,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/04/04/mysql-和mongo-导入数据总结/&title=《mysql 和mongo 导入数据总结》 — ITWO&source=需求背景
-线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/04/04/mysql-和mongo-导入数据总结/&title=《mysql 和mongo 导入数据总结》 — ITWO&source=
+线上系统环境迁移，数据部分mysql和mongo需要迁移，大部分的数据通过dump，已经迁移过去，迁移过程中会有增量的数据产生，这部分数据要怎么做到无缝..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -272,7 +277,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现分析"><span class="post-toc-text">实现分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术细节"><span class="post-toc-text">技术细节</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mysql"><span class="post-toc-text">mysql</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mongo"><span class="post-toc-text">mongo</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实现分析"><span class="post-toc-text">实现分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#技术细节"><span class="post-toc-text">技术细节</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mysql"><span class="post-toc-text">mysql</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mongo"><span class="post-toc-text">mongo</span></a></li></ol></li></ol>
         </nav>
     </aside>
     

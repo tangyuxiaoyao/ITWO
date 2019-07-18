@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景: 项目中有链接https接口的请求所以使用了,apache的httpcomponents中的httpclient,但是启动测试的时候报错，NoClassDefFoundError: org/apache/http/ssl/TrustStrategy">
+  <meta name="description" content="项目中有链接https接口的请求所以使用了,apache的httpcomponents中的httpclient,但是启动测试的时候报错，NoClassDefFoundError: org/apache/http/ssl/TrustStrategy">
 <meta name="keywords" content="apache,https,ssl,NoClassDefFound">
 <meta property="og:type" content="article">
 <meta property="og:title" content="apache http ssl模块NoClassDefFoundError: org&#x2F;apache&#x2F;http&#x2F;ssl&#x2F;TrustStrategy">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/09/18/apache-http-ssl模块NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景: 项目中有链接https接口的请求所以使用了,apache的httpcomponents中的httpclient,但是启动测试的时候报错，NoClassDefFoundError: org/apache/http/ssl/TrustStrategy">
+<meta property="og:description" content="项目中有链接https接口的请求所以使用了,apache的httpcomponents中的httpclient,但是启动测试的时候报错，NoClassDefFoundError: org/apache/http/ssl/TrustStrategy">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:14:08.192Z">
+<meta property="og:updated_time" content="2019-07-18T12:05:33.509Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="apache http ssl模块NoClassDefFoundError: org&#x2F;apache&#x2F;http&#x2F;ssl&#x2F;TrustStrategy">
-<meta name="twitter:description" content="需求背景: 项目中有链接https接口的请求所以使用了,apache的httpcomponents中的httpclient,但是启动测试的时候报错，NoClassDefFoundError: org/apache/http/ssl/TrustStrategy">
+<meta name="twitter:description" content="项目中有链接https接口的请求所以使用了,apache的httpcomponents中的httpclient,但是启动测试的时候报错，NoClassDefFoundError: org/apache/http/ssl/TrustStrategy">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,14 +139,16 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h1 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景:"></a>需求背景:</h1><blockquote>
+            <blockquote>
 <p>项目中有链接https接口的请求所以使用了,apache的httpcomponents中的httpclient,但是启动测试的时候报错，NoClassDefFoundError: org/apache/http/ssl/TrustStrategy<br><a id="more"></a></p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案:"></a>解决方案:</h2><p>然后找了下该类竟然出现在三个版本的包中，使用mvn dependency:tree &gt;temp,找到了dubbo、disconf中也有出现，然后exclued掉.但是还是报错找不到类，后来发现该包正确使用的包在dubbo的引用下面，把该包的引用移动到上面，然后问题解决。</p>
+</blockquote>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案:"></a>解决方案:</h2><blockquote>
+<p>然后找了下该类竟然出现在三个版本的包中，使用mvn dependency:tree &gt;temp,找到了dubbo、disconf中也有出现，然后exclued掉.但是还是报错找不到类，后来发现该包正确使用的包在dubbo的引用下面，把该包的引用移动到上面，然后问题解决。</p>
 </blockquote>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:14</p>
+        <p>最后更新： 2019年07月18日 20:05</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2017/09/18/apache-http-ssl模块NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/" title="apache http ssl模块NoClassDefFoundError: org/apache/http/ssl/TrustStrategy">http://www.tangyuxiaoyao.club/ITWO/2017/09/18/apache-http-ssl模块NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -211,8 +216,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/09/18/apache-http-ssl模块NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/&title=《apache http ssl模块NoClassDefFoundError: org/apache/http/ssl/TrustStrategy》 — ITWO&source=需求背景:
-项目中有链接https接口的请求所以使用了,apache的httpcomponents中的httpclient,但是启动测试的时候报错，NoC..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/09/18/apache-http-ssl模块NoClassDefFoundError-org-apache-http-ssl-TrustStrategy/&title=《apache http ssl模块NoClassDefFoundError: org/apache/http/ssl/TrustStrategy》 — ITWO&source=
+项目中有链接https接口的请求所以使用了,apache的httpcomponents中的httpclient,但是启动测试的时候报错，NoClassD..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -268,7 +273,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景:</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决方案"><span class="post-toc-text">解决方案:</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决方案"><span class="post-toc-text">解决方案:</span></a></li></ol>
         </nav>
     </aside>
     

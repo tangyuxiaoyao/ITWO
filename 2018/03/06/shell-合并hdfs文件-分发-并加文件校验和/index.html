@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="背景描述 提供一批带有城市标识的商户号，然后在流水中匹配到卡号，最终通过设备号和卡号的映射关系，输出每个城市商户商户对应的设备号。">
-<meta name="keywords" content="hadoop,hdfs,shell,file,scala,spark,awk,suffix">
+  <meta name="description" content="提供一批带有城市标识的商户号，然后在流水中匹配到卡号，最终通过设备号和卡号的映射关系，输出每个城市商户商户对应的设备号。">
+<meta name="keywords" content="hadoop,hdfs,shell,file,scala,awk,spark,suffix">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shell 合并hdfs文件 分发 并加文件校验和">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="背景描述 提供一批带有城市标识的商户号，然后在流水中匹配到卡号，最终通过设备号和卡号的映射关系，输出每个城市商户商户对应的设备号。">
+<meta property="og:description" content="提供一批带有城市标识的商户号，然后在流水中匹配到卡号，最终通过设备号和卡号的映射关系，输出每个城市商户商户对应的设备号。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T03:21:29.832Z">
+<meta property="og:updated_time" content="2019-07-18T12:11:08.942Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shell 合并hdfs文件 分发 并加文件校验和">
-<meta name="twitter:description" content="背景描述 提供一批带有城市标识的商户号，然后在流水中匹配到卡号，最终通过设备号和卡号的映射关系，输出每个城市商户商户对应的设备号。">
+<meta name="twitter:description" content="提供一批带有城市标识的商户号，然后在流水中匹配到卡号，最终通过设备号和卡号的映射关系，输出每个城市商户商户对应的设备号。">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,7 +139,7 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote>
+            <blockquote>
 <p>提供一批带有城市标识的商户号，然后在流水中匹配到卡号，最终通过设备号和卡号的映射关系，输出每个城市商户商户对应的设备号。<a id="more"></a></p>
 </blockquote>
 <h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">MapDevice</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">MidCard</span>(<span class="params">card: <span class="type">String</span>, mid: <span class="type">String</span></span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="class">  <span class="title">case</span> <span class="title">class</span> <span class="title">CardDevice</span>(<span class="params">card: <span class="type">String</span>, device: <span class="type">String</span></span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="class"></span></div><div class="line"><span class="class">  <span class="title">case</span> <span class="title">class</span> <span class="title">CityMid</span>(<span class="params">city: <span class="type">String</span>, mid: <span class="type">String</span></span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="class">  <span class="title">val</span> <span class="title">comma</span> </span>= <span class="string">","</span></div><div class="line">  <span class="keyword">val</span> tab = <span class="string">"\t"</span></div><div class="line"></div><div class="line">  <span class="comment">// 从业务逻辑来看直接判断分割以后的列数更能够过滤掉脏数据，当然空行也被pass了。</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</div><div class="line">    <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"商户数据抓取设备号"</span>).setMaster(<span class="string">"local[*]"</span>)</div><div class="line">    <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</div><div class="line">    <span class="keyword">val</span> sqlContext = <span class="keyword">new</span> <span class="type">SQLContext</span>(sc)</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// .filter(_.matches("\\S+")) 过滤空行</span></div><div class="line">    <span class="comment">// 考虑到只有city和mid的前提下，就会产生重复数据，所以要过滤以后再建表。</span></div><div class="line">    <span class="keyword">import</span> sqlContext.implicits._</div><div class="line">    <span class="keyword">val</span> midFilePath = args(<span class="number">0</span>)</div><div class="line">    <span class="keyword">val</span> cardMids = sc.textFile(midFilePath)</div><div class="line">      .filter(_.trim.split(comma, <span class="number">-1</span>).length == <span class="number">6</span>)</div><div class="line">      .map(line =&gt; &#123;</div><div class="line">        <span class="keyword">val</span> details = line.split(comma, <span class="number">-1</span>)</div><div class="line">        details(<span class="number">0</span>) + comma + details(<span class="number">4</span>)</div><div class="line">      &#125;).distinct().map(line =&gt; &#123;</div><div class="line">      <span class="keyword">val</span> details = line.split(comma, <span class="number">-1</span>)</div><div class="line">      <span class="type">CityMid</span>(details(<span class="number">0</span>), details(<span class="number">1</span>))</div><div class="line">    &#125;).toDF()</div><div class="line"></div><div class="line">    cardMids.registerTempTable(<span class="string">"cityMid"</span>)</div><div class="line"></div><div class="line">    <span class="comment">//    cardMids.show()</span></div><div class="line"></div><div class="line">    <span class="keyword">val</span> transFilePath = args(<span class="number">1</span>)</div><div class="line"></div><div class="line">    <span class="keyword">val</span> todayMCDF = sc.newAPIHadoopFile[<span class="type">LongWritable</span>, <span class="type">Text</span>, <span class="type">LzoTextInputFormat</span>](transFilePath)</div><div class="line">      .filter(_._2.toString.split(comma, <span class="number">-1</span>).length == <span class="number">47</span>)</div><div class="line">      .map(_._2.toString.split(comma, <span class="number">-1</span>))</div><div class="line">      .map(mpc =&gt; <span class="type">MidCard</span>(mpc(<span class="number">0</span>), mpc(<span class="number">1</span>)))</div><div class="line">      .toDF()</div><div class="line"></div><div class="line">    todayMCDF.registerTempTable(<span class="string">"midcard"</span>)</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">val</span> cardDevicePath = args(<span class="number">2</span>)</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// .filter(_.trim.length &gt; 0) 过滤空行</span></div><div class="line">    <span class="comment">// _.device.matches("\\S+") 过滤匹配到的设备号为空</span></div><div class="line">    <span class="keyword">val</span> cardDeviceDF = sc.textFile(cardDevicePath)</div><div class="line">      .filter(_.trim.split(tab, <span class="number">-1</span>).length == <span class="number">10</span>)</div><div class="line">      .map(line =&gt; &#123;</div><div class="line">        <span class="keyword">val</span> items = line.split(tab, <span class="number">-1</span>)</div><div class="line">        <span class="keyword">val</span> card = items(<span class="number">0</span>)</div><div class="line">        <span class="keyword">val</span> deviceId = items(<span class="number">3</span>)</div><div class="line">        <span class="type">CardDevice</span>(card, deviceId)</div><div class="line">      &#125;).filter(_.device.matches(<span class="string">"\\S+"</span>)).toDF()</div><div class="line"></div><div class="line"></div><div class="line">    cardDeviceDF.registerTempTable(<span class="string">"carddevice"</span>)</div><div class="line"></div><div class="line">    <span class="comment">//    cardDeviceDF.show(10)</span></div><div class="line"></div><div class="line">    <span class="keyword">val</span> resDF = sqlContext.sql(<span class="string">"select city,device from (select card,city from cityMid c  join cardmid m on c.mid=m.mid ) c join carddevice d on d.card=c.card group by city,device"</span>)</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//    resDF.show(5)</span></div><div class="line">    <span class="keyword">val</span> resSavePath = args(<span class="number">3</span>)</div><div class="line"></div><div class="line"></div><div class="line">    resDF.map(value =&gt; value.mkString(comma)).saveAsTextFile(resSavePath)</div><div class="line"></div><div class="line">  &#125;</div></pre></td></tr></table></figure>
@@ -163,7 +166,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年04月16日 11:21</p>
+        <p>最后更新： 2019年07月18日 20:11</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/" title="shell 合并hdfs文件 分发 并加文件校验和">http://www.tangyuxiaoyao.club/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -231,7 +234,7 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/&title=《shell 合并hdfs文件 分发 并加文件校验和》 — ITWO&source=背景描述
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2018/03/06/shell-合并hdfs文件-分发-并加文件校验和/&title=《shell 合并hdfs文件 分发 并加文件校验和》 — ITWO&source=
 提供一批带有城市标识的商户号，然后在流水中匹配到卡号，最终通过设备号和卡号的映射关系，输出每个城市商户商户对应的设备号。" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
@@ -279,9 +282,9 @@
       
     <a href="/ITWO/tags/scala/" class="color1">scala</a>
       
-    <a href="/ITWO/tags/spark/" class="color1">spark</a>
-      
     <a href="/ITWO/tags/awk/" class="color4">awk</a>
+      
+    <a href="/ITWO/tags/spark/" class="color1">spark</a>
       
     <a href="/ITWO/tags/suffix/" class="color2">suffix</a>
       
@@ -296,7 +299,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#背景描述"><span class="post-toc-text">背景描述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#具体实现"><span class="post-toc-text">具体实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题总结"><span class="post-toc-text">问题总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#怎么才算是有效的数据过滤？"><span class="post-toc-text">怎么才算是有效的数据过滤？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如果匹配到的设备号为空怎么办？"><span class="post-toc-text">如果匹配到的设备号为空怎么办？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#怎么多列的配置文件的前提下，过滤掉同个城市下会存在重复的mid"><span class="post-toc-text">怎么多列的配置文件的前提下，过滤掉同个城市下会存在重复的mid</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何在最终结果文件中按文件分发？（shell实现以及理论上的scala实现）"><span class="post-toc-text">如何在最终结果文件中按文件分发？（shell实现以及理论上的scala实现）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#shell"><span class="post-toc-text">shell</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#scala"><span class="post-toc-text">scala</span></a></li></ol></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#具体实现"><span class="post-toc-text">具体实现</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题总结"><span class="post-toc-text">问题总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#怎么才算是有效的数据过滤？"><span class="post-toc-text">怎么才算是有效的数据过滤？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如果匹配到的设备号为空怎么办？"><span class="post-toc-text">如果匹配到的设备号为空怎么办？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#怎么多列的配置文件的前提下，过滤掉同个城市下会存在重复的mid"><span class="post-toc-text">怎么多列的配置文件的前提下，过滤掉同个城市下会存在重复的mid</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何在最终结果文件中按文件分发？（shell实现以及理论上的scala实现）"><span class="post-toc-text">如何在最终结果文件中按文件分发？（shell实现以及理论上的scala实现）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#shell"><span class="post-toc-text">shell</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#scala"><span class="post-toc-text">scala</span></a></li></ol></li></ol></li></ol>
         </nav>
     </aside>
     

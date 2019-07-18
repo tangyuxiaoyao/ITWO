@@ -90,7 +90,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -98,6 +98,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -132,7 +135,7 @@
         </div>
         <div class="article-feed">
             <p>
-                <h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote>
+                <blockquote>
 <p>提供一批带有城市标识的商户号，然后在流水中匹配到卡号，最终通过设备号和卡号的映射关系，输出每个城市商户商户对应的设备号。
             </p>
         </div>
@@ -159,9 +162,9 @@
       
     <a href="/ITWO/tags/scala/" class="color1">scala</a>
       
-    <a href="/ITWO/tags/spark/" class="color1">spark</a>
-      
     <a href="/ITWO/tags/awk/" class="color4">awk</a>
+      
+    <a href="/ITWO/tags/spark/" class="color1">spark</a>
       
     <a href="/ITWO/tags/suffix/" class="color2">suffix</a>
       
@@ -202,7 +205,7 @@
         </div>
         <div class="article-feed">
             <p>
-                <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
+                <blockquote>
 <p>在提取数据时，有用到使用商户号和终端号join匹配商户信息，但是返现怎么都匹配不到，以为是这两个号可能前后有空格，所以使用trim()函数处理，但还是没有匹配到结果，后来，vi文件 set list，发现 有一字段后面有^I紧跟其后，才警觉，这丫不是tab么，后来查看源码发现，hive的trim()只对空格感兴趣，所以想起可以使用replace,但是想到通用来讲，但是考虑到使用正则好点，所以又查到hive有正则替换。</p>
 </blockquote>
             </p>
@@ -269,7 +272,7 @@
         </div>
         <div class="article-feed">
             <p>
-                <h2 id="又是背景"><a href="#又是背景" class="headerlink" title="又是背景"></a>又是背景</h2><blockquote>
+                <blockquote>
 <p>python 作为工作大数据mapreduce脚本支撑语言用过一段时间了,通过这篇文章查缺补漏.
             </p>
         </div>
@@ -293,54 +296,6 @@
         </ul>
         
             <a href="/ITWO/2018/01/30/python-拾遗/#more" class="article-more-link" >more&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article id="post-spark-ListBuffer遍历" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/ITWO/2018/01/25/spark-ListBuffer遍历/"  >spark ListBuffer遍历</a>
-    </h1>
-  
-
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/ITWO/2018/01/25/spark-ListBuffer遍历/" >
-                
-                <img src="http://www.tangyuxiaoyao.club/ITWO/images/banner.jpg" alt="spark ListBuffer遍历" title="spark ListBuffer遍历">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2018-01-25</li>
-            
-            
-        </ul>
-        
-            <a href="/ITWO/2018/01/25/spark-ListBuffer遍历/#more" class="article-more-link" >more&gt;&gt;</a>
         
     </footer>
   </div>
@@ -373,7 +328,7 @@
         </div>
         <div class="article-feed">
             <p>
-                <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
+                <blockquote>
 <p>hadoop生态圈中hadoop streaming占了很大的比重,因为它很好的融合了其他脚本语言作为map,reduce来处理业务逻辑,本文重点说的是使用Python或者shell遇到的问题.<br>
             </p>
         </div>
@@ -433,8 +388,9 @@
         </div>
         <div class="article-feed">
             <p>
-                <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
-<p>集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而当一个队列的资源有剩余时，可暂时将剩余资源共享给其他队列。
+                <blockquote>
+<p>集群资源有限,考虑到有多个部门要用到,所以使用不同部门使用不同队列的方式来使用集群资源,这里我们使用的是Capacity Schedule分配策略,顾名思义,是给各个队列分配相应占比的资源来独立使用,而队列内部则还是使用yarn默认的FIFO Schedule分配策略,这样可以保证每个队列可设定一定比例的资源最低保证和使用上限，同时，每个用户也可以设定一定的资源使用上限以防止资源滥用。而当一个队列的资源有剩余时，可暂时将剩余资源共享给其他队列。</p>
+</blockquote>
             </p>
         </div>
       
@@ -495,8 +451,9 @@
         </div>
         <div class="article-feed">
             <p>
-                <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
-<p>描述如下图所示:<br><img src="/ITWO/assets/rangeImg.png" alt="矩阵变换图"><br>把左边的图形转换为右边的模样
+                <blockquote>
+<p>描述如下图所示:<br><img src="/ITWO/assets/rangeImg.png" alt="矩阵变换图"><br>把左边的图形转换为右边的模样</p>
+</blockquote>
             </p>
         </div>
       
@@ -555,7 +512,7 @@
         </div>
         <div class="article-feed">
             <p>
-                <h2 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h2><blockquote>
+                <blockquote>
 <p>在使用crontab定制定时任务时,没有结果输出,想去查看下log.但是没有找到,通过一下途径来定位问题.<br>
             </p>
         </div>
@@ -613,7 +570,7 @@
         </div>
         <div class="article-feed">
             <p>
-                <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景:"></a>需求背景:</h2><blockquote>
+                <blockquote>
 <p>公司现阶段有很多的加密方式,过段时间会最终只有一个SM3,所以过渡阶段会有很多的解密加密的查询解析诉求,所以借用一个下午的时间想实现下提供一个页面供同事使用,来完成以下功能:</p>
 </blockquote>
 <ol>
@@ -678,8 +635,9 @@
         </div>
         <div class="article-feed">
             <p>
-                <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
-<p>公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为tsv，接着转换为hfile，或者直接导入到hbase中（跳过生成hfile过程，不建议这样，比较慢）。<br>本文总结的是在数据导入的过程中遇到的各种问题。<br>
+                <blockquote>
+<p>公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为tsv，接着转换为hfile，或者直接导入到hbase中（跳过生成hfile过程，不建议这样，比较慢）。<br>本文总结的是在数据导入的过程中遇到的各种问题。</p>
+</blockquote>
             </p>
         </div>
       
@@ -713,10 +671,71 @@
 
 
   
+    <article id="post-yarn-详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/ITWO/2017/12/22/yarn-详解/"  >yarn 详解</a>
+    </h1>
+  
+
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/ITWO/2017/12/22/yarn-详解/" >
+                
+                <img src="http://www.tangyuxiaoyao.club/ITWO/images/banner.jpg" alt="yarn 详解" title="yarn 详解">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                <blockquote>
+<p>yarn 作为hadoop2.0的新特性，使用了这么久的时间，把概念重新过一遍。<br>温故知新，查缺补漏。</p>
+</blockquote>
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2017-12-22</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/ITWO/tags/hadoop/" class="color2">hadoop</a>
+      
+    <a href="/ITWO/tags/mapreduce/" class="color5">mapreduce</a>
+      
+    <a href="/ITWO/tags/yarn/" class="color5">yarn</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/ITWO/2017/12/22/yarn-详解/#more" class="article-more-link" >more&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/ITWO/page/4/"><< Prev</a><a class="page-number" href="/ITWO/">1</a><span class="space">&hellip;</span><a class="page-number" href="/ITWO/page/3/">3</a><a class="page-number" href="/ITWO/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/ITWO/page/6/">6</a><a class="page-number" href="/ITWO/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/ITWO/page/9/">9</a><a class="extend next" rel="next" href="/ITWO/page/6/">Next >></a>
+    <a class="extend prev" rel="prev" href="/ITWO/page/4/"><< Prev</a><a class="page-number" href="/ITWO/">1</a><span class="space">&hellip;</span><a class="page-number" href="/ITWO/page/3/">3</a><a class="page-number" href="/ITWO/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/ITWO/page/6/">6</a><a class="page-number" href="/ITWO/page/7/">7</a><a class="page-number" href="/ITWO/page/8/">8</a><a class="extend next" rel="next" href="/ITWO/page/6/">Next >></a>
   </nav>
 </section>
         

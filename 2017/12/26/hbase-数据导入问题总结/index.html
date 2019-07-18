@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="唐钰逍遥,ITWO" />
   
-  <meta name="description" content="需求背景 公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为tsv，接着转换为hfile，或者直接导入到hbase中（跳过生成hfile过程，不建议这样，比较慢）。本文总结的是在数据导入的过程中遇到的各种问题。">
+  <meta name="description" content="公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为tsv，接着转换为hfile，或者直接导入到hbase中（跳过生成hfile过程，不建议这样，比较慢）。本文总结的是在数据导入的过程中遇到的各种问题。">
 <meta name="keywords" content="hbase,bulkload,error">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hbase 数据导入问题总结">
 <meta property="og:url" content="http://www.tangyuxiaoyao.club/ITWO/2017/12/26/hbase-数据导入问题总结/index.html">
 <meta property="og:site_name" content="ITWO">
-<meta property="og:description" content="需求背景 公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为tsv，接着转换为hfile，或者直接导入到hbase中（跳过生成hfile过程，不建议这样，比较慢）。本文总结的是在数据导入的过程中遇到的各种问题。">
+<meta property="og:description" content="公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为tsv，接着转换为hfile，或者直接导入到hbase中（跳过生成hfile过程，不建议这样，比较慢）。本文总结的是在数据导入的过程中遇到的各种问题。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-12T10:04:24.712Z">
+<meta property="og:updated_time" content="2019-07-18T12:08:11.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hbase 数据导入问题总结">
-<meta name="twitter:description" content="需求背景 公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为tsv，接着转换为hfile，或者直接导入到hbase中（跳过生成hfile过程，不建议这样，比较慢）。本文总结的是在数据导入的过程中遇到的各种问题。">
+<meta name="twitter:description" content="公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为tsv，接着转换为hfile，或者直接导入到hbase中（跳过生成hfile过程，不建议这样，比较慢）。本文总结的是在数据导入的过程中遇到的各种问题。">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -92,7 +92,7 @@
             <nav class="header-nav">
                 <div class="social">
                     
-                        <a title="ITWO" target="_blank" href="//tangyuxiaoyao.club">
+                        <a title="ITWO" target="_blank" href="//www.tangyuxiaoyao.club">
                             <i class="fa fa-home fa-2x"></i></a>
                     
                         <a title="Github" target="_blank" href="//github.com/tangyuxiaoyao">
@@ -100,6 +100,9 @@
                     
                         <a title="Weibo" target="_blank" href="//weibo.com/u/5999601685">
                             <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/tangyuxiaoyao">
+                            <i class="fa fa-twitter fa-2x"></i></a>
                     
                 </div>
             </nav>
@@ -136,10 +139,11 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><blockquote>
-<p>公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为tsv，接着转换为hfile，或者直接导入到hbase中（跳过生成hfile过程，不建议这样，比较慢）。<br>本文总结的是在数据导入的过程中遇到的各种问题。<br><a id="more"></a></p>
-<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2></blockquote>
-<p>①: 数据量大导致的Trying to load more than 32 hfiles to one family of one region</p>
+            <blockquote>
+<p>公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为tsv，接着转换为hfile，或者直接导入到hbase中（跳过生成hfile过程，不建议这样，比较慢）。<br>本文总结的是在数据导入的过程中遇到的各种问题。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>①: 数据量大导致的Trying to load more than 32 hfiles to one family of one region</p>
 <blockquote>
 <p>从字面可以看出该错误是因为在每个region的每个family中只能导入32个hfiles，超过该限制就会报错。<br>该配置如下：<br>/conf/hbase-site.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.mapreduce.bulkload.max.hfiles.perRegion.perFamily<span class="tag">&lt;/<span class="name">name</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">value</span>&gt;</span>32<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>第一思路肯定是修改该配置为9999然后重启hbase搞定，但是明显在生成环境该解决方案扑街，后来查文档得知可以通过导入的时候设置参数搞定，所以准备通过该方法实现，具体做法为：当生成hfile以后我们统计下hfile的个数，当我们设计表的时候如果只用了一个列族，实际情况的确也是一个，我们的做法就是把该参数的值定位hfile的个数加一，加载该配置然后再buldload就可以解决异常。<br>ps:该bug在高版本已经修复。</p>
@@ -174,7 +178,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年07月12日 18:04</p>
+        <p>最后更新： 2019年07月18日 20:08</p>
         <p>原始链接： <a class="post-url" href="/ITWO/2017/12/26/hbase-数据导入问题总结/" title="hbase 数据导入问题总结">http://www.tangyuxiaoyao.club/ITWO/2017/12/26/hbase-数据导入问题总结/</a></p>
         <footer>
             <a href="http://www.tangyuxiaoyao.club/ITWO">
@@ -242,8 +246,8 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/12/26/hbase-数据导入问题总结/&title=《hbase 数据导入问题总结》 — ITWO&source=需求背景
-公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完..." data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.tangyuxiaoyao.club/ITWO/2017/12/26/hbase-数据导入问题总结/&title=《hbase 数据导入问题总结》 — ITWO&source=
+公司现提供一批画像需要导入到hbase中，因为该画像还需要进一步处理才能作为最终的展示指标输出，所以需要自己实现业务逻辑mapreduce处理完了转换为..." data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
@@ -297,7 +301,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求背景"><span class="post-toc-text">需求背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题解决"><span class="post-toc-text">问题解决</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#预分区方法"><span class="post-toc-text">预分区方法</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题解决"><span class="post-toc-text">问题解决</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#预分区方法"><span class="post-toc-text">预分区方法</span></a></li></ol>
         </nav>
     </aside>
     
