@@ -198,9 +198,9 @@
             
             <tag> git </tag>
             
-            <tag> ssh </tag>
-            
             <tag> scp </tag>
+            
+            <tag> ssh </tag>
             
         </tags>
       
@@ -466,11 +466,11 @@
             
             <tag> python </tag>
             
-            <tag> file </tag>
-            
             <tag> hadoop streaming </tag>
             
             <tag> cacheFile </tag>
+            
+            <tag> file </tag>
             
             <tag> files </tag>
             
@@ -749,11 +749,11 @@
       
         <tags>
             
-            <tag> shell </tag>
-            
             <tag> hadoop </tag>
             
             <tag> hdfs </tag>
+            
+            <tag> shell </tag>
             
             <tag> file </tag>
             
@@ -1059,11 +1059,11 @@
       
         <tags>
             
+            <tag> error </tag>
+            
             <tag> spark </tag>
             
             <tag> local </tag>
-            
-            <tag> error </tag>
             
         </tags>
       
@@ -1135,11 +1135,11 @@
             
             <tag> hadoop </tag>
             
+            <tag> file </tag>
+            
             <tag> no </tag>
             
             <tag> such </tag>
-            
-            <tag> file </tag>
             
         </tags>
       
@@ -1447,9 +1447,9 @@
             
             <tag> spark </tag>
             
-            <tag> match </tag>
-            
             <tag> not </tag>
+            
+            <tag> match </tag>
             
         </tags>
       
