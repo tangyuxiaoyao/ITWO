@@ -367,11 +367,11 @@
       
         <tags>
             
+            <tag> python </tag>
+            
             <tag> mapreduce </tag>
             
             <tag> hive </tag>
-            
-            <tag> python </tag>
             
             <tag> row_number </tag>
             
@@ -464,9 +464,9 @@
       
         <tags>
             
-            <tag> hadoop streaming </tag>
-            
             <tag> python </tag>
+            
+            <tag> hadoop streaming </tag>
             
             <tag> cacheFile </tag>
             
@@ -584,11 +584,11 @@
             
             <tag> hadoop </tag>
             
-            <tag> mapreduce </tag>
-            
             <tag> streaming </tag>
             
             <tag> python </tag>
+            
+            <tag> mapreduce </tag>
             
             <tag> numpy </tag>
             
@@ -1029,9 +1029,9 @@
             
             <tag> hadoop </tag>
             
-            <tag> mapreduce </tag>
-            
             <tag> streaming </tag>
+            
+            <tag> mapreduce </tag>
             
             <tag> hive </tag>
             
@@ -1343,9 +1343,9 @@
       
         <tags>
             
-            <tag> lzo </tag>
-            
             <tag> spark </tag>
+            
+            <tag> lzo </tag>
             
         </tags>
       
